@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33283252BA7B300FA03AA /* AppDelegate.swift */; };
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
-		56C33288252BA7B300FA03AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33287252BA7B300FA03AA /* ViewController.swift */; };
 		56C3328B252BA7B300FA03AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C33289252BA7B300FA03AA /* Main.storyboard */; };
 		56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328C252BA7B500FA03AA /* Assets.xcassets */; };
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
@@ -19,7 +18,6 @@
 		56C33280252BA7B300FA03AA /* MakerU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C33283252BA7B300FA03AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		56C33285252BA7B300FA03AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		56C33287252BA7B300FA03AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		56C3328A252BA7B300FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		56C3328C252BA7B500FA03AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56C3328F252BA7B500FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,15 +54,22 @@
 		56C33282252BA7B300FA03AA /* MakerU */ = {
 			isa = PBXGroup;
 			children = (
+				56C33299252BADDA00FA03AA /* App */,
+				56C33289252BA7B300FA03AA /* Main.storyboard */,
+			);
+			path = MakerU;
+			sourceTree = "<group>";
+		};
+		56C33299252BADDA00FA03AA /* App */ = {
+			isa = PBXGroup;
+			children = (
 				56C33283252BA7B300FA03AA /* AppDelegate.swift */,
 				56C33285252BA7B300FA03AA /* SceneDelegate.swift */,
-				56C33287252BA7B300FA03AA /* ViewController.swift */,
-				56C33289252BA7B300FA03AA /* Main.storyboard */,
 				56C3328C252BA7B500FA03AA /* Assets.xcassets */,
 				56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */,
 				56C33291252BA7B500FA03AA /* Info.plist */,
 			);
-			path = MakerU;
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +142,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56C33288252BA7B300FA03AA /* ViewController.swift in Sources */,
 				56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */,
 				56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */,
 			);
@@ -288,7 +292,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJUSD98938;
-				INFOPLIST_FILE = MakerU/Info.plist;
+				INFOPLIST_FILE = MakerU/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -308,7 +312,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJUSD98938;
-				INFOPLIST_FILE = MakerU/Info.plist;
+				INFOPLIST_FILE = MakerU/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
