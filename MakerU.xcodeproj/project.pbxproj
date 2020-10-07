@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33283252BA7B300FA03AA /* AppDelegate.swift */; };
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
 		56C3328B252BA7B300FA03AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C33289252BA7B300FA03AA /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
+		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		56C33280252BA7B300FA03AA /* MakerU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C33283252BA7B300FA03AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		56C33285252BA7B300FA03AA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,17 +32,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5648EFFC252CBA7600E326CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5648EFFD252CBA7600E326CD /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		56C33277252BA7B300FA03AA = {
 			isa = PBXGroup;
 			children = (
 				56C33282252BA7B300FA03AA /* MakerU */,
 				56C33281252BA7B300FA03AA /* Products */,
+				5648EFFC252CBA7600E326CD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +67,7 @@
 		56C33282252BA7B300FA03AA /* MakerU */ = {
 			isa = PBXGroup;
 			children = (
+				5648EFFB252CBA6E00E326CD /* MakerU.entitlements */,
 				56C33299252BADDA00FA03AA /* App */,
 				56C33289252BA7B300FA03AA /* Main.storyboard */,
 			);
@@ -290,6 +304,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MakerU/MakerU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJUSD98938;
 				INFOPLIST_FILE = MakerU/App/Info.plist;
@@ -310,6 +325,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MakerU/MakerU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJUSD98938;
 				INFOPLIST_FILE = MakerU/App/Info.plist;
