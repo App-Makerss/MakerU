@@ -8,5 +8,5 @@
 import Foundation
 
 protocol IdentifiableEntity {
-    var id: String? { get }
+    var id: String? { get set }
 }
