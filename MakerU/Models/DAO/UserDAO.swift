@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-struct UserDAO: ReferenceType {
+struct UserDAO: GenericsDAO {
     typealias ManagedEntity = User
     internal let referenceName: String = "User"
     
