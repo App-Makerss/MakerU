@@ -13,6 +13,7 @@ struct User: IdentifiableEntity, Codable {
     
     var name: String
     var email: String
+    var role: UserRole
     var password: String
     var whatsapp: String
     var skills: [String]

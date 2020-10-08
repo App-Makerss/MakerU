@@ -17,23 +17,24 @@ struct UserDAO: ReferenceType {
         guard let name = record["name"] as? String,
               let email = record["email"] as? String,
               let password = record["password"] as? String,
-              let makerspaces = record["makerspaces"] as? [CKRecord.Reference]
+              let role = record["role"] as? Int,
+              let userRole = UserRole(rawValue: role)
         else {return nil}
         
         // loads the optionals info
         let whatsapp = record["whatsapp"] as? String ?? ""
         let skills = record["skills"] as? [String] ?? []
         let projects = record["projects"] as? [CKRecord.Reference] ?? []
+        let makerspaces = record["makerspaces"] as? [CKRecord.Reference] ?? []
         let id = record.recordID.recordName
         
         let makerspacesString = makerspaces.map { ref -> String in
             ref.recordID.recordName
         }
-        
         let projectsString = projects.map { ref -> String in
             ref.recordID.recordName
         }
-        return User(id: id, name: name, email: email, password: password, whatsapp: whatsapp, skills: skills, projects: projectsString, makerspaces: makerspacesString)
+        return User(id: id, name: name, email: email, role: userRole, password: password, whatsapp: whatsapp, skills: skills, projects: projectsString, makerspaces: makerspacesString)
     }
     
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any] {
