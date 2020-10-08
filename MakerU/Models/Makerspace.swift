@@ -16,9 +16,3 @@ struct Makerspace: IdentifiableEntity, Codable {
     var maxCapacity: Int
     
 }
-
-
-struct Coordinate: Codable {
-    var latitude: Double
-    var longitude: Double
-}
