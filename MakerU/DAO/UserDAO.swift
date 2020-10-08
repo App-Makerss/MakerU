@@ -12,7 +12,11 @@ struct UserDAO: ReferenceType {
     typealias ManagedEntity = User
     internal let referenceName: String = "User"
     
-    func decode(fromRecord record: CKRecord) -> User? {
+    
+    /// Decodes an ManagedEntity from a CKRecord
+    /// - Parameter record: record to be decoded to an Entity
+    /// - Returns: The decoded managedEntity (User)
+    func decode(fromRecord record: CKRecord) -> ManagedEntity? {
         // Loads the mandatory info, otherwise returns nil
         guard let name = record["name"] as? String,
               let email = record["email"] as? String,
@@ -37,6 +41,9 @@ struct UserDAO: ReferenceType {
         return User(id: id, name: name, email: email, role: userRole, password: password, whatsapp: whatsapp, skills: skills, projects: projectsString, makerspaces: makerspacesString)
     }
     
+    /// Remove variables of references (CKReference) from the dictionary because it needs a special treat
+    /// - Parameter dictionary: dictionary from where variable references will be removed
+    /// - Returns: the dictionary without any variables of references
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any] {
         var newDict = dictionary
         //References needs a special treat
@@ -46,6 +53,11 @@ struct UserDAO: ReferenceType {
         return newDict
     }
     
+    
+    /// Apply the special way to treat the CKReferences for the record
+    /// - Parameters:
+    ///   - rec: record that need the injection of references
+    ///   - entity: entity that has the references as strings
     func referencesSpecialTreat(forRecord rec: CKRecord, entity: ManagedEntity) {
         
         rec["projects"] = generateRecordReference(for: entity.projects)
