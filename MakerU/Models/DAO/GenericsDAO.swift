@@ -12,6 +12,7 @@ protocol GenericsDAO where Self: CloudKitEncodable {
     func delete(id: String)
     func update(entity: ManagedEntity)
     func save(entity: ManagedEntity) -> ManagedEntity
+    func find(byId id: String, completion:  @escaping (ManagedEntity?,Error?) -> ())
 }
 
 extension GenericsDAO {
@@ -77,4 +78,14 @@ extension GenericsDAO {
             }
         }
     }
+    
+    func find(byId id: String, completion:  @escaping (ManagedEntity?, Error?) -> ()) {
+        let recID = CKRecord.ID(recordName: id)
+        DatabaseAccess.shared.publicDB.fetch(withRecordID: recID) { (ckrecord, error) in 
+            
+            guard let rec = ckrecord else {return}
+            completion(decode(fromRecord: rec), error)
+        }
+    }
+    
 }

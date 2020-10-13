@@ -16,7 +16,7 @@ protocol CloudKitEncodable {
     
     func decode(fromRecord record: CKRecord) -> ManagedEntity?
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any]
-    func referencesSpecialTreat(forRecord rec: CKRecord, entity: ManagedEntity)
+    func treatSpecialValues(forRecord rec: CKRecord, entity: ManagedEntity)
 }
 
 extension CloudKitEncodable {
@@ -24,11 +24,11 @@ extension CloudKitEncodable {
     /// Generates a list of record references based on a list of recordNames (ids)
     /// - Parameter recordNames: the list of ids that will be used to create the references
     /// - Returns: a list of record references based on ids received
-    func generateRecordReference(for recordNames: [String]) -> [CKRecord.Reference] {
+    func generateRecordReference(for recordNames: [String], action: CKRecord.Reference.Action = .none) -> [CKRecord.Reference] {
         var references: [CKRecord.Reference] = []
         recordNames.forEach { refID in
             let recID = CKRecord.ID(recordName: refID)
-            let reference = CKRecord.Reference(recordID: recID, action: .none)
+            let reference = CKRecord.Reference(recordID: recID, action: action)
             references.append(reference)
         }
         return references
@@ -77,7 +77,7 @@ extension CloudKitEncodable {
         }
         
         //reference's special treat
-        referencesSpecialTreat(forRecord: rec, entity: entity)
+        treatSpecialValues(forRecord: rec, entity: entity)
         
         return rec
     }

@@ -12,10 +12,13 @@ struct Project: IdentifiableEntity, Codable {
     
     var title: String
     var description: String
+    var category: String
     var skillsInNeed: [String]
     var owner: String
-    var onMural: Bool
-    var makerspace: [String]
-//    var coverImage: File
+    var isForMural: Bool
+    var makerspace: String
+    var status: Bool
+    var collaborators: [String]
+    var coverImage: Data? = nil
     
 }

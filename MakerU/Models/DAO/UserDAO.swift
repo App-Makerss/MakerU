@@ -58,7 +58,7 @@ struct UserDAO: GenericsDAO {
     /// - Parameters:
     ///   - rec: record that need the injection of references
     ///   - entity: entity that has the references as strings
-    func referencesSpecialTreat(forRecord rec: CKRecord, entity: ManagedEntity) {
+    func treatSpecialValues(forRecord rec: CKRecord, entity: ManagedEntity) {
         
         rec["projects"] = generateRecordReference(for: entity.projects)
         rec["makerspaces"] = generateRecordReference(for: entity.makerspaces)
