@@ -15,7 +15,8 @@
 		56548DA8252E0BDC003AC229 /* CloudKitEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA7252E0BDC003AC229 /* CloudKitEncodable.swift */; };
 		566620B7252F59A2009821E9 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620B6252F59A2009821E9 /* UserRole.swift */; };
 		566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620B9252F7D9D009821E9 /* GenericsDAO.swift */; };
-		566620CE252F90CF009821E9 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620CD252F90CF009821E9 /* Project.swift */; };
+		566620C7252F8C00009821E9 /* Makerspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C6252F8C00009821E9 /* Makerspace.swift */; };
+		566620CA252F9054009821E9 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C9252F9054009821E9 /* Coordinate.swift */; };
 		566EC891252E738A00346846 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC890252E738A00346846 /* User.swift */; };
 		566EC894252E74B000346846 /* UserDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC893252E74B000346846 /* UserDAO.swift */; };
 		566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC896252E99AC00346846 /* IdentifiableEntity.swift */; };
@@ -37,7 +38,8 @@
 		56548DA7252E0BDC003AC229 /* CloudKitEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitEncodable.swift; sourceTree = "<group>"; };
 		566620B6252F59A2009821E9 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		566620B9252F7D9D009821E9 /* GenericsDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericsDAO.swift; sourceTree = "<group>"; };
-		566620CD252F90CF009821E9 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		566620C6252F8C00009821E9 /* Makerspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Makerspace.swift; sourceTree = "<group>"; };
+		566620C9252F9054009821E9 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		566EC890252E738A00346846 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		566EC893252E74B000346846 /* UserDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDAO.swift; sourceTree = "<group>"; };
 		566EC896252E99AC00346846 /* IdentifiableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEntity.swift; sourceTree = "<group>"; };
@@ -70,7 +72,8 @@
 				566EC890252E738A00346846 /* User.swift */,
 				566620B6252F59A2009821E9 /* UserRole.swift */,
 				3E633ACB252F6DB400EAF3B8 /* Match.swift */,
-				566620CD252F90CF009821E9 /* Project.swift */,
+				566620C6252F8C00009821E9 /* Makerspace.swift */,
+				566620C9252F9054009821E9 /* Coordinate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -223,8 +226,9 @@
 				56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */,
 				56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */,
 				566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */,
+				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,
-				56389D7E2534E3D2004B358D /* ProjectDAO.swift in Sources */,
+				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,
