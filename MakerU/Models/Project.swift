@@ -13,7 +13,7 @@ struct Project: IdentifiableEntity, Codable {
     var title: String
     var description: String
     var category: String
-    var skillsInNeed: [String]
+    var skillsInNeed: String
     var owner: String
     var isForMural: Bool
     var makerspace: String

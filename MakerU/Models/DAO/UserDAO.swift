@@ -27,7 +27,7 @@ struct UserDAO: GenericsDAO {
         
         // loads the optionals info
         let whatsapp = record["whatsapp"] as? String ?? ""
-        let skills = record["skills"] as? [String] ?? []
+        let skills = record["skills"] as? String ?? ""
         let projects = record["projects"] as? [CKRecord.Reference] ?? []
         let makerspaces = record["makerspaces"] as? [CKRecord.Reference] ?? []
         let id = record.recordID.recordName

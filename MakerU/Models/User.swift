@@ -16,7 +16,7 @@ struct User: IdentifiableEntity, Codable {
     var role: UserRole
     var password: String
     var whatsapp: String
-    var skills: [String]
+    var skills: String
     var projects: [String]
     var makerspaces: [String]
 }
