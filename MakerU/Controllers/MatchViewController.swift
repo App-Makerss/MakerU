@@ -95,5 +95,3 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
         // mudar quando estiver com conteudos dentro do card e as constraint gerar o tamanho correto do mesmo
     }
 }
-
-
