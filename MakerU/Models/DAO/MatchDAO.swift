@@ -9,7 +9,6 @@ import Foundation
 import CloudKit
 
 struct MatchDAO: CloudKitEncodable {
-    
     typealias ManagedEntity = Match
     internal let referenceName: String = "Match"
     
@@ -40,13 +39,45 @@ struct MatchDAO: CloudKitEncodable {
     }
     
     
-    /// Apply the special way to treat the CKReferences for the record
-    /// - Parameters:
-    ///   - rec: record that need the injection of references
-    ///   - entity: entity that has the references as strings
     func treatSpecialValues(forRecord rec: CKRecord, entity: ManagedEntity) {
         
         rec["part1"] = generateRecordReference(for: entity.part1)
         rec["part2"] = generateRecordReference(for: entity.part2)
+    }
+    
+    func find(byParts parts: [String], completion: @escaping (Match?, Error?) ->()) {
+        let refParts = generateRecordReference(for: parts).shuffled()
+        let pred1 = NSPredicate(format: "part1 == %@ AND part2 == %@", refParts[0].recordID, refParts[1].recordID)
+
+        let op1 = CKQueryOperation(query: CKQuery(recordType: referenceName, predicate: pred1))
+        var matchFound: Match? = nil
+        
+        let recordFetchedBlock: ((CKRecord) -> Void) = {
+            record in
+            if let match = decode(fromRecord: record) {
+                matchFound = match
+            }
+        }
+        op1.recordFetchedBlock = recordFetchedBlock
+        op1.queryCompletionBlock = {
+            _, error in
+            if matchFound == nil {
+                let pred2 = NSPredicate(format: "part2 == %@ AND part1 == %@", refParts[0].recordID, refParts[1].recordID)
+                let op2 = CKQueryOperation(query: CKQuery(recordType: referenceName, predicate: pred2))
+                op2.recordFetchedBlock = recordFetchedBlock
+                
+                op2.queryCompletionBlock = {
+                    _, error in
+                    completion(matchFound, error)
+                }
+                
+                DatabaseAccess.shared.publicDB.add(op2)
+            }else {
+                completion(matchFound, error)
+            }
+        }
+        DatabaseAccess.shared.publicDB.add(op1)
+        
+        
     }
 }
