@@ -43,7 +43,8 @@ class MatchViewController: UIViewController {
     
     @objc func configDisplayButtonTapped() {
         let displayConfigurationVC = MatchDisplayConfigurationTableViewController()
-        navigationController?.pushViewController(displayConfigurationVC, animated: true)
+        let navigation = UINavigationController(rootViewController: displayConfigurationVC)
+        present(navigation, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation
