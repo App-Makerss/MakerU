@@ -21,7 +21,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
 
     let cardTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .title2)
+        title.font = UIFont.preferredFont(forTextStyle: .title3)
         title.text = "Realidade aumentada para inclusão"
         title.numberOfLines = 0
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -42,6 +42,29 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return btn
     }()
 
+    let cardTitleDescription: UILabel = {
+        let description = UILabel()
+        description.font = UIFont.preferredFont(forTextStyle: .headline)
+        description.text = "Descrição"
+        return description
+    }()
+
+    let seeMoreButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setTitle("Ver Tudo", for: .normal)
+        btn.tintColor = .systemPurple
+        return btn
+    }()
+
+    let cardDescription: UILabel = {
+        let description = UILabel()
+        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene..."
+        description.numberOfLines = 6
+        return description
+    }()
+
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -52,13 +75,22 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         commonInit()
     }
 
+    func downStack() -> UIStackView {
+        let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
+        downStack.distribution = .fillProportionally
+        return downStack
+    }
+
+    func upStack() -> UIStackView {
+        let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack()])
+        upStack.axis = .vertical
+        upStack.spacing = 8
+        return upStack
+    }
+
+
     func commonInit(){
         let headerHStack: UIStackView = {
-            let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
-            downStack.distribution = .fillProportionally
-            let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack])
-            upStack.axis = .vertical
-            upStack.spacing = 8
             let view = UIView()
             view.addSubview(cardImageView)
             cardImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -68,7 +100,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
             view.widthAnchor.constraint(equalToConstant: 75).isActive = true
             view.backgroundColor = .purple
             view.layer.cornerRadius = 10
-            let rootView = UIStackView(arrangedSubviews: [view, upStack])
+            let rootView = UIStackView(arrangedSubviews: [view, upStack()])
             rootView.translatesAutoresizingMaskIntoConstraints = false
             rootView.alignment = .center
             rootView.spacing = 16
