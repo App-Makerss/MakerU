@@ -31,6 +31,8 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
 
     let cardSubtitle: UILabel = {
         let subtitle = UILabel()
+        subtitle.setContentHuggingPriority(.init(251), for: .vertical)
+        subtitle.setContentHuggingPriority(.init(251), for: .horizontal)
         subtitle.font = UIFont.preferredFont(forTextStyle: .subheadline)
         subtitle.text = "Tecnologia"
         return subtitle
@@ -44,14 +46,12 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return btn
     }()
 
-    let cardTitleDescription: UILabel = {
-        let description = UILabel()
-        description.font = UIFont.preferredFont(forTextStyle: .headline)
-        description.text = "Descrição"
-        description.setContentHuggingPriority(.init(251), for: .horizontal)
-        description.setContentHuggingPriority(.init(251), for: .vertical)
-        description.tintColor = .label
-        return description
+    let cardFirstSessionTitle: UILabel = {
+        let title = UILabel()
+        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.text = "Descrição"
+        title.tintColor = .label
+        return title
     }()
 
     let seeMoreButton: UIButton = {
@@ -64,20 +64,55 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return btn
     }()
 
-    let cardDescription: UILabel = {
+    let cardFirstSessionDescription: UILabel = {
         let description = UILabel()
+        description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
         description.font = UIFont.preferredFont(forTextStyle: .callout)
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 6
         return description
     }()
 
-    let divider: UIView = {
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        divider.backgroundColor = .lightGray
-        return divider
+    let cardSecondSessionTitle: UILabel = {
+        let title = UILabel()
+        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.text = "Habilidades Procuradas"
+        title.tintColor = .label
+        return title
+    }()
+
+    let cardSecondSessionDescription: UILabel = {
+        let description = UILabel()
+        description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
+        description.numberOfLines = 6
+        return description
+    }()
+
+    let spacer: UIView = {
+        let spa = UIView()
+        spa.translatesAutoresizingMaskIntoConstraints = false
+        spa.heightAnchor.constraint(equalToConstant: 39).isActive = true
+        return spa
+    }()
+
+    let arrowImageView: UIImageView = {
+        let img = UIImageView()
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 26).isActive = true
+        img.image = UIImage(systemName: "chevron.up.circle.fill")
+        img.tintColor = .black
+        return img
+    }()
+
+    let colaborateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .caption2)
+        label.text = "Vamos Colaborar?"
+        label.tintColor = .label
+        return label
     }()
 
     override init(frame: CGRect) {
@@ -107,10 +142,15 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
 
     private func firstSessionStack() -> UIStackView {
 
-        let upStack = UIStackView(arrangedSubviews: [cardTitleDescription, seeMoreButton])
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        divider.backgroundColor = .lightGray
+
+        let upStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, seeMoreButton])
         upStack.distribution = .fillProportionally
 
-        let content = UIStackView(arrangedSubviews: [upStack, cardDescription])
+        let content = UIStackView(arrangedSubviews: [upStack, cardFirstSessionDescription])
         content.spacing = 8
         content.axis = .vertical
 
@@ -120,12 +160,33 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return firstSessionStack
     }
 
+    private func secondSessionStack() -> UIStackView {
+
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        divider.backgroundColor = .lightGray
+
+        let content = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardFirstSessionDescription])
+        content.spacing = 8
+        content.axis = .vertical
+
+        return content
+    }
+
+
     private func headerStack() -> UIStackView {
-         let headerStack = UIStackView(arrangedSubviews: [headerContentStack(), divider])
-         headerStack.axis = .vertical
-         headerStack.spacing = 8
-         return headerStack
-     }
+
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        divider.backgroundColor = .lightGray
+
+        let headerStack = UIStackView(arrangedSubviews: [headerContentStack(), divider])
+        headerStack.axis = .vertical
+        headerStack.spacing = 8
+        return headerStack
+    }
 
     func commonInit(){
 
