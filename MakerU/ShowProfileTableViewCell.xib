@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ShowProfileTableViewCell" customModule="MakerU" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="343" height="89"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="343" height="89"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uM8-AZ-T2D">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="177" translatesAutoresizingMaskIntoConstraints="NO" id="OdP-UU-S6X">
+                                <rect key="frame" x="15.5" y="6.5" width="312" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exibir Perfil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ab-pc-pC5">
+                                        <rect key="frame" x="0.0" y="0.0" width="86" height="31"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xza-HP-FLc">
+                                        <rect key="frame" x="263" y="0.0" width="51" height="31"/>
+                                        <color key="onTintColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </switch>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="OdP-UU-S6X" firstAttribute="height" secondItem="uM8-AZ-T2D" secondAttribute="height" multiplier="0.704545" id="3K9-Lt-ThM"/>
+                            <constraint firstItem="OdP-UU-S6X" firstAttribute="width" secondItem="uM8-AZ-T2D" secondAttribute="width" multiplier="0.909621" id="CZF-QG-JU0"/>
+                            <constraint firstItem="OdP-UU-S6X" firstAttribute="centerY" secondItem="uM8-AZ-T2D" secondAttribute="centerY" id="Ftj-5R-lty"/>
+                            <constraint firstItem="OdP-UU-S6X" firstAttribute="centerX" secondItem="uM8-AZ-T2D" secondAttribute="centerX" id="bAf-Zr-zDN"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ao habilitar a exibição, as informações acima estarão visíveis para os demais usuários do espaço." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECq-2o-RLx">
+                        <rect key="frame" x="11" y="53" width="321" height="36"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                        <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="ECq-2o-RLx" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.404494" id="0Hc-pL-GJX"/>
+                    <constraint firstItem="ECq-2o-RLx" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.93586" id="7lM-Nb-SVy"/>
+                    <constraint firstItem="uM8-AZ-T2D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8T0-ov-P6V"/>
+                    <constraint firstItem="ECq-2o-RLx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="11" id="H4G-u0-upn"/>
+                    <constraint firstItem="ECq-2o-RLx" firstAttribute="top" secondItem="uM8-AZ-T2D" secondAttribute="bottom" constant="9" id="JsH-ZW-DvR"/>
+                    <constraint firstItem="uM8-AZ-T2D" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.494382" id="XLh-5W-rmT"/>
+                    <constraint firstItem="uM8-AZ-T2D" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="XRM-tu-ivg"/>
+                    <constraint firstItem="uM8-AZ-T2D" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="oeK-gS-7Kf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <point key="canvasLocation" x="138.40579710144928" y="124.88839285714285"/>
+        </tableViewCell>
+    </objects>
+</document>

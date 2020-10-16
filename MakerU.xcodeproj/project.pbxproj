@@ -18,6 +18,8 @@
 		3EB6456E25392A79008D437D /* ProjectDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */; };
 		3EB645712539388F008D437D /* SkillsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */; };
 		3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB645702539388F008D437D /* SkillsTableViewCell.xib */; };
+		3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */; };
+		3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA4252E0985003AC229 /* DatabaseAccess.swift */; };
@@ -51,6 +53,8 @@
 		3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsTableViewCell.swift; sourceTree = "<group>"; };
 		3EB645702539388F008D437D /* SkillsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsTableViewCell.xib; sourceTree = "<group>"; };
+		3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
+		3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowProfileTableViewCell.xib; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		56389D7D2534E3D2004B358D /* ProjectDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
@@ -176,6 +180,8 @@
 				3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */,
 				3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */,
 				3EB645702539388F008D437D /* SkillsTableViewCell.xib */,
+				3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */,
+				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
 			);
 			path = MakerU;
 			sourceTree = "<group>";
@@ -251,6 +257,7 @@
 			files = (
 				56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */,
 				3EB64566253922D6008D437D /* UserProjectTagTableViewCell.xib in Resources */,
+				3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */,
 				3EB6456E25392A79008D437D /* ProjectDescriptionTableViewCell.xib in Resources */,
 				3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */,
 				3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */,
@@ -281,6 +288,7 @@
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
+				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
