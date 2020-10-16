@@ -10,6 +10,10 @@
 		3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E633ACB252F6DB400EAF3B8 /* Match.swift */; };
 		3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */; };
 		3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */; };
+		3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */; };
+		3EB64566253922D6008D437D /* UserProjectTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64564253922D6008D437D /* UserProjectTagTableViewCell.xib */; };
+		3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB64567253924F4008D437D /* UserBioTableViewCell.swift */; };
+		3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64568253924F4008D437D /* UserBioTableViewCell.xib */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA4252E0985003AC229 /* DatabaseAccess.swift */; };
@@ -35,6 +39,10 @@
 		3E633ACB252F6DB400EAF3B8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTagTableViewCell.swift; sourceTree = "<group>"; };
 		3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTagTableViewCell.xib; sourceTree = "<group>"; };
+		3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProjectTagTableViewCell.swift; sourceTree = "<group>"; };
+		3EB64564253922D6008D437D /* UserProjectTagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProjectTagTableViewCell.xib; sourceTree = "<group>"; };
+		3EB64567253924F4008D437D /* UserBioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBioTableViewCell.swift; sourceTree = "<group>"; };
+		3EB64568253924F4008D437D /* UserBioTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserBioTableViewCell.xib; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		56389D7D2534E3D2004B358D /* ProjectDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
@@ -152,6 +160,10 @@
 				566EC89E252E9A2D00346846 /* Extensions */,
 				3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */,
 				3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */,
+				3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */,
+				3EB64564253922D6008D437D /* UserProjectTagTableViewCell.xib */,
+				3EB64567253924F4008D437D /* UserBioTableViewCell.swift */,
+				3EB64568253924F4008D437D /* UserBioTableViewCell.xib */,
 			);
 			path = MakerU;
 			sourceTree = "<group>";
@@ -226,6 +238,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */,
+				3EB64566253922D6008D437D /* UserProjectTagTableViewCell.xib in Resources */,
+				3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */,
 				3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */,
 				56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */,
 			);
@@ -239,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */,
+				3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */,
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
 				3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */,
@@ -250,6 +265,7 @@
 				3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */,
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
+				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,
