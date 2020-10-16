@@ -89,12 +89,10 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MatchCardCollectionViewCell
-        cell.backgroundColor = .white
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
-        // mudar quando estiver com conteudos dentro do card e as constraint gerar o tamanho correto do mesmo
+        CGSize(width: collectionView.bounds.width*0.9, height: collectionView.bounds.height)
     }
 }

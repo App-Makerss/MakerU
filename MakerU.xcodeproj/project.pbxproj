@@ -16,6 +16,7 @@
 		566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620B9252F7D9D009821E9 /* GenericsDAO.swift */; };
 		566620C7252F8C00009821E9 /* Makerspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C6252F8C00009821E9 /* Makerspace.swift */; };
 		566620CA252F9054009821E9 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C9252F9054009821E9 /* Coordinate.swift */; };
+		566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D51022539F262002B0CE1 /* UIFont+Extensions.swift */; };
 		566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EB3CD2535E58B0092F096 /* MatchViewController.swift */; };
 		566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */; };
 		566EB3D52535EF6D0092F096 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EB3D42535EF6D0092F096 /* Project.swift */; };
@@ -44,6 +45,7 @@
 		566620B9252F7D9D009821E9 /* GenericsDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericsDAO.swift; sourceTree = "<group>"; };
 		566620C6252F8C00009821E9 /* Makerspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Makerspace.swift; sourceTree = "<group>"; };
 		566620C9252F9054009821E9 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		566D51022539F262002B0CE1 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		566EB3CD2535E58B0092F096 /* MatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
 		566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDisplayConfigurationTableViewController.swift; sourceTree = "<group>"; };
 		566EB3D42535EF6D0092F096 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */,
+				566D51022539F262002B0CE1 /* UIFont+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,
+				566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */,
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
