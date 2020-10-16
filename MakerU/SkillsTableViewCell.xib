@@ -33,6 +33,12 @@
                             <constraint firstItem="uOT-F3-Fp2" firstAttribute="width" secondItem="4u1-Vf-c8E" secondAttribute="width" id="Wyz-vw-aCu"/>
                             <constraint firstItem="uOT-F3-Fp2" firstAttribute="centerY" secondItem="4u1-Vf-c8E" secondAttribute="centerY" id="YT0-A5-i0I"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.makeBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HABILIDADES PESSOAIS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEX-cX-CRr">
                         <rect key="frame" x="13" y="0.0" width="150" height="16"/>

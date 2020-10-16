@@ -43,6 +43,12 @@
                     <constraint firstItem="50G-pS-gKY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="arT-OI-nCS"/>
                     <constraint firstItem="50G-pS-gKY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="cDz-gz-ON2"/>
                 </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                        <integer key="value" value="8"/>
+                    </userDefinedRuntimeAttribute>
+                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.makeBounds" value="YES"/>
+                </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <point key="canvasLocation" x="139" y="125"/>
