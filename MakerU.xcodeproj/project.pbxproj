@@ -106,6 +106,25 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		3EB6457725395558008D437D /* CustomTableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */,
+				3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */,
+				3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */,
+				3EB64564253922D6008D437D /* UserProjectTagTableViewCell.xib */,
+				3EB64567253924F4008D437D /* UserBioTableViewCell.swift */,
+				3EB64568253924F4008D437D /* UserBioTableViewCell.xib */,
+				3EB6456B25392A79008D437D /* ProjectDescriptionTableViewCell.swift */,
+				3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */,
+				3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */,
+				3EB645702539388F008D437D /* SkillsTableViewCell.xib */,
+				3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */,
+				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
+			);
+			path = CustomTableViewCells;
+			sourceTree = "<group>";
+		};
 		5648EFFC252CBA7600E326CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,23 +184,12 @@
 		56C33282252BA7B300FA03AA /* MakerU */ = {
 			isa = PBXGroup;
 			children = (
+				3EB6457725395558008D437D /* CustomTableViewCells */,
 				566EB3CC2535E56B0092F096 /* Controllers */,
 				3E633ACA252F6D9000EAF3B8 /* Models */,
 				5648EFFB252CBA6E00E326CD /* MakerU.entitlements */,
 				56C33299252BADDA00FA03AA /* App */,
 				566EC89E252E9A2D00346846 /* Extensions */,
-				3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */,
-				3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */,
-				3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */,
-				3EB64564253922D6008D437D /* UserProjectTagTableViewCell.xib */,
-				3EB64567253924F4008D437D /* UserBioTableViewCell.swift */,
-				3EB64568253924F4008D437D /* UserBioTableViewCell.xib */,
-				3EB6456B25392A79008D437D /* ProjectDescriptionTableViewCell.swift */,
-				3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */,
-				3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */,
-				3EB645702539388F008D437D /* SkillsTableViewCell.xib */,
-				3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */,
-				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
 			);
 			path = MakerU;
 			sourceTree = "<group>";
