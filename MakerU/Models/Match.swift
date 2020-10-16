@@ -7,14 +7,11 @@
 
 import Foundation
 
-class Match {
-    var isMutual: Int64
+struct Match: IdentifiableEntity, Codable {
+    var id: String?
+    
+    var isMutual: Bool
     var part1: String
     var part2: String
     
-    init(isMutual: Int64, part1: String, part2: String) {
-        self.isMutual = isMutual
-        self.part1 = part1
-        self.part2 = part2
-    }
 }
