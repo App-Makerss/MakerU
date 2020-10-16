@@ -19,6 +19,7 @@ struct ProjectDAO: GenericsDAO {
               let ownerRef = record["owner"] as? CKRecord.Reference,
               let makerspaceRef = record["makerspace"]as? CKRecord.Reference,
               let isForMuralInt = record["isForMural"] as? Int,
+              let canAppearOnMatchInt = record["canAppearOnMatch"] as? Int,
               let statusInt = record["status"] as? Int
         else {return nil}
         
@@ -37,11 +38,12 @@ struct ProjectDAO: GenericsDAO {
         let owner = ownerRef.recordID.recordName
         let makerspace = makerspaceRef.recordID.recordName
         let isForMural = isForMuralInt == 1
+        let canAppearOnMatch = canAppearOnMatchInt == 1
         let status = statusInt == 1 
         let coverImageData = coverImageAsset?.image?.jpegData(compressionQuality: 1)
        
         
-        return Project(id: id, title: title, description: description, category: category, skillsInNeed: skillsInNeed, owner: owner, isForMural: isForMural, makerspace: makerspace, status: status, collaborators: collaborators, coverImage: coverImageData)
+        return Project(id: id, title: title, description: description, category: category, skillsInNeed: skillsInNeed, owner: owner, isForMural: isForMural, makerspace: makerspace, status: status, collaborators: collaborators, coverImage: coverImageData, canAppearOnMatch: canAppearOnMatch)
     }
     
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any] {

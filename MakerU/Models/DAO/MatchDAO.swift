@@ -8,7 +8,7 @@
 import Foundation
 import CloudKit
 
-struct MatchDAO: CloudKitEncodable {
+struct MatchDAO: GenericsDAO {
     typealias ManagedEntity = Match
     internal let referenceName: String = "Match"
     
@@ -45,10 +45,16 @@ struct MatchDAO: CloudKitEncodable {
         rec["part2"] = generateRecordReference(for: entity.part2)
     }
     
-    func find(byParts parts: [String], completion: @escaping (Match?, Error?) ->()) {
-        let refParts = generateRecordReference(for: parts).shuffled()
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - match: <#match description#>
+    ///   - completion: <#completion description#>
+    /// - Returns: <#description#>
+    func search(for match: ManagedEntity, completion: @escaping (Match?, Int, Error?) ->()) {
+        let refParts = generateRecordReference(for: [match.part1, match.part2])
         let pred1 = NSPredicate(format: "part1 == %@ AND part2 == %@", refParts[0].recordID, refParts[1].recordID)
-
+        
         let op1 = CKQueryOperation(query: CKQuery(recordType: referenceName, predicate: pred1))
         var matchFound: Match? = nil
         
@@ -68,16 +74,14 @@ struct MatchDAO: CloudKitEncodable {
                 
                 op2.queryCompletionBlock = {
                     _, error in
-                    completion(matchFound, error)
+                    completion(matchFound, 2, error)
                 }
                 
                 DatabaseAccess.shared.publicDB.add(op2)
             }else {
-                completion(matchFound, error)
+                completion(matchFound, 1, error)
             }
         }
         DatabaseAccess.shared.publicDB.add(op1)
-        
-        
     }
 }
