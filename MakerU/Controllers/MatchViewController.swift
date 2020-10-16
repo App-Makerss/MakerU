@@ -13,7 +13,6 @@ class MatchViewController: UIViewController {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-//        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumLineSpacing = 8
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +36,7 @@ class MatchViewController: UIViewController {
 
         view.addSubview(configDisplayButton)
         view.addSubview(collectionView)
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemGray6
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -52,6 +51,9 @@ class MatchViewController: UIViewController {
         item.title = "Match"
         item.image = UIImage(systemName: "square.fill.on.square.fill")
         self.tabBarItem = item
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .systemGray6
     }
     
     @objc func configDisplayButtonTapped() {
@@ -63,8 +65,9 @@ class MatchViewController: UIViewController {
     func setupContraints() {
 
         // constraint CollectionView
-        collectionView.backgroundColor = .blue
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 31).isActive = true
+        collectionView.backgroundColor = .clear
+        let safeAnchors = view.safeAreaLayoutGuide
+        collectionView.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 0).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: configDisplayButton.topAnchor, constant: -16).isActive = true
@@ -91,7 +94,7 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 353, height: 578)
+        CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
         // mudar quando estiver com conteudos dentro do card e as constraint gerar o tamanho correto do mesmo
     }
 }

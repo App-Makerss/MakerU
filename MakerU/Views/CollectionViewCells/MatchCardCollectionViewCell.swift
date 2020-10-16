@@ -90,29 +90,30 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return description
     }()
 
-    let spacer: UIView = {
-        let spa = UIView()
-        spa.translatesAutoresizingMaskIntoConstraints = false
-        spa.heightAnchor.constraint(equalToConstant: 39).isActive = true
-        return spa
-    }()
-
-    let arrowImageView: UIImageView = {
+    let  collaborateButton: UIStackView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
         img.heightAnchor.constraint(equalToConstant: 24).isActive = true
         img.widthAnchor.constraint(equalToConstant: 26).isActive = true
         img.image = UIImage(systemName: "chevron.up.circle.fill")
         img.tintColor = .black
-        return img
-    }()
-
-    let colaborateLabel: UILabel = {
+        
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .caption2)
         label.text = "Vamos Colaborar?"
-        label.tintColor = .label
-        return label
+        label.textColor = .systemPurple
+        
+        let sv = UIStackView(arrangedSubviews: [img, label])
+        sv.axis = .vertical
+        sv.alignment = .center
+        return sv
+    }()
+    
+    private let spacer: UIView = {
+        let spa = UIView()
+        spa.translatesAutoresizingMaskIntoConstraints = false
+        spa.heightAnchor.constraint(equalToConstant: 23).isActive = true // Calculate based on screen height %
+        return spa
     }()
 
     override init(frame: CGRect) {
@@ -190,7 +191,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
 
     func commonInit(){
 
-        let root = UIStackView(arrangedSubviews: [headerStack(), firstSessionStack(),secondSessionStack()])
+        let root = UIStackView(arrangedSubviews: [headerStack(), firstSessionStack(),secondSessionStack(), spacer, collaborateButton])
         root.axis = .vertical
         root.spacing = 16
         root.distribution = .fillProportionally
