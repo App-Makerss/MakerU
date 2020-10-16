@@ -12,10 +12,11 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     let cardImageView: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
-        img.heightAnchor.constraint(equalToConstant: 34).isActive = true
-        img.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        img.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 75).isActive = true
         img.image = UIImage(systemName: "desktopcomputer")
-        img.tintColor = .white
+        img.tintColor = .purple
+        img.layer.cornerRadius = 10
         return img
     }()
 
@@ -39,6 +40,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let btn = UIButton(type: .custom)
         btn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         btn.tintColor = .systemPurple
+        btn.contentHorizontalAlignment = .right
         return btn
     }()
 
@@ -46,24 +48,37 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let description = UILabel()
         description.font = UIFont.preferredFont(forTextStyle: .headline)
         description.text = "Descrição"
+        description.setContentHuggingPriority(.init(251), for: .horizontal)
+        description.setContentHuggingPriority(.init(251), for: .vertical)
+        description.tintColor = .label
         return description
     }()
 
     let seeMoreButton: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setTitle("Ver Tudo", for: .normal)
-        btn.tintColor = .systemPurple
+        btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        btn.setTitle("Ver tudo", for: .normal)
+        btn.setTitleColor(.systemPurple, for: .normal)
+        btn.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+        btn.contentHorizontalAlignment = .right
         return btn
     }()
 
     let cardDescription: UILabel = {
         let description = UILabel()
         description.font = UIFont.preferredFont(forTextStyle: .callout)
-        description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene..."
+        description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 6
         return description
     }()
 
+    let divider: UIView = {
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        divider.backgroundColor = .lightGray
+        return divider
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,44 +90,56 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         commonInit()
     }
 
-    func downStack() -> UIStackView {
+    private func headerContentStack() -> UIStackView {
+
         let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
         downStack.distribution = .fillProportionally
-        return downStack
-    }
 
-    func upStack() -> UIStackView {
-        let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack()])
+        let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack])
         upStack.axis = .vertical
         upStack.spacing = 8
-        return upStack
+
+        let headerContent = UIStackView(arrangedSubviews: [cardImageView, upStack])
+        headerContent.alignment = .center
+        headerContent.spacing = 16
+        return headerContent
     }
 
+    private func firstSessionStack() -> UIStackView {
+
+        let upStack = UIStackView(arrangedSubviews: [cardTitleDescription, seeMoreButton])
+        upStack.distribution = .fillProportionally
+
+        let content = UIStackView(arrangedSubviews: [upStack, cardDescription])
+        content.spacing = 8
+        content.axis = .vertical
+
+        let firstSessionStack = UIStackView(arrangedSubviews: [content])
+        firstSessionStack.spacing = 20
+
+        return firstSessionStack
+    }
+
+    private func headerStack() -> UIStackView {
+         let headerStack = UIStackView(arrangedSubviews: [headerContentStack(), divider])
+         headerStack.axis = .vertical
+         headerStack.spacing = 8
+         return headerStack
+     }
 
     func commonInit(){
-        let headerHStack: UIStackView = {
-            let view = UIView()
-            view.addSubview(cardImageView)
-            cardImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            cardImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.heightAnchor.constraint(equalToConstant: 75).isActive = true
-            view.widthAnchor.constraint(equalToConstant: 75).isActive = true
-            view.backgroundColor = .purple
-            view.layer.cornerRadius = 10
-            let rootView = UIStackView(arrangedSubviews: [view, upStack()])
-            rootView.translatesAutoresizingMaskIntoConstraints = false
-            rootView.alignment = .center
-            rootView.spacing = 16
 
-            return rootView
-        }()
+        let root = UIStackView(arrangedSubviews: [headerStack(), firstSessionStack()])
+        root.axis = .vertical
+        root.spacing = 16
+        root.distribution = .fillProportionally
 
-        contentView.addSubview(headerHStack)
+        root.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(root)
+
         self.layer.cornerRadius = 10
-        headerHStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
-        headerHStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        headerHStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
-        headerHStack.heightAnchor.constraint(equalToConstant: 122).isActive = true
+        root.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
+        root.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
+        root.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
     }
 }
