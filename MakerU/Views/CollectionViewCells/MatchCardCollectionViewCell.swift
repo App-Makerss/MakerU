@@ -167,7 +167,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
         divider.backgroundColor = .lightGray
 
-        let content = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardFirstSessionDescription])
+        let content = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardSecondSessionDescription])
         content.spacing = 8
         content.axis = .vertical
 
@@ -190,7 +190,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
 
     func commonInit(){
 
-        let root = UIStackView(arrangedSubviews: [headerStack(), firstSessionStack()])
+        let root = UIStackView(arrangedSubviews: [headerStack(), firstSessionStack(),secondSessionStack()])
         root.axis = .vertical
         root.spacing = 16
         root.distribution = .fillProportionally
