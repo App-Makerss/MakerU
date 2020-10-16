@@ -16,20 +16,31 @@ protocol CloudKitEncodable {
     
     func decode(fromRecord record: CKRecord) -> ManagedEntity?
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any]
-    func referencesSpecialTreat(forRecord rec: CKRecord, entity: ManagedEntity)
+    func treatSpecialValues(forRecord rec: CKRecord, entity: ManagedEntity)
 }
 
 extension CloudKitEncodable {
     
+    /// Generates a record reference based on a recordName (id)
+    /// - Parameters:
+    ///   - recordName: id to be used to generate the reference
+    ///   - action: action to be setted in the reference, none by default
+    /// - Returns: a record reference based on id received
+    func generateRecordReference(for recordName: String, action: CKRecord.Reference.Action = .none) -> CKRecord.Reference {
+        let recID = CKRecord.ID(recordName: recordName)
+        let reference = CKRecord.Reference(recordID: recID, action: action)
+        return reference
+    }
+
     /// Generates a list of record references based on a list of recordNames (ids)
-    /// - Parameter recordNames: the list of ids that will be used to create the references
+    /// - Parameters:
+    ///   - recordNames: he list of ids that will be used to create the references
+    ///   - action: action to be setted in the reference, none by default
     /// - Returns: a list of record references based on ids received
-    func generateRecordReference(for recordNames: [String]) -> [CKRecord.Reference] {
+    func generateRecordReference(for recordNames: [String], action: CKRecord.Reference.Action = .none) -> [CKRecord.Reference] {
         var references: [CKRecord.Reference] = []
         recordNames.forEach { refID in
-            let recID = CKRecord.ID(recordName: refID)
-            let reference = CKRecord.Reference(recordID: recID, action: .none)
-            references.append(reference)
+            references.append(generateRecordReference(for: refID))
         }
         return references
     }
@@ -77,7 +88,7 @@ extension CloudKitEncodable {
         }
         
         //reference's special treat
-        referencesSpecialTreat(forRecord: rec, entity: entity)
+        treatSpecialValues(forRecord: rec, entity: entity)
         
         return rec
     }

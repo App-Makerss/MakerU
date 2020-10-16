@@ -22,13 +22,15 @@ struct UserDAO: GenericsDAO {
               let email = record["email"] as? String,
               let password = record["password"] as? String,
               let role = record["role"] as? Int,
-              let userRole = UserRole(rawValue: role)
+              let userRole = UserRole(rawValue: role),
+              let canAppearOnMatchInt = record["canAppearOnMatch"] as? Int
         else {return nil}
         
         // loads the optionals info
         let whatsapp = record["whatsapp"] as? String ?? ""
-        let skills = record["skills"] as? [String] ?? []
+        let skills = record["skills"] as? String ?? ""
         let projects = record["projects"] as? [CKRecord.Reference] ?? []
+        let canAppearOnMatch = canAppearOnMatchInt == 1
         let makerspaces = record["makerspaces"] as? [CKRecord.Reference] ?? []
         let id = record.recordID.recordName
         
@@ -38,7 +40,7 @@ struct UserDAO: GenericsDAO {
         let projectsString = projects.map { ref -> String in
             ref.recordID.recordName
         }
-        return User(id: id, name: name, email: email, role: userRole, password: password, whatsapp: whatsapp, skills: skills, projects: projectsString, makerspaces: makerspacesString)
+        return User(id: id, name: name, email: email, role: userRole, password: password, whatsapp: whatsapp, skills: skills, projects: projectsString, makerspaces: makerspacesString, canAppearOnMatch: canAppearOnMatch)
     }
     
     /// Remove variables of references (CKReference) from the dictionary because it needs a special treat
@@ -58,7 +60,7 @@ struct UserDAO: GenericsDAO {
     /// - Parameters:
     ///   - rec: record that need the injection of references
     ///   - entity: entity that has the references as strings
-    func referencesSpecialTreat(forRecord rec: CKRecord, entity: ManagedEntity) {
+    func treatSpecialValues(forRecord rec: CKRecord, entity: ManagedEntity) {
         
         rec["projects"] = generateRecordReference(for: entity.projects)
         rec["makerspaces"] = generateRecordReference(for: entity.makerspaces)
