@@ -27,6 +27,8 @@ struct UserDAO: GenericsDAO {
         else {return nil}
         
         // loads the optionals info
+        let description = record["description"] as? String ?? ""
+        let ocupation = record["ocupation"] as? String ?? ""
         let whatsapp = record["whatsapp"] as? String ?? ""
         let skills = record["skills"] as? String ?? ""
         let projects = record["projects"] as? [CKRecord.Reference] ?? []
@@ -34,13 +36,13 @@ struct UserDAO: GenericsDAO {
         let makerspaces = record["makerspaces"] as? [CKRecord.Reference] ?? []
         let id = record.recordID.recordName
         
-        let makerspacesString = makerspaces.map { ref -> String in
+        let makerspacesStrings = makerspaces.map { ref -> String in
             ref.recordID.recordName
         }
-        let projectsString = projects.map { ref -> String in
+        let projectsStrings = projects.map { ref -> String in
             ref.recordID.recordName
         }
-        return User(id: id, name: name, email: email, role: userRole, password: password, whatsapp: whatsapp, skills: skills, projects: projectsString, makerspaces: makerspacesString, canAppearOnMatch: canAppearOnMatch)
+        return User(id: id, name: name, email: email, role: userRole, password: password, ocupation: ocupation, description: description, whatsapp: whatsapp, skills: skills, projects: projectsStrings, makerspaces: makerspacesStrings, canAppearOnMatch: canAppearOnMatch)
     }
     
     /// Remove variables of references (CKReference) from the dictionary because it needs a special treat

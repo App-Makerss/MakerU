@@ -9,6 +9,8 @@ import UIKit
 
 class MatchViewController: UIViewController {
 
+    
+    var matchSuggestions: [MatchCard] = []
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -83,12 +85,19 @@ class MatchViewController: UIViewController {
 extension MatchViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         4  // number of cards
-            // logic about show projects or profiles here
+        matchSuggestions.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MatchCardCollectionViewCell
+        let item = matchSuggestions[indexPath.row]
+        cell.cardTitle.text = item.title
+        cell.cardSubtitle.text = item.subtitle
+        cell.cardImageView.image = item.image
+        cell.cardFirstSessionTitle.text = item.firstSessionTitle
+        cell.cardFirstSessionDescription.text = item.firstSessionLabel
+        cell.cardSecondSessionTitle.text = item.secondSessionTitle
+        cell.cardSecondSessionDescription.text = item.secondSessionLabel
         return cell
     }
 
