@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E633ACB252F6DB400EAF3B8 /* Match.swift */; };
+		3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */; };
+		3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA4252E0985003AC229 /* DatabaseAccess.swift */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		3E633ACB252F6DB400EAF3B8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTagTableViewCell.swift; sourceTree = "<group>"; };
+		3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTagTableViewCell.xib; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		56389D7D2534E3D2004B358D /* ProjectDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 				5648EFFB252CBA6E00E326CD /* MakerU.entitlements */,
 				56C33299252BADDA00FA03AA /* App */,
 				566EC89E252E9A2D00346846 /* Extensions */,
+				3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */,
+				3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */,
 			);
 			path = MakerU;
 			sourceTree = "<group>";
@@ -220,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */,
+				3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */,
 				56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +247,7 @@
 				566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,
+				3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */,
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
