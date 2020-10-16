@@ -74,6 +74,11 @@
                 </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="additionalInfo" destination="lE6-yi-Rhn" id="Djo-gS-HC2"/>
+                <outlet property="skillsTag" destination="xEX-cX-CRr" id="eFy-D5-T6O"/>
+                <outlet property="skillsTextField" destination="uOT-F3-Fp2" id="dBh-7r-8Ul"/>
+            </connections>
             <point key="canvasLocation" x="138.40579710144928" y="124.88839285714285"/>
         </tableViewCell>
     </objects>

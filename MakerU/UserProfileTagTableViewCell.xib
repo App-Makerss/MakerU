@@ -51,6 +51,9 @@
                 </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="userName" destination="Whl-zz-JWI" id="XnJ-2S-iaj"/>
+            </connections>
             <point key="canvasLocation" x="139" y="125"/>
         </tableViewCell>
     </objects>

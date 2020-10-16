@@ -9,6 +9,11 @@ import UIKit
 
 class SkillsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var skillsTag: UILabel!
+    @IBOutlet weak var skillsTextField: UITextField!
+    @IBOutlet weak var additionalInfo: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -9,6 +9,7 @@ import UIKit
 
 class UserProfileTagTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var userName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

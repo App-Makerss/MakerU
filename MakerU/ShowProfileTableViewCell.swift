@@ -9,6 +9,10 @@ import UIKit
 
 class ShowProfileTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var showProjectOrProfile: UILabel!
+    @IBOutlet weak var showSwitchControll: UISwitch!
+    @IBOutlet weak var additionalInfo: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
