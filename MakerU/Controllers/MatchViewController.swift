@@ -8,7 +8,19 @@
 import UIKit
 
 class MatchViewController: UIViewController {
-    
+
+
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
+    }()
+
+
     let configDisplayButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -23,14 +35,14 @@ class MatchViewController: UIViewController {
         super.viewDidLoad()
 
         view.addSubview(configDisplayButton)
-        view.backgroundColor = .systemBackground
-        
-        configDisplayButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
-        configDisplayButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        configDisplayButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        configDisplayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -99).isActive = true
-        
+        view.addSubview(collectionView)
+        view.backgroundColor = .systemGray6
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
+
         setupNavigations()
+        setupContraints()
     }
     
     func setupNavigations() {
@@ -39,20 +51,50 @@ class MatchViewController: UIViewController {
         item.title = "Match"
         item.image = UIImage(systemName: "square.fill.on.square.fill")
         self.tabBarItem = item
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .systemGray6
     }
     
     @objc func configDisplayButtonTapped() {
         let displayConfigurationVC = MatchDisplayConfigurationTableViewController()
-        navigationController?.pushViewController(displayConfigurationVC, animated: true)
+        let navigation = UINavigationController(rootViewController: displayConfigurationVC)
+        present(navigation, animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setupContraints() {
+
+        // constraint CollectionView
+        collectionView.backgroundColor = .clear
+        let safeAnchors = view.safeAreaLayoutGuide
+        collectionView.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 0).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: configDisplayButton.topAnchor, constant: -16).isActive = true
+
+        // constraint Button
+        configDisplayButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        configDisplayButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        configDisplayButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        configDisplayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -99).isActive = true
     }
-    */
+}
 
+extension MatchViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+         4  // number of cards
+            // logic about show projects or profiles here
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MatchCardCollectionViewCell
+        cell.backgroundColor = .white
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        // mudar quando estiver com conteudos dentro do card e as constraint gerar o tamanho correto do mesmo
+    }
 }
