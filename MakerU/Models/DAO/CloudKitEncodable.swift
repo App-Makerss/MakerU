@@ -21,13 +21,17 @@ protocol CloudKitEncodable {
 
 extension CloudKitEncodable {
     
+    func generateRecordID(for recordName: String) -> CKRecord.ID {
+        CKRecord.ID(recordName: recordName)
+    }
+    
     /// Generates a record reference based on a recordName (id)
     /// - Parameters:
     ///   - recordName: id to be used to generate the reference
     ///   - action: action to be setted in the reference, none by default
     /// - Returns: a record reference based on id received
     func generateRecordReference(for recordName: String, action: CKRecord.Reference.Action = .none) -> CKRecord.Reference {
-        let recID = CKRecord.ID(recordName: recordName)
+        let recID = generateRecordID(for: recordName)
         let reference = CKRecord.Reference(recordID: recID, action: action)
         return reference
     }

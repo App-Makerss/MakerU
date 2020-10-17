@@ -22,8 +22,9 @@ class MatchViewController: UIViewController {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 8
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return cv
