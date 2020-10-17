@@ -13,6 +13,7 @@ protocol GenericsDAO where Self: CloudKitEncodable {
     func update(entity: ManagedEntity)
     func save(entity: ManagedEntity) -> ManagedEntity
     func find(byId id: String, completion:  @escaping (ManagedEntity?,Error?) -> ())
+    func listAll(by predicate: NSPredicate, completion: @escaping ([ManagedEntity]?, Error?) -> ())
 }
 
 extension GenericsDAO {
@@ -86,6 +87,26 @@ extension GenericsDAO {
             guard let rec = ckrecord else {return}
             completion(decode(fromRecord: rec), error)
         }
+    }
+    
+    func listAll(by predicate: NSPredicate, completion: @escaping ([ManagedEntity]?, Error?) -> ()) {
+        let op = CKQueryOperation(query: CKQuery(recordType: referenceName, predicate: predicate))
+        
+        var list: [ManagedEntity] = []
+        
+        op.recordFetchedBlock = { record in
+            if let element = decode(fromRecord: record) {
+                list.append(element)
+            }
+        }
+        op.queryCompletionBlock = { cursor, error in
+            if let error = error {
+                completion(nil, error)
+            }else {
+                completion(list, nil)
+            }
+        }
+        DatabaseAccess.shared.publicDB.add(op)
     }
     
 }

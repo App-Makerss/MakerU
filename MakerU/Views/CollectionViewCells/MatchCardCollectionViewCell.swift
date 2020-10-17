@@ -113,13 +113,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return sv
     }()
     
-    //    private let spacer: UIView = {
-    //        let spa = UIView()
-    //        spa.translatesAutoresizingMaskIntoConstraints = false
-    //        spa.heightAnchor.constraint(equalTo: , multiplier: <#T##CGFloat#>).isActive = true // Calculate based on screen height %
-    //        return spa
-    //    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -198,7 +191,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         root.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         root.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         
-        collaborateButton.topAnchor.constraint(equalTo: root.bottomAnchor, constant: 40).isActive = true
+       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: root.bottomAnchor, constant: 40).isActive = true
         collaborateButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         collaborateButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
     }

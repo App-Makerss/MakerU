@@ -9,8 +9,15 @@ import UIKit
 
 class MatchViewController: UIViewController {
 
+    let matchService = MatchService()
     
-    var matchSuggestions: [MatchCard] = []
+    var matchSuggestions: [MatchCard] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -45,6 +52,18 @@ class MatchViewController: UIViewController {
 
         setupNavigations()
         setupContraints()
+        
+        CategoryDAO().listAll { (categories, error) in
+            if let categories = categories{
+                self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
+                    if let matchCards = matchCards{
+                        self.matchSuggestions.append(contentsOf: matchCards)
+                    }
+                }
+            }
+        }
+        
+       
     }
     
     func setupNavigations() {
