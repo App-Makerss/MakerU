@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIFont {
-    static func systemFont(style: UIFont.TextStyle, weight: UIFont.Weight?) -> UIFont {
+    static func systemFont(style: UIFont.TextStyle, weight: UIFont.Weight? = nil) -> UIFont {
 
         guard let weight = weight else {
             return UIFont.preferredFont(forTextStyle: style)

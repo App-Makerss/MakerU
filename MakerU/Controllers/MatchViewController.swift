@@ -27,18 +27,40 @@ class MatchViewController: UIViewController {
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        cv.layer.shadowColor = UIColor.black.cgColor
+        cv.layer.masksToBounds = false
+        cv.layer.shadowRadius = 4
+        cv.layer.shadowOpacity = 0.25
+        cv.layer.shadowOffset = CGSize(width: 0, height:2)
         return cv
     }()
 
 
-    let configDisplayButton: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Configurações de exibição", for: .normal)
-        btn.setTitleColor(.label, for: .normal)
-        btn.backgroundColor = .systemBlue
-        btn.addTarget(self, action: #selector(Self.configDisplayButtonTapped), for: .touchUpInside)
-        return btn
+    let configDisplayButton: UIControl = {
+        
+        let control = UIControl()
+        control.backgroundColor = .systemBackground
+        control.layer.cornerRadius = 15
+        control.translatesAutoresizingMaskIntoConstraints = false
+        
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "notToReuse")
+        cell.accessoryType = .disclosureIndicator
+        cell.imageView?.image = UIImage(systemName: "person.2.square.stack")
+        cell.imageView?.tintColor = .systemPurple
+        cell.textLabel?.text = "Configurações de exibição"
+        cell.translatesAutoresizingMaskIntoConstraints = false
+        cell.isUserInteractionEnabled = false
+        
+        control.addSubview(cell)
+        
+        cell.topAnchor.constraint(equalTo: control.topAnchor).isActive = true
+        cell.leadingAnchor.constraint(equalTo: control.leadingAnchor, constant: 5).isActive = true
+        cell.trailingAnchor.constraint(equalTo: control.trailingAnchor, constant: -5).isActive = true
+        cell.bottomAnchor.constraint(equalTo: control.bottomAnchor).isActive = true
+
+        control.addTarget(self, action: #selector(Self.configDisplayButtonTapped), for: .touchUpInside)
+        
+        return control
     }()
 
     override func viewDidLoad() {
@@ -90,8 +112,8 @@ class MatchViewController: UIViewController {
         collectionView.backgroundColor = .clear
         let safeAnchors = view.safeAreaLayoutGuide
         collectionView.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 0).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: configDisplayButton.topAnchor, constant: -16).isActive = true
 
         // constraint Button
@@ -110,6 +132,8 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MatchCardCollectionViewCell
+        cell.delegate = self
+        cell.cardFace = .front
         let item = matchSuggestions[indexPath.row]
         cell.cardTitle.text = item.title
         cell.cardSubtitle.text = item.subtitle
@@ -122,6 +146,42 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: collectionView.bounds.width*0.9, height: collectionView.bounds.height)
+        CGSize(width: configDisplayButton.bounds.width, height: collectionView.bounds.height*0.98)
+    }
+}
+
+
+extension MatchViewController: MatchCardCollectionViewCellDelegate {
+    func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
+        //TODO: animates the card flowing up
+        guard let currentIndex = collectionView.indexPath(for: cell),
+              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else {return}
+        
+        let card = matchSuggestions[currentIndex.row]
+        
+        let match = Match(id: nil, part1: loggedUserID, part2: card.id)
+        
+        matchService.verifyMatch(match: match) { isMutual in
+            let nextIndex = IndexPath(row: currentIndex.row+1, section: 0)
+            if !isMutual {
+                DispatchQueue.main.async {
+                    self.collectionView.layer.shadowOpacity = 0
+                    cell.cardFace = .back
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                    self.collectionView.scrollToItem(at: nextIndex, at: .centeredHorizontally, animated: true)
+                    cell.isHidden = true
+                    self.collectionView.layer.shadowOpacity = 0.25
+                }
+            }else{
+                DispatchQueue.main.async {
+                    self.collectionView.scrollToItem(at: nextIndex, at: .centeredHorizontally, animated: true)
+                    self.collectionView.deleteItems(at: [currentIndex])
+                }
+            }
+            
+        }
+            
+        
     }
 }

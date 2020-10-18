@@ -7,7 +7,29 @@
 
 import UIKit
 
+protocol MatchCardCollectionViewCellDelegate: class {
+    func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell)
+}
+
+
+enum CardFace {
+    case front
+    case back
+}
+
 class MatchCardCollectionViewCell: UICollectionViewCell {
+    
+    var delegate: MatchCardCollectionViewCellDelegate?
+    
+    var cardFace: CardFace = .front {
+        didSet{
+            if cardFace == .front {
+                setupCardFrontalFace()
+            }else {
+                setupCardBackFace()
+            }
+        }
+    }
     
     let cardImageView: UIImageView = {
         let img = UIImageView()
@@ -32,10 +54,10 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     let cardSubtitle: UILabel = {
         let subtitle = UILabel()
         subtitle.textColor = .secondaryLabel
-        subtitle.setContentHuggingPriority(.init(251), for: .vertical)
-        subtitle.setContentHuggingPriority(.init(251), for: .horizontal)
+        subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         subtitle.font = UIFont.preferredFont(forTextStyle: .subheadline)
         subtitle.text = "Tecnologia"
+        subtitle.numberOfLines = 0
         return subtitle
     }()
     
@@ -91,7 +113,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return description
     }()
     
-    let  collaborateButton: UIStackView = {
+    let collaborateButton: UIControl = {
         let img = UIImageView()
         img.image = UIImage(systemName: "chevron.up.circle.fill")
         img.tintColor = .black
@@ -110,23 +132,23 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         sv.distribution = .fillProportionally
         
         sv.translatesAutoresizingMaskIntoConstraints = false
-        return sv
+        sv.isUserInteractionEnabled = false
+        
+        let control = UIControl()
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.addSubview(sv)
+        sv.topAnchor.constraint(equalTo: control.topAnchor).isActive = true
+        sv.leadingAnchor.constraint(equalTo: control.leadingAnchor).isActive = true
+        sv.trailingAnchor.constraint(equalTo: control.trailingAnchor).isActive = true
+        sv.bottomAnchor.constraint(equalTo: control.bottomAnchor).isActive = true
+        
+        return control
     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
     
     private func headerContentStack() -> UIStackView {
         
         let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
-        downStack.distribution = .fillProportionally
+        downStack.distribution = .fill
         
         let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack])
         upStack.axis = .vertical
@@ -140,11 +162,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     private func firstSessionStack() -> UIStackView {
         
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        divider.backgroundColor = .lightGray
-        
         let upStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, seeMoreButton])
         upStack.distribution = .fillProportionally
         
@@ -152,18 +169,22 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         content.spacing = 8
         content.axis = .vertical
         
-        let firstSessionStack = UIStackView(arrangedSubviews: [content])
+        let firstSessionStack = UIStackView(arrangedSubviews: [content, genDivider()])
+        firstSessionStack.axis = .vertical
         firstSessionStack.spacing = 20
         
         return firstSessionStack
     }
     
-    private func secondSessionStack() -> UIStackView {
-        
+    private func genDivider() -> UIView {
         let divider = UIView()
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        divider.backgroundColor = .lightGray
+        divider.backgroundColor = .systemGray3
+        return divider
+    }
+    
+    private func secondSessionStack() -> UIStackView {
         
         let content = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardSecondSessionDescription])
         content.spacing = 8
@@ -172,50 +193,112 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return content
     }
     
-    
     private func headerStack() -> UIStackView {
         
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        divider.backgroundColor = .lightGray
-        
-        let headerStack = UIStackView(arrangedSubviews: [headerContentStack(), divider])
+        let headerStack = UIStackView(arrangedSubviews: [headerContentStack(),genDivider()])
         headerStack.axis = .vertical
         headerStack.spacing = 8
         return headerStack
     }
     
-    fileprivate func setupConstraints(_ root: UIStackView) {
-        root.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
-        root.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        root.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
+    fileprivate func setupCardFrontConstraints() {
+        cardFrontContent.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
+        cardFrontContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
+        cardFrontContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         
-       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: root.bottomAnchor, constant: 40).isActive = true
+       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 40).isActive = true
         collaborateButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         collaborateButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
     }
     
     fileprivate func setupAppearance() {
-        self.backgroundColor = .systemBackground
-        self.layer.cornerRadius = 10
+        if cardFace == .front {
+            self.backgroundColor = .systemBackground
+            self.layer.cornerRadius = 10
+            
+        } else {
+            self.backgroundColor = .systemGray6
+        }
     }
     
-    func commonInit(){
-        
-        let root = UIStackView(arrangedSubviews: [headerStack(), firstSessionStack(),secondSessionStack()])
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private let cardFrontContent: UIStackView = {
+        let root = UIStackView()
         root.axis = .vertical
         root.spacing = 16
         root.distribution = .fillProportionally
         
         root.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(root)
+        return root
+    }()
+    
+    private let cardBackContent: UIStackView = {
+        
+        let label1 = UILabel()
+        label1.text = "Match!"
+        label1.font = UIFont.systemFont(style: .largeTitle, weight: .bold)
+        label1.textColor = .systemPurple
+        label1.textAlignment = .center
+        
+        let label2 = UILabel()
+        label2.text = "O contato para colaboração está disponível na área de notificações do seu perfil."
+        label2.font = UIFont.systemFont(style: .callout)
+        label2.numberOfLines = 0
+        label2.textAlignment = .center
+        
+        
+        let root = UIStackView(arrangedSubviews: [label1,label2])
+        root.axis = .vertical
+        root.distribution = .fillProportionally
+        root.alignment = .center
+        root.spacing = 29
+        
+        root.translatesAutoresizingMaskIntoConstraints = false
+        
+        return root
+    }()
+    
+    private func setupCardBackFace() {
+        contentView.subviews.forEach {$0.removeFromSuperview()}
+        
+        contentView.addSubview(cardBackContent)
+        
+        cardBackContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32).isActive = true
+        cardBackContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32).isActive = true
+        cardBackContent.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        
+        setupAppearance()
+    }
+    
+    private func setupCardFrontalFace(){
+        cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
+        contentView.subviews.forEach {$0.removeFromSuperview()}
+        cardFrontContent.addArrangedSubview(headerStack())
+        cardFrontContent.addArrangedSubview(firstSessionStack())
+        cardFrontContent.addArrangedSubview(secondSessionStack())
+        cardFrontContent.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.addSubview(cardFrontContent)
         contentView.addSubview(collaborateButton)
         
         setupAppearance()
         
         
-        setupConstraints(root)
+        setupCardFrontConstraints()
+        
+        collaborateButton.addTarget(self, action: #selector(self.collaborateButtonTap), for: .touchUpInside)
+    }
+    
+    
+    @objc func collaborateButtonTap() {
+        delegate?.collaborateButtonTapped(self)
     }
 }
