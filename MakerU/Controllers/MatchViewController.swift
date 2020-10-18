@@ -152,6 +152,13 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
 
 extension MatchViewController: MatchCardCollectionViewCellDelegate {
+    fileprivate func removeCard(for currentIndex: IndexPath) {
+        self.collectionView.performBatchUpdates({
+            self.collectionView.deleteItems(at: [currentIndex])
+            self.matchSuggestions.remove(at: currentIndex.row)
+        }, completion:nil)
+    }
+    
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         //TODO: animates the card flowing up
         guard let currentIndex = collectionView.indexPath(for: cell),
@@ -162,21 +169,19 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         let match = Match(id: nil, part1: loggedUserID, part2: card.id)
         
         matchService.verifyMatch(match: match) { isMutual in
-            let nextIndex = IndexPath(row: currentIndex.row+1, section: 0)
-            if !isMutual {
+            if isMutual {
                 DispatchQueue.main.async {
                     self.collectionView.layer.shadowOpacity = 0
                     cell.cardFace = .back
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    self.collectionView.scrollToItem(at: nextIndex, at: .centeredHorizontally, animated: true)
-                    cell.isHidden = true
+                    self.removeCard(for: currentIndex)
+
                     self.collectionView.layer.shadowOpacity = 0.25
                 }
             }else{
                 DispatchQueue.main.async {
-                    self.collectionView.scrollToItem(at: nextIndex, at: .centeredHorizontally, animated: true)
-                    self.collectionView.deleteItems(at: [currentIndex])
+                    self.removeCard(for: currentIndex)
                 }
             }
             
