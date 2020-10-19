@@ -44,7 +44,7 @@ struct MatchCard {
         
         title = user.name
         subtitle = user.ocupation
-        image = UIImage(systemName: "person.fill")
+        image = UIImage(data: user.profileImage ?? Data()) ?? UIImage(systemName: "person.fill")
         firstSessionTitle = "Bio"
         firstSessionLabel = user.description
         secondSessionTitle = "Habilidades Pessoais"

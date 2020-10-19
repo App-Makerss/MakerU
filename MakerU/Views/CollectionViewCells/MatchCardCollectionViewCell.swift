@@ -39,6 +39,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         img.image = UIImage(systemName: "desktopcomputer")
         img.tintColor = .purple
         img.layer.cornerRadius = 10
+        img.clipsToBounds = true
         return img
     }()
     

@@ -27,6 +27,7 @@ struct UserDAO: GenericsDAO {
         else {return nil}
         
         // loads the optionals info
+        let profileImageAsset = record["profileImage"] as? CKAsset
         let description = record["description"] as? String ?? ""
         let ocupation = record["ocupation"] as? String ?? ""
         let whatsapp = record["whatsapp"] as? String ?? ""
@@ -35,6 +36,7 @@ struct UserDAO: GenericsDAO {
         let canAppearOnMatch = canAppearOnMatchInt == 1
         let makerspaces = record["makerspaces"] as? [CKRecord.Reference] ?? []
         let id = record.recordID.recordName
+        let profileImageData = profileImageAsset?.image?.jpegData(compressionQuality: 1)
         
         let makerspacesStrings = makerspaces.map { ref -> String in
             ref.recordID.recordName
@@ -42,7 +44,7 @@ struct UserDAO: GenericsDAO {
         let projectsStrings = projects.map { ref -> String in
             ref.recordID.recordName
         }
-        return User(id: id, name: name, email: email, role: userRole, password: password, ocupation: ocupation, description: description, whatsapp: whatsapp, skills: skills, projects: projectsStrings, makerspaces: makerspacesStrings, canAppearOnMatch: canAppearOnMatch)
+        return User(id: id, name: name, email: email, role: userRole, password: password, ocupation: ocupation, description: description, whatsapp: whatsapp, skills: skills, projects: projectsStrings, makerspaces: makerspacesStrings, canAppearOnMatch: canAppearOnMatch,profileImage: profileImageData)
     }
     
     /// Remove variables of references (CKReference) from the dictionary because it needs a special treat
@@ -66,6 +68,10 @@ struct UserDAO: GenericsDAO {
         
         rec["projects"] = generateRecordReference(for: entity.projects)
         rec["makerspaces"] = generateRecordReference(for: entity.makerspaces)
+        
+        if let data = entity.profileImage, let image = CKAsset(data: data, compression: 1) {
+            rec["profielImage"] = image
+        }
     }
     
 }

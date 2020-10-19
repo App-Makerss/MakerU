@@ -26,6 +26,7 @@ struct MatchService {
                     matchUpdated.isMutual = true
                     matchDAO.update(entity: matchUpdated)
                     completion(true)
+                    return
                 }
             }else {
                 // new match interest

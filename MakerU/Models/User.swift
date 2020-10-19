@@ -22,4 +22,5 @@ struct User: IdentifiableEntity, Codable {
     var projects: [String]
     var makerspaces: [String]
     var canAppearOnMatch: Bool = false
+    var profileImage: Data? = nil
 }

@@ -16,9 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //simulation of a loggedUser
-        if UserDefaults.standard.string(forKey: "loggedUserId") == nil {
-            UserDefaults.standard.setValue("3AFCA70E-7A52-4B67-B7D7-113B1B8BCF98", forKey: "loggedUserId")
-        }
+            UserDefaults.standard.setValue("22ABF1B6-D0B5-4AB1-8549-29ECD125FCF9", forKey: "loggedUserId")
+//            UserDefaults.standard.setValue("3AFCA70E-7A52-4B67-B7D7-113B1B8BCF98", forKey: "loggedUserId")
         return true
     }
 
