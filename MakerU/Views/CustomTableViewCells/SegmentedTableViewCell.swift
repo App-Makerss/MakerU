@@ -1,19 +1,14 @@
 //
-//  ShowProfileTableViewCell.swift
+//  SegmentedTableViewCell.swift
 //  MakerU
 //
-//  Created by Patricia Amado Ferreira de Mello on 15/10/20.
+//  Created by Bruno Cardoso Ambrosio on 20/10/20.
 //
 
 import UIKit
 
+class SegmentedTableViewCell: UITableViewCell {
 
-class ShowProfileTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var showProjectOrProfile: UILabel!
-    @IBOutlet weak var showSwitchControll: UISwitch!
-    @IBOutlet weak var additionalInfo: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,5 +19,5 @@ class ShowProfileTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

@@ -9,9 +9,7 @@ import UIKit
 
 class UserBioTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var bioOrDescription: UILabel!
     @IBOutlet weak var descriptionText: UILabel!
-    @IBOutlet weak var additionalInfo: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

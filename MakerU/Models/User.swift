@@ -15,9 +15,12 @@ struct User: IdentifiableEntity, Codable {
     var email: String
     var role: UserRole = .commonUser
     var password: String
+    var ocupation: String = ""
+    var description: String = ""
     var whatsapp: String = ""
     var skills: String = ""
     var projects: [String]
     var makerspaces: [String]
     var canAppearOnMatch: Bool = false
+    var profileImage: Data? = nil
 }
