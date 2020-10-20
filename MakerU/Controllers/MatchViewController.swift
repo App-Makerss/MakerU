@@ -24,14 +24,11 @@ class MatchViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 8
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .clear
+        cv.clipsToBounds = false
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        cv.layer.shadowColor = UIColor.black.cgColor
-        cv.layer.masksToBounds = false
-        cv.layer.shadowRadius = 4
-        cv.layer.shadowOpacity = 0.25
-        cv.layer.shadowOffset = CGSize(width: 0, height:2)
         return cv
     }()
 
@@ -40,7 +37,7 @@ class MatchViewController: UIViewController {
         
         let control = UIControl()
         control.backgroundColor = .systemBackground
-        control.layer.cornerRadius = 15
+        control.layer.cornerRadius = 10
         control.translatesAutoresizingMaskIntoConstraints = false
         
         let cell = UITableViewCell(style: .default, reuseIdentifier: "notToReuse")
@@ -85,8 +82,6 @@ class MatchViewController: UIViewController {
                 }
             }
         }
-        
-       
     }
     
     func setupNavigations() {
@@ -97,7 +92,7 @@ class MatchViewController: UIViewController {
         self.tabBarItem = item
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.backgroundColor = .systemGray6
+        navigationController?.navigationBar.backgroundColor = .clear
     }
     
     @objc func configDisplayButtonTapped() {
@@ -171,13 +166,10 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         matchService.verifyMatch(match: match) { isMutual in
             if isMutual {
                 DispatchQueue.main.async {
-                    self.collectionView.layer.shadowOpacity = 0
                     cell.cardFace = .back
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                     self.removeCard(for: currentIndex)
-
-                    self.collectionView.layer.shadowOpacity = 0.25
                 }
             }else{
                 DispatchQueue.main.async {

@@ -172,7 +172,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         let firstSessionStack = UIStackView(arrangedSubviews: [content, genDivider()])
         firstSessionStack.axis = .vertical
-        firstSessionStack.spacing = 20
+        firstSessionStack.spacing = 16
         
         return firstSessionStack
     }
@@ -180,7 +180,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     private func genDivider() -> UIView {
         let divider = UIView()
         divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         divider.backgroundColor = .systemGray3
         return divider
     }
@@ -198,7 +198,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         let headerStack = UIStackView(arrangedSubviews: [headerContentStack(),genDivider()])
         headerStack.axis = .vertical
-        headerStack.spacing = 8
+        headerStack.spacing = 24
         return headerStack
     }
     
@@ -216,9 +216,15 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         if cardFace == .front {
             self.backgroundColor = .systemBackground
             self.layer.cornerRadius = 10
+            self.layer.shadowColor = UIColor.black.cgColor
+            self.layer.masksToBounds = false
+            self.layer.shadowRadius = 50 / 2.0
+            self.layer.shadowOpacity = 0.15
+            self.layer.shadowOffset = CGSize(width: 0, height:10)
             
         } else {
             self.backgroundColor = .systemGray6
+            self.layer.shadowOpacity = 0
         }
     }
     

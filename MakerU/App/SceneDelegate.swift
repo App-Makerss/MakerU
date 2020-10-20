@@ -31,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let profileNavigation = UINavigationController(rootViewController: profileViewController)
         
         let tabs = UITabBarController()
+        tabs.tabBar.tintColor = .systemPurple
         tabs.viewControllers = [homeNavigation, placeNavigation, matchNavigation, profileNavigation]
         tabs.selectedViewController = matchNavigation
         window?.rootViewController = tabs
