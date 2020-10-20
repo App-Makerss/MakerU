@@ -101,7 +101,7 @@ class MatchViewController: UIViewController {
     }
     
     @objc func configDisplayButtonTapped() {
-        let displayConfigurationVC = MatchDisplayConfigurationTableViewController()
+        let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
         let navigation = UINavigationController(rootViewController: displayConfigurationVC)
         present(navigation, animated: true, completion: nil)
     }

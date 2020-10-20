@@ -64,43 +64,44 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 5
     }
     
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        section == 1 ? 2 : 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        
-        switch row {
-            case 0:
-                let cell = UITableViewCell()
-                cell.contentView.addSubview(configSegmentedControl)
-                return cell
-            case 1 :
+        let section = indexPath.section
+
+        switch section {
+        case 0:
+            let cell = UITableViewCell()
+            cell.contentView.addSubview(configSegmentedControl)
+            return cell
+        case 1:
+            if row == 0 {
                 let cell = UITableViewCell()
                 self.initFromNib(xibName: "UserProjectTagTableViewCell", tableviewCell: cell)
                 return cell
-                
-            case 2:
+            } else {
                 let cell = ProjectSelectorTableViewCell()
-//                self.initFromNib(xibName: "UserBioTableViewCell", tableviewCell: cell)
                 return cell
-                
-            case 3:
-                let cell = UITableViewCell()
-                self.initFromNib(xibName: "SkillsTableViewCell", tableviewCell: cell)
-                return cell
-            case 4:
-                let cell = UITableViewCell()
-                self.initFromNib(xibName: "ShowProfileTableViewCell", tableviewCell: cell)
-                return cell
-            default:
-                return UITableViewCell()
+            }
+        case 2:
+            let cell = UITableViewCell()
+            self.initFromNib(xibName: "UserBioTableViewCell", tableviewCell: cell)
+            return cell
+        case 3:
+            let cell = UITableViewCell()
+            self.initFromNib(xibName: "SkillsTableViewCell", tableviewCell: cell)
+            return cell
+        default:
+            let cell = UITableViewCell()
+            self.initFromNib(xibName: "ShowProfileTableViewCell", tableviewCell: cell)
+            return cell
         }
     }
-
 }
