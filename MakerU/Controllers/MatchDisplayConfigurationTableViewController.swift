@@ -8,6 +8,12 @@
 import UIKit
 
 class MatchDisplayConfigurationTableViewController: UITableViewController {
+
+    var isPickerVisible = false {
+        didSet {
+            tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+        }
+    }
     
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
@@ -70,6 +76,17 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         section == 1 ? 2 : 1
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        guard indexPath.section == 1 && indexPath.row == 1 && !isPickerVisible
+        else { return UITableView.automaticDimension }
+        return 0
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        isPickerVisible = indexPath.section == 1 && indexPath.row == 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
