@@ -28,11 +28,11 @@
 		566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620B9252F7D9D009821E9 /* GenericsDAO.swift */; };
 		566620C7252F8C00009821E9 /* Makerspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C6252F8C00009821E9 /* Makerspace.swift */; };
 		566620CA252F9054009821E9 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C9252F9054009821E9 /* Coordinate.swift */; };
+		566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D50F42539E721002B0CE1 /* MatchDAO.swift */; };
 		566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D51022539F262002B0CE1 /* UIFont+Extensions.swift */; };
 		566D5106253A2B18002B0CE1 /* MatchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D5105253A2B18002B0CE1 /* MatchCard.swift */; };
 		566D5109253A2DFE002B0CE1 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D5108253A2DFE002B0CE1 /* Category.swift */; };
 		566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D510B253A3164002B0CE1 /* CategoryDAO.swift */; };
-		566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D50F42539E721002B0CE1 /* MatchDAO.swift */; };
 		566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EB3CD2535E58B0092F096 /* MatchViewController.swift */; };
 		566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */; };
 		566EB3D52535EF6D0092F096 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EB3D42535EF6D0092F096 /* Project.swift */; };
@@ -46,6 +46,7 @@
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
 		56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328C252BA7B500FA03AA /* Assets.xcassets */; };
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
+		E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,11 +73,11 @@
 		566620B9252F7D9D009821E9 /* GenericsDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericsDAO.swift; sourceTree = "<group>"; };
 		566620C6252F8C00009821E9 /* Makerspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Makerspace.swift; sourceTree = "<group>"; };
 		566620C9252F9054009821E9 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		566D50F42539E721002B0CE1 /* MatchDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchDAO.swift; sourceTree = "<group>"; };
 		566D51022539F262002B0CE1 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		566D5105253A2B18002B0CE1 /* MatchCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCard.swift; sourceTree = "<group>"; };
 		566D5108253A2DFE002B0CE1 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		566D510B253A3164002B0CE1 /* CategoryDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDAO.swift; sourceTree = "<group>"; };
-		566D50F42539E721002B0CE1 /* MatchDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchDAO.swift; sourceTree = "<group>"; };
 		566EB3CD2535E58B0092F096 /* MatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
 		566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDisplayConfigurationTableViewController.swift; sourceTree = "<group>"; };
 		566EB3D42535EF6D0092F096 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 		56C3328C252BA7B500FA03AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56C3328F252BA7B500FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56C33291252BA7B500FA03AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSelectorTableViewCell.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +141,7 @@
 				3EB645702539388F008D437D /* SkillsTableViewCell.xib */,
 				3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */,
 				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
+				E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */,
 			);
 			path = CustomTableViewCells;
 			sourceTree = "<group>";
@@ -162,7 +165,6 @@
 				56548DA4252E0985003AC229 /* DatabaseAccess.swift */,
 				566EC893252E74B000346846 /* UserDAO.swift */,
 				56389D772534DB43004B358D /* CKAsset+UIImage.swift */,
-				5692CB0F25366CCA0087358A /* MatchDAO.swift */,
 				566D510B253A3164002B0CE1 /* CategoryDAO.swift */,
 			);
 			path = DAO;
@@ -352,6 +354,7 @@
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
+				E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */,
 				56BE769E25389C5100F3E07F /* MatchService.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,
 				566EB3D52535EF6D0092F096 /* Project.swift in Sources */,

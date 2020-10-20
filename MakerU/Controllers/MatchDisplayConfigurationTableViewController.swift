@@ -82,12 +82,12 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 return cell
             case 1 :
                 let cell = UITableViewCell()
-                self.initFromNib(xibName: "UserProfileTagTableViewCell", tableviewCell: cell)
+                self.initFromNib(xibName: "UserProjectTagTableViewCell", tableviewCell: cell)
                 return cell
                 
             case 2:
-                let cell = UITableViewCell()
-                self.initFromNib(xibName: "UserBioTableViewCell", tableviewCell: cell)
+                let cell = ProjectSelectorTableViewCell()
+//                self.initFromNib(xibName: "UserBioTableViewCell", tableviewCell: cell)
                 return cell
                 
             case 3:
