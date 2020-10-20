@@ -80,6 +80,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         
         setupNavigations()
         tableView.tableFooterView = UIView()
+        tableView.register(UINib(nibName: "UserBioTableViewCell", bundle: nil), forCellReuseIdentifier: "UserBioTableViewCell")
 
     }
 
@@ -116,6 +117,23 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         isPickerVisible = indexPath.section == 1 && indexPath.row == 0
     }
 
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section < 2 {
+            return 0
+        }
+        return UITableView.automaticDimension
+    }
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section < 2 {
+            return ""
+        }
+        if section == 2 {
+            return  "Acesse seu perfil para alterar suas informações."
+        }
+        return ""
+        
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         let section = indexPath.section
@@ -140,8 +158,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 return cell
             }
         case 2:
-            let cell = UITableViewCell()
-            self.initFromNib(xibName: "UserBioTableViewCell", tableviewCell: cell)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserBioTableViewCell")!
             return cell
         case 3:
             let cell = UITableViewCell()
