@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class ShowProfileTableViewCell: UITableViewCell {
 
     @IBOutlet weak var showProjectOrProfile: UILabel!

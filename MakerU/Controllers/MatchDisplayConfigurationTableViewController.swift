@@ -35,12 +35,14 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     var projects: [Project] = [] {
         didSet {
-            print("atualizei")
             DispatchQueue.main.async {
                 self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
             }
         }
     }
+    
+    var stringUpdates: [String: String] = [:]
+    var boolUpdates: [String: Bool] = [:]
 
     let projectService = ProjectService()
 
@@ -52,22 +54,17 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
         return segmented
     }()
-    let rightBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "OK", style: .plain, target: self, action: nil)
-        barButtonItem.tintColor = UIColor.systemPurple
-        return barButtonItem
-    }()
     
-    let leftBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: nil)
-        barButtonItem.tintColor = UIColor.systemPurple
-        return barButtonItem
-    }()
     func setupNavigations() {
         navigationItem.title = "Exibição"
+        let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
+        cancelBarItem.tintColor = UIColor.systemPurple
         
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+        let okButtonItem = UIBarButtonItem(title: "OK", style: .plain, target: self, action: #selector(self.okBarItemTapped))
+        okButtonItem.tintColor = UIColor.systemPurple
+        
+        self.navigationItem.rightBarButtonItem = okButtonItem
+        self.navigationItem.leftBarButtonItem = cancelBarItem
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
@@ -232,11 +229,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SkillsTableViewCell")!
             let skills = configSegmentedControl.selectedSegmentIndex == 0 ? selectedUser?.skills : selectedProject?.skillsInNeed
             (cell as! SkillsTableViewCell).skillsTextView.text = skills
+            (cell as! SkillsTableViewCell).delegate = self
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowProfileTableViewCell")!
             let isOn = configSegmentedControl.selectedSegmentIndex == 0 ? (selectedUser?.canAppearOnMatch == true) : (selectedProject?.canAppearOnMatch == true)
             (cell as! ShowProfileTableViewCell).showSwitchControll.setOn(isOn, animated: true)
+            (cell as! ShowProfileTableViewCell).showSwitchControll.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
             return cell
         }
     }
@@ -245,12 +244,72 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     @objc func selectedSegmentChanged(sender: UISegmentedControl) {
         tableView.reloadData()
     }
+    
+    @objc func cancelBarItemTapped() {
+        
+        if stringUpdates.isEmpty && boolUpdates.isEmpty {
+            self.dismiss(animated: true, completion: nil)
+        }else  {
+            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+            let deleteAction = UIAlertAction(title: "Descartar Alterações", style: .destructive) { _ in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            actionSheet.addAction(deleteAction)
+            actionSheet.addAction(cancelAction)
+            
+            self.present(actionSheet, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func okBarItemTapped() {
+        if !stringUpdates.isEmpty || !boolUpdates.isEmpty,
+            var selectedProject = selectedProject {
+            
+            selectedProject.skillsInNeed = stringUpdates["projectSkills"] ?? selectedProject.skillsInNeed
+            selectedProject.canAppearOnMatch = boolUpdates["projectCanAppearOnMatch"] ?? selectedProject.canAppearOnMatch
+            
+            if var selectedUser = selectedUser {
+                selectedUser.skills = stringUpdates["userSkills"] ?? selectedUser.skills
+                selectedUser.canAppearOnMatch = boolUpdates["userCanAppearOnMatch"] ?? selectedUser.canAppearOnMatch
+                UserDAO().update(entity: selectedUser)
+            }
+            
+            ProjectDAO().update(entity: selectedProject)
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }else {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    
+    @objc func switchChanged(sender: UISwitch) {
+        if configSegmentedControl.selectedSegmentIndex == 0 {
+            boolUpdates["userCanAppearOnMatch"] = sender.isOn
+        }else {
+            boolUpdates["projectCanAppearOnMatch"] = sender.isOn
+        }
+    }
 }
 
 extension MatchDisplayConfigurationTableViewController: PickerSelectorTableViewCellDelegate {
     
     func didSelected(project: Project) {
         selectedProject = project
+    }
+}
+
+extension MatchDisplayConfigurationTableViewController: SkillsTableViewCellDelegate {
+    func skillsDidChanged(skills: String) {
+        if configSegmentedControl.selectedSegmentIndex == 0 {
+            stringUpdates["userSkills"] = skills
+        }else {
+            stringUpdates["projectSkills"] = skills
+            
+        }
     }
 }
 

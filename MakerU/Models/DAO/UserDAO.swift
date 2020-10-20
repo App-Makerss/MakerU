@@ -55,7 +55,6 @@ struct UserDAO: GenericsDAO {
         //References needs a special treat
         newDict.removeValue(forKey: "projects")
         newDict.removeValue(forKey: "makerspaces")
-        
         return newDict
     }
     
@@ -70,7 +69,7 @@ struct UserDAO: GenericsDAO {
         rec["makerspaces"] = generateRecordReference(for: entity.makerspaces)
         
         if let data = entity.profileImage, let image = CKAsset(data: data, compression: 1) {
-            rec["profielImage"] = image
+            rec["profileImage"] = image
         }
     }
     
