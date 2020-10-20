@@ -1,15 +1,14 @@
 //
-//  ProjectDescriptionTableViewCell.swift
+//  SegmentedTableViewCell.swift
 //  MakerU
 //
-//  Created by Patricia Amado Ferreira de Mello on 15/10/20.
+//  Created by Bruno Cardoso Ambrosio on 20/10/20.
 //
 
 import UIKit
 
-class ProjectDescriptionTableViewCell: UITableViewCell {
-    @IBOutlet weak var descriptionLabel: UILabel!
-    
+class SegmentedTableViewCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +19,5 @@ class ProjectDescriptionTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

@@ -13,24 +13,37 @@ protocol PickerSelectorTableViewCellDelegate: class {
 
 class ProjectSelectorTableViewCell: UITableViewCell {
 
-    var projects = [Project]()
+    var projects: [Project] = []
 
     weak var delegate: PickerSelectorTableViewCellDelegate?
 
-    let picker: UIPickerView = {
+    lazy var picker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+    
+    init(projects: [Project]) {
+        super.init(style: .default, reuseIdentifier: nil)
+        
+        
+        self.projects = projects
+        commonInit()
+    }
+    
+    fileprivate func commonInit() {
         picker.dataSource = self
         picker.delegate = self
         contentView.addSubview(picker)
-
+        self.selectionStyle = .none
         setupContraint()
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        commonInit()
 
     }
 
@@ -61,22 +74,22 @@ extension ProjectSelectorTableViewCell: UIPickerViewDelegate, UIPickerViewDataSo
         delegate?.didSelected(project: projects[row])
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        projects[row].title
-    }
-
-//    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//        var pickerLabel: UILabel? = (view as? UILabel)
-//        if pickerLabel == nil {
-//            pickerLabel = UILabel()
-//            pickerLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-//            pickerLabel?.textAlignment = .center
-//        }
-//        pickerLabel?.textColor = .labelReversed
-//        pickerLabel?.text = projects[row].title
-//
-//        return pickerLabel!
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        projects[row].title
 //    }
+
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel: UILabel? = (view as? UILabel)
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+            pickerLabel?.textAlignment = .center
+        }
+        pickerLabel?.textColor = .label
+        pickerLabel?.text = projects[row].title
+
+        return pickerLabel!
+    }
 
 //    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
 //        let title = projects[row].title

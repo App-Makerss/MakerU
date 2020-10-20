@@ -47,7 +47,6 @@
                 <constraint firstItem="gRq-Cr-GTp" firstAttribute="trailing" secondItem="njF-e1-oar" secondAttribute="trailing" constant="-13" id="DuH-9a-CjN"/>
             </constraints>
             <connections>
-                <outlet property="bioOrDescription" destination="nCz-jI-4Sw" id="X2E-X9-tbo"/>
                 <outlet property="descriptionText" destination="Bfe-81-Alf" id="x1S-UJ-vcu"/>
             </connections>
             <point key="canvasLocation" x="141.30434782608697" y="116.85267857142857"/>
