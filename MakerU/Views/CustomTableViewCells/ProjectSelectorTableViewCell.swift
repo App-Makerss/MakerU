@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol PickerSelectorTableViewCellDelegate: class {
+    func didSelected(project: Project)
+}
+
 class ProjectSelectorTableViewCell: UITableViewCell {
 
-    let projects = ["Apps para espaço maker", "Simulador imersivo de carrinho de rolimã", "Realidade aumentada para inclusão", "Trabaho de F 429"]
+    var projects = [Project]()
+
+    weak var delegate: PickerSelectorTableViewCellDelegate?
 
     let picker: UIPickerView = {
         let picker = UIPickerView()
@@ -51,21 +57,39 @@ extension ProjectSelectorTableViewCell: UIPickerViewDelegate, UIPickerViewDataSo
         projects.count // linhas do picker
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-       let row = projects[row]
-       return row // lista de projetos mandada pelo viewController
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        delegate?.didSelected(project: projects[row])
     }
 
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        var pickerLabel: UILabel? = (view as? UILabel)
-            if pickerLabel == nil {
-                pickerLabel = UILabel()
-                pickerLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-                pickerLabel?.textAlignment = .center
-            }
-            pickerLabel?.text = projects[row]
-            pickerLabel?.textColor = UIColor.black
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        projects[row].title
+    }
 
-            return pickerLabel!
+//    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+//        var pickerLabel: UILabel? = (view as? UILabel)
+//        if pickerLabel == nil {
+//            pickerLabel = UILabel()
+//            pickerLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+//            pickerLabel?.textAlignment = .center
+//        }
+//        pickerLabel?.textColor = .labelReversed
+//        pickerLabel?.text = projects[row].title
+//
+//        return pickerLabel!
+//    }
+
+//    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+//        let title = projects[row].title
+//        let myAttribute = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
+//        return NSAttributedString(string: title, attributes: myAttribute)
+//    }
+
+}
+extension UIColor {
+    static var labelReversed: UIColor {
+        return UIColor { (traits) -> UIColor in
+            // Return one of two colors depending on light or dark mode
+            return traits.userInterfaceStyle == .dark ? .white : .black
+        }
     }
 }

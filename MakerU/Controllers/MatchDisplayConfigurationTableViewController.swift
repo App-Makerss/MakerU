@@ -11,10 +11,31 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     var isPickerVisible = false {
         didSet {
-            tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+            DispatchQueue.main.async {
+                self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+            }
         }
     }
     
+    var selectedProject: Project? {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+            }
+        }
+    }
+
+    var projects: [Project] = [] {
+        didSet {
+            print("atualizei")
+            DispatchQueue.main.async {
+                self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+            }
+        }
+    }
+
+    let projectService = ProjectService()
+
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
 
@@ -59,11 +80,17 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         
         setupNavigations()
         tableView.tableFooterView = UIView()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        projectService.listAllProjectsOfLoggedUser(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77") { (projects, error) in
+            if let projects = projects {
+                self.projects = projects
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -100,11 +127,16 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             return cell
         case 1:
             if row == 0 {
-                let cell = UITableViewCell()
-                self.initFromNib(xibName: "UserProjectTagTableViewCell", tableviewCell: cell)
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: "ProjectSelectorHeader")
+                cell.textLabel?.text = "Projeto"
+                cell.detailTextLabel?.text = selectedProject?.title
                 return cell
             } else {
                 let cell = ProjectSelectorTableViewCell()
+                cell.delegate = self
+                DispatchQueue.main.async {
+                    cell.projects = self.projects
+                }
                 return cell
             }
         case 2:
@@ -120,5 +152,12 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             self.initFromNib(xibName: "ShowProfileTableViewCell", tableviewCell: cell)
             return cell
         }
+    }
+}
+
+extension MatchDisplayConfigurationTableViewController: PickerSelectorTableViewCellDelegate {
+    
+    func didSelected(project: Project) {
+        selectedProject = project
     }
 }

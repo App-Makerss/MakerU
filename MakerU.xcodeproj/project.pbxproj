@@ -47,6 +47,7 @@
 		56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328C252BA7B500FA03AA /* Assets.xcassets */; };
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
 		E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */; };
+		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		56C3328F252BA7B500FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56C33291252BA7B500FA03AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSelectorTableViewCell.swift; sourceTree = "<group>"; };
+		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				56BE769D25389C5100F3E07F /* MatchService.swift */,
+				E22EB021253E87F400EA7FDD /* ProjectService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,
 				566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */,
 				3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */,
+				E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */,
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
