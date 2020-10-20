@@ -117,7 +117,7 @@ class MatchViewController: UIViewController {
         collectionView.bottomAnchor.constraint(equalTo: configDisplayButton.topAnchor, constant: -16).isActive = true
 
         // constraint Button
-        configDisplayButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        configDisplayButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         configDisplayButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         configDisplayButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         configDisplayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -99).isActive = true

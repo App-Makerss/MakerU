@@ -245,7 +245,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         let label1 = UILabel()
         label1.text = "Match!"
-        label1.font = UIFont.systemFont(style: .largeTitle, weight: .bold)
+        label1.font = UIFont(name: "Futura-Bold", size: 50)
         label1.textColor = .systemPurple
         label1.textAlignment = .center
         

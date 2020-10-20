@@ -23,6 +23,7 @@
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		564954B8253F0C790052125A /* SegmentedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564954B7253F0C790052125A /* SegmentedTableViewCell.swift */; };
+		564954C2253F56510052125A /* Futura_Bold_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 564954C1253F561A0052125A /* Futura_Bold_font.ttf */; };
 		56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA4252E0985003AC229 /* DatabaseAccess.swift */; };
 		56548DA8252E0BDC003AC229 /* CloudKitEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA7252E0BDC003AC229 /* CloudKitEncodable.swift */; };
 		566620B7252F59A2009821E9 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620B6252F59A2009821E9 /* UserRole.swift */; };
@@ -70,6 +71,7 @@
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
 		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		564954B7253F0C790052125A /* SegmentedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedTableViewCell.swift; sourceTree = "<group>"; };
+		564954C1253F561A0052125A /* Futura_Bold_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Futura_Bold_font.ttf; sourceTree = "<group>"; };
 		56548DA4252E0985003AC229 /* DatabaseAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAccess.swift; sourceTree = "<group>"; };
 		56548DA7252E0BDC003AC229 /* CloudKitEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitEncodable.swift; sourceTree = "<group>"; };
 		566620B6252F59A2009821E9 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
@@ -159,6 +161,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		564954C0253F55D80052125A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				564954C1253F561A0052125A /* Futura_Bold_font.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		56548DA3252E096E003AC229 /* DAO */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +245,7 @@
 		56C33299252BADDA00FA03AA /* App */ = {
 			isa = PBXGroup;
 			children = (
+				564954C0253F55D80052125A /* Fonts */,
 				56C33283252BA7B300FA03AA /* AppDelegate.swift */,
 				56C33285252BA7B300FA03AA /* SceneDelegate.swift */,
 				56C3328C252BA7B500FA03AA /* Assets.xcassets */,
@@ -321,6 +332,7 @@
 				56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */,
 				3EB64566253922D6008D437D /* UserProjectTagTableViewCell.xib in Resources */,
 				3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */,
+				564954C2253F56510052125A /* Futura_Bold_font.ttf in Resources */,
 				3EB6456E25392A79008D437D /* ProjectDescriptionTableViewCell.xib in Resources */,
 				3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */,
 				3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */,
