@@ -148,7 +148,8 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     private func headerContentStack() -> UIStackView {
         
-        let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
+        let downStack = UIStackView(arrangedSubviews: [cardSubtitle])
+        //TODO: shareButton removed till sprint3
         downStack.distribution = .fill
         
         let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack])
