@@ -7,17 +7,17 @@
 
 import UIKit
 
-enum MatchCardType {
+enum MatchCardType: Int16, Codable {
     case project
     case user
 }
-struct MatchCard {
+struct MatchCard: Codable, Hashable {
     var id: String
     var type: MatchCardType
     
     var title: String
     var subtitle: String
-    var image: UIImage?
+    var image: Data?
     var firstSessionTitle: String
     var firstSessionLabel: String
     var secondSessionTitle: String
@@ -31,7 +31,7 @@ struct MatchCard {
         
         title = project.title
         subtitle = category.name
-        image = UIImage(data: category.icon)
+        image = category.icon
         firstSessionTitle = "Descrição"
         firstSessionLabel = project.description
         secondSessionTitle = "Habilidades Procuradas"
@@ -44,7 +44,7 @@ struct MatchCard {
         
         title = user.name
         subtitle = user.ocupation
-        image = UIImage(data: user.profileImage ?? Data()) ?? UIImage(systemName: "person.fill")
+        image = user.profileImage
         firstSessionTitle = "Bio"
         firstSessionLabel = user.description
         secondSessionTitle = "Habilidades Pessoais"

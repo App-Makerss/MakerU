@@ -18,7 +18,7 @@ enum CardFace {
 }
 
 class MatchCardCollectionViewCell: UICollectionViewCell {
-    
+    static let reuseIdentifier = String(describing: self)
     var delegate: MatchCardCollectionViewCellDelegate?
     
     var cardFace: CardFace = .front {

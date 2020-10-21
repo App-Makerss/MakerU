@@ -7,32 +7,23 @@
 
 import UIKit
 
-class MatchViewController: UIViewController {
+class MatchViewController: UIViewController, UICollectionViewDelegate {
+    //MARK: Config attributes
+    var dataSource: UICollectionViewDiffableDataSource<String,MatchCard>!
 
+    //MARK: Attributes
     let matchService = MatchService()
-    
     var matchSuggestions: [MatchCard] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+            DispatchQueue.main.async { [self] in
+                configureDataSource()
+                configureSnapshot()
             }
         }
     }
-
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .clear
-        cv.clipsToBounds = false
-        cv.showsHorizontalScrollIndicator = false
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        return cv
-    }()
-
-
+    
+    //MARK: Outlets
+    var collectionView: UICollectionView!
     let configDisplayButton: UIControl = {
         
         let control = UIControl()
@@ -54,25 +45,14 @@ class MatchViewController: UIViewController {
         cell.leadingAnchor.constraint(equalTo: control.leadingAnchor, constant: 5).isActive = true
         cell.trailingAnchor.constraint(equalTo: control.trailingAnchor, constant: -5).isActive = true
         cell.bottomAnchor.constraint(equalTo: control.bottomAnchor).isActive = true
-
+        
         control.addTarget(self, action: #selector(Self.configDisplayButtonTapped), for: .touchUpInside)
         
         return control
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.addSubview(configDisplayButton)
-        view.addSubview(collectionView)
-        view.backgroundColor = .systemGray6
-
-        collectionView.delegate = self
-        collectionView.dataSource = self
-
-        setupNavigations()
-        setupContraints()
-        
+    
+    //MARK: Load data
+    fileprivate func loadMatchSuggestions() {
         CategoryDAO().listAll { (categories, error) in
             if let categories = categories{
                 self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
@@ -82,6 +62,38 @@ class MatchViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    
+    //MARK: View life cycles
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(configDisplayButton)
+        view.backgroundColor = .systemGray6
+        
+        setupCollecitonView()
+        setupContraints()
+        setupNavigations()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadMatchSuggestions()
+    }
+    
+    //MARK: Setups
+    func setupCollecitonView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .clear
+        collectionView.clipsToBounds = false
+        collectionView.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: MatchCardCollectionViewCell.reuseIdentifier)
+        view.addSubview(collectionView)
+        collectionView.delegate = self
+        
     }
     
     func setupNavigations() {
@@ -95,14 +107,8 @@ class MatchViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .clear
     }
     
-    @objc func configDisplayButtonTapped() {
-        let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
-        let navigation = UINavigationController(rootViewController: displayConfigurationVC)
-        present(navigation, animated: true, completion: nil)
-    }
-
     func setupContraints() {
-
+        
         // constraint CollectionView
         collectionView.backgroundColor = .clear
         let safeAnchors = view.safeAreaLayoutGuide
@@ -110,42 +116,84 @@ class MatchViewController: UIViewController {
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: configDisplayButton.topAnchor, constant: -16).isActive = true
-
+        
         // constraint Button
         configDisplayButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         configDisplayButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         configDisplayButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         configDisplayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -99).isActive = true
     }
+    
+    //MARK: @ojbc funcs
+    @objc func configDisplayButtonTapped() {
+        let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
+        let navigation = UINavigationController(rootViewController: displayConfigurationVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
 }
 
-extension MatchViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        matchSuggestions.count
+//MARK: UICollectionViewDiffableDataSource & UICollectionViewCompositionalLayout
+extension MatchViewController  {
+    typealias cardsDataSource = UICollectionViewDiffableDataSource<String,MatchCard>
+    
+    func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        
+        let sectionProvider = {(sectionIdex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
+            
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize: NSCollectionLayoutSize
+            
+            groupSize =  NSCollectionLayoutSize(widthDimension: .absolute(self.view.bounds.width-32), heightDimension: .fractionalHeight(0.99))
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .groupPaging
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            section.interGroupSpacing = 8
+            
+            return section
+            
+        }
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MatchCardCollectionViewCell
-        cell.delegate = self
-        cell.cardFace = .front
-        let item = matchSuggestions[indexPath.row]
-        cell.cardTitle.text = item.title
-        cell.cardSubtitle.text = item.subtitle
-        cell.cardImageView.image = item.image
-        cell.cardFirstSessionTitle.text = item.firstSessionTitle
-        cell.cardFirstSessionDescription.text = item.firstSessionLabel
-        cell.cardSecondSessionTitle.text = item.secondSessionTitle
-        cell.cardSecondSessionDescription.text = item.secondSessionLabel
-        return cell
+    
+    func configureDataSource() {
+        dataSource = cardsDataSource(collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, tutorial) -> UICollectionViewCell? in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MatchCardCollectionViewCell.reuseIdentifier, for: indexPath) as? MatchCardCollectionViewCell else {
+                fatalError("Cannot create MatchCardCollectionViewCell")
+            }
+            cell.delegate = self
+            cell.cardFace = .front
+            let item = self.matchSuggestions[indexPath.row]
+            cell.cardTitle.text = item.title
+            cell.cardSubtitle.text = item.subtitle
+            if let imageData = item.image {
+                cell.cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
+            }
+            cell.cardFirstSessionTitle.text = item.firstSessionTitle
+            cell.cardFirstSessionDescription.text = item.firstSessionLabel
+            cell.cardSecondSessionTitle.text = item.secondSessionTitle
+            cell.cardSecondSessionDescription.text = item.secondSessionLabel
+            
+            return cell
+        })
     }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: configDisplayButton.bounds.width, height: collectionView.bounds.height*0.98)
+    func configureSnapshot() {
+        var currentSnapshot = NSDiffableDataSourceSnapshot<String, MatchCard>()
+        currentSnapshot.appendSections([""])
+        currentSnapshot.appendItems(matchSuggestions)
+        
+        dataSource.apply(currentSnapshot,animatingDifferences: false)
     }
+    
 }
 
-
+//MARK: MatchCardCollectionViewCellDelegate
 extension MatchViewController: MatchCardCollectionViewCellDelegate {
     fileprivate func removeCard(for currentIndex: IndexPath) {
         self.collectionView.performBatchUpdates({
@@ -178,7 +226,5 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
             }
             
         }
-            
-        
     }
 }
