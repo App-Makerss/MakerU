@@ -20,6 +20,8 @@
 		3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB645702539388F008D437D /* SkillsTableViewCell.xib */; };
 		3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */; };
 		3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */; };
+		5626667A2541B5470091C10C /* MakerspaceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562666792541B5470091C10C /* MakerspaceTableViewController.swift */; };
+		56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626667F254203B20091C10C /* ImageCoverNavigationController.swift */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		564954B8253F0C790052125A /* SegmentedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564954B7253F0C790052125A /* SegmentedTableViewCell.swift */; };
@@ -67,6 +69,8 @@
 		3EB645702539388F008D437D /* SkillsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsTableViewCell.xib; sourceTree = "<group>"; };
 		3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowProfileTableViewCell.xib; sourceTree = "<group>"; };
+		562666792541B5470091C10C /* MakerspaceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerspaceTableViewController.swift; sourceTree = "<group>"; };
+		5626667F254203B20091C10C /* ImageCoverNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCoverNavigationController.swift; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
 		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -190,6 +194,8 @@
 			children = (
 				566EB3CD2535E58B0092F096 /* MatchViewController.swift */,
 				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
+				562666792541B5470091C10C /* MakerspaceTableViewController.swift */,
+				5626667F254203B20091C10C /* ImageCoverNavigationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 				3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */,
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
 				E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */,
+				5626667A2541B5470091C10C /* MakerspaceTableViewController.swift in Sources */,
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
 				3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */,
 				3EB645712539388F008D437D /* SkillsTableViewCell.swift in Sources */,
@@ -380,6 +387,7 @@
 				566EB3D52535EF6D0092F096 /* Project.swift in Sources */,
 				566D5106253A2B18002B0CE1 /* MatchCard.swift in Sources */,
 				56548DA8252E0BDC003AC229 /* CloudKitEncodable.swift in Sources */,
+				56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */,
 				566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */,
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,
 			);

@@ -20,11 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
         let homeViewController = UIViewController() //TODO: Colocar view Controller certo
         let homeNavigation = UINavigationController(rootViewController: homeViewController)
-        let placeViewController = UIViewController() //TODO: Colocar view Controller certo
-        let placeNavigation = UINavigationController(rootViewController: placeViewController)
+        let placeViewController = MakerspaceTableViewController(style: .insetGrouped) //TODO: Colocar view Controller certo
+        let placeNavigation = ImageCoverNavigationController(rootViewController: placeViewController)
         let matchViewController = MatchViewController()
         let matchNavigation = UINavigationController(rootViewController: matchViewController)
         let profileViewController = UIViewController() //TODO: Colocar view Controller certo
