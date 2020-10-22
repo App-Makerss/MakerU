@@ -219,9 +219,9 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
             self.layer.cornerRadius = 10
             self.layer.shadowColor = UIColor.black.cgColor
             self.layer.masksToBounds = false
-            self.layer.shadowRadius = 50 / 2.0
-            self.layer.shadowOpacity = 0.15
-            self.layer.shadowOffset = CGSize(width: 0, height:10)
+            self.layer.shadowRadius = 30 / 2.0
+            self.layer.shadowOpacity = 0.10
+            self.layer.shadowOffset = CGSize(width: 0, height: 3)
             
         } else {
             self.backgroundColor = .systemGray6
