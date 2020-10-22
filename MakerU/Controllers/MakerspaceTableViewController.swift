@@ -9,6 +9,7 @@ import UIKit
 
 class MakerspaceTableViewController: UITableViewController {
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let nav = navigationController as? ImageCoverNavigationController
@@ -27,6 +28,7 @@ class MakerspaceTableViewController: UITableViewController {
         item.image = UIImage(systemName: "house.fill")
         self.tabBarItem = item
         navigationItem.title = "Espaço"
+        navigationController?.navigationBar.barTintColor  = .systemPurple
     }
     
     required init?(coder: NSCoder) {
@@ -60,14 +62,19 @@ extension MakerspaceTableViewController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let navBar  = self.navigationController?.navigationBar
         else {return}
-        
+
         let navBarHeight = navBar.bounds.height
-        if navBarHeight >= 46{
-            navBar.tintColor = .white
-            navigationController?.setNeedsStatusBarAppearanceUpdate()
-        } else if navBarHeight <= 103 {
-            navBar.tintColor = .link
-            navigationController?.setNeedsStatusBarAppearanceUpdate()
+        if navBarHeight >= 46 {
+            
+            let backImage = UIImage(systemName: "chevron.left.circle.fill")
+            navigationItem.scrollEdgeAppearance?.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
+            navigationController?.navigationBar.tintColor = .white
+            
+            
+        }else {
+            navigationItem.scrollEdgeAppearance?.setBackIndicatorImage(nil, transitionMaskImage: nil)
+            navigationController?.navigationBar.tintColor = .systemPurple
         }
+        navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
 }

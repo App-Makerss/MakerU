@@ -27,23 +27,19 @@ class ImageCoverNavigationController: UINavigationController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
-        self.navigationBar.tintColor = .white
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationBar.prefersLargeTitles = true
-        self.navigationBar.tintColor = .white
         
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         let navBarHeight = self.navigationBar.bounds.height
         if navBarHeight >= 46{
-            self.navigationBar.tintColor = .white
             return .lightContent
         } else {
-            self.navigationBar.tintColor = .link
             return .default
         }
         
