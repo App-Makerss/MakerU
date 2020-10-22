@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */; };
 		3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E633ACB252F6DB400EAF3B8 /* Match.swift */; };
 		3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */; };
 		3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardInfoViewController.swift; sourceTree = "<group>"; };
 		3E633ACB252F6DB400EAF3B8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTagTableViewCell.swift; sourceTree = "<group>"; };
 		3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTagTableViewCell.xib; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				566EB3CD2535E58B0092F096 /* MatchViewController.swift */,
 				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
+				3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */,
 				566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
+				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,
 				566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */,
