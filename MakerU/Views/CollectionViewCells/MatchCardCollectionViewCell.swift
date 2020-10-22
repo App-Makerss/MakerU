@@ -9,6 +9,8 @@ import UIKit
 
 protocol MatchCardCollectionViewCellDelegate: class {
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell)
+    func seeMoreButtonButtonTapped(nextScreen: MatchCardInfoViewController)
+    
 }
 
 
@@ -85,6 +87,8 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         btn.setTitleColor(.systemPurple, for: .normal)
         btn.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         btn.contentHorizontalAlignment = .right
+        btn.isEnabled = true
+                
         return btn
     }()
     
@@ -297,15 +301,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(collaborateButton)
         
         setupAppearance()
-        
-        
         setupCardFrontConstraints()
         
         collaborateButton.addTarget(self, action: #selector(self.collaborateButtonTap), for: .touchUpInside)
+        seeMoreButton.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
     }
     
     
     @objc func collaborateButtonTap() {
         delegate?.collaborateButtonTapped(self)
+    }
+    
+    @objc func seeMoreButtonTap() {
+        delegate?.seeMoreButtonButtonTapped(nextScreen: MatchCardInfoViewController())
     }
 }

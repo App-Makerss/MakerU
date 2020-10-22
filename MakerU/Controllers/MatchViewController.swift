@@ -69,7 +69,6 @@ class MatchViewController: UIViewController {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-
         setupNavigations()
         setupContraints()
         
@@ -98,6 +97,12 @@ class MatchViewController: UIViewController {
     @objc func configDisplayButtonTapped() {
         let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
         let navigation = UINavigationController(rootViewController: displayConfigurationVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func seeMoreButtonTapped() {
+        let displayInfoVC = MatchCardInfoViewController()
+        let navigation = UINavigationController(rootViewController: displayInfoVC)
         present(navigation, animated: true, completion: nil)
     }
 
@@ -147,6 +152,15 @@ extension MatchViewController: UICollectionViewDataSource, UICollectionViewDeleg
 
 
 extension MatchViewController: MatchCardCollectionViewCellDelegate {
+    
+    /// Present's the The MatchCardInfoViewController Modal
+    /// - Parameter nextScreen: The MatchCardInfoViewController
+    func seeMoreButtonButtonTapped(nextScreen: MatchCardInfoViewController) {
+        let displayInfoVC = MatchCardInfoViewController()
+        let navigation = UINavigationController(rootViewController: displayInfoVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
     fileprivate func removeCard(for currentIndex: IndexPath) {
         self.collectionView.performBatchUpdates({
             self.collectionView.deleteItems(at: [currentIndex])
@@ -176,9 +190,6 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                     self.removeCard(for: currentIndex)
                 }
             }
-            
         }
-            
-        
     }
 }

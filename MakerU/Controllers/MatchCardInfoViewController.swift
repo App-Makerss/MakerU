@@ -8,18 +8,13 @@
 import Foundation
 import UIKit
 
+protocol MatchCardInfoViewCellDelegate: class {
+    func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell)
+}
 
-class MatchCardInfoViewController: UICollectionViewCell {
+
+class MatchCardInfoViewController: UIViewController {
     
-    //MARK: Init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
     
     //MARK: Set up View Code
     
@@ -101,16 +96,20 @@ class MatchCardInfoViewController: UICollectionViewCell {
         root.axis = .vertical
         root.spacing = 16
         root.distribution = .fillProportionally
-        
         root.translatesAutoresizingMaskIntoConstraints = false
         
         return root
     }()
     
+    let scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        
+        return scroll
+    }()
+    
     //MARK: Setup Functions
     
     private func headerContentStack() -> UIStackView {
-        
         let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
         downStack.distribution = .fill
         
@@ -125,7 +124,6 @@ class MatchCardInfoViewController: UICollectionViewCell {
     }
     
     private func firstSessionStack() -> UIStackView {
-        
         let upStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle])
         upStack.distribution = .fillProportionally
         
@@ -149,7 +147,6 @@ class MatchCardInfoViewController: UICollectionViewCell {
     }
     
     private func secondSessionStack() -> UIStackView {
-        
         let content = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardSecondSessionDescription])
         content.spacing = 8
         content.axis = .vertical
@@ -158,42 +155,45 @@ class MatchCardInfoViewController: UICollectionViewCell {
     }
     
     private func headerStack() -> UIStackView {
-        
         let headerStack = UIStackView(arrangedSubviews: [headerContentStack(),genDivider()])
         headerStack.axis = .vertical
         headerStack.spacing = 24
         return headerStack
     }
     
-    fileprivate func setupModalConstraints() {
-        modalContent.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
-        modalContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        modalContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
-    }
-    
-    fileprivate func setupAppearance() {
-        self.backgroundColor = .systemBackground
-        self.layer.cornerRadius = 10
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.masksToBounds = false
-        self.layer.shadowRadius = 50 / 2.0
-        self.layer.shadowOpacity = 0.15
-        self.layer.shadowOffset = CGSize(width: 0, height:10)
-    }
-    
-    
     private func setupModal(){
         modalContent.subviews.forEach {$0.removeFromSuperview()}
-        contentView.subviews.forEach {$0.removeFromSuperview()}
         modalContent.addArrangedSubview(headerStack())
-        modalContent.addArrangedSubview(firstSessionStack())
-        modalContent.addArrangedSubview(secondSessionStack())
+        scrollView.addSubview(firstSessionStack())
+        scrollView.addSubview(secondSessionStack())
+        modalContent.addArrangedSubview(scrollView)
+//        modalContent.addArrangedSubview(firstSessionStack())
+//        modalContent.addArrangedSubview(secondSessionStack())
         modalContent.translatesAutoresizingMaskIntoConstraints = false
+//        setupModalConstraints()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        contentView.addSubview(modalContent)
+        self.modalPresentationStyle = .popover
         
-        setupAppearance()
-        setupModalConstraints()
+        self.setupModal()
+        
+        view.addSubview(modalContent)
+        view.backgroundColor = .systemGray6
+
+        setupContraints()
+    }
+    
+    func setupContraints() {
+        // constraint ScrollView
+        scrollView.backgroundColor = .clear
+        let safeAnchors = view.safeAreaLayoutGuide
+        scrollView.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 0).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
     }
 
 }
