@@ -16,7 +16,7 @@ protocol MatchCardInfoViewCellDelegate: class {
 class MatchCardInfoViewController: UIViewController {
     
     
-    //MARK: Set up View Code
+    //MARK: View Code Set up
     
     let cardImageView: UIImageView = {
         let img = UIImageView()
@@ -67,10 +67,10 @@ class MatchCardInfoViewController: UIViewController {
 
     let cardFirstSessionDescription: UILabel = {
         let description = UILabel()
-//        description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
         description.font = UIFont.preferredFont(forTextStyle: .callout)
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
-        //description.numberOfLines = 6
+        description.numberOfLines = 0
         return description
     }()
     
@@ -84,10 +84,10 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardSecondSessionDescription: UILabel = {
         let description = UILabel()
-        //description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
         description.font = UIFont.preferredFont(forTextStyle: .callout)
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
-//        description.numberOfLines = 6
+        description.numberOfLines = 0
         return description
     }()
     
@@ -103,11 +103,14 @@ class MatchCardInfoViewController: UIViewController {
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
+        scroll.isScrollEnabled = true
+        scroll.isDirectionalLockEnabled = true
+        scroll.alwaysBounceVertical = true
         
         return scroll
     }()
     
-    //MARK: Setup Functions
+    //MARK: Functions Set up
     
     private func headerContentStack() -> UIStackView {
         let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
@@ -161,39 +164,56 @@ class MatchCardInfoViewController: UIViewController {
         return headerStack
     }
     
-    private func setupModal(){
-        modalContent.subviews.forEach {$0.removeFromSuperview()}
-        modalContent.addArrangedSubview(headerStack())
-        scrollView.addSubview(firstSessionStack())
-        scrollView.addSubview(secondSessionStack())
-        modalContent.addArrangedSubview(scrollView)
-//        modalContent.addArrangedSubview(firstSessionStack())
-//        modalContent.addArrangedSubview(secondSessionStack())
+    
+    private func setupScroll(){
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         modalContent.translatesAutoresizingMaskIntoConstraints = false
-//        setupModalConstraints()
+        modalContent.addArrangedSubview(firstSessionStack())
+        modalContent.addArrangedSubview(secondSessionStack())
+        view.addSubview(scrollView)
+        scrollView.addSubview(modalContent)
     }
+    
+    //MARK: Controller Set Up
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .close)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = .clear
         
         self.modalPresentationStyle = .popover
         
-        self.setupModal()
+        let header = headerStack()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(header)
+        self.setupScroll()
         
-        view.addSubview(modalContent)
         view.backgroundColor = .systemGray6
 
-        setupContraints()
+        setupContraints(header: header)
     }
     
-    func setupContraints() {
-        // constraint ScrollView
-        scrollView.backgroundColor = .clear
-        let safeAnchors = view.safeAreaLayoutGuide
-        scrollView.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 0).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
+    func setupContraints(header: UIView) {
+        
+        header.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        header.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+        header.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+        header.topAnchor.constraint(equalTo: view.topAnchor, constant: 29).isActive = true
+        header.bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: -16).isActive = true
+        
+        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        modalContent.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        modalContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        modalContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        modalContent.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        modalContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        
     }
 
 }
