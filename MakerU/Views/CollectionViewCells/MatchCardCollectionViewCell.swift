@@ -9,7 +9,7 @@ import UIKit
 
 protocol MatchCardCollectionViewCellDelegate: class {
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell)
-    func seeMoreButtonButtonTapped(nextScreen: MatchCardInfoViewController)
+    func seeMoreButtonButtonTapped(_ cell: MatchCardCollectionViewCell)
     
 }
 
@@ -313,6 +313,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func seeMoreButtonTap() {
-        delegate?.seeMoreButtonButtonTapped(nextScreen: MatchCardInfoViewController())
+        delegate?.seeMoreButtonButtonTapped(self)
     }
 }

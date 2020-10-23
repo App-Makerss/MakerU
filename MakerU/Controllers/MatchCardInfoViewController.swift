@@ -15,6 +15,16 @@ protocol MatchCardInfoViewCellDelegate: class {
 
 class MatchCardInfoViewController: UIViewController {
     
+    func config(with matchCard: MatchCard) {
+        cardTitle.text = matchCard.title
+        cardSubtitle.text = matchCard.subtitle
+        cardImageView.image = matchCard.image
+        
+        cardFirstSessionTitle.text = matchCard.firstSessionTitle
+        cardFirstSessionDescription.text = matchCard.firstSessionLabel
+        cardSecondSessionTitle.text = matchCard.secondSessionTitle
+        cardSecondSessionDescription.text = matchCard.secondSessionLabel
+    }
     
     //MARK: View Code Set up
     
@@ -121,7 +131,7 @@ class MatchCardInfoViewController: UIViewController {
         upStack.spacing = 8
         
         let headerContent = UIStackView(arrangedSubviews: [cardImageView, upStack])
-        headerContent.alignment = .center
+        headerContent.alignment = .top
         headerContent.spacing = 16
         return headerContent
     }
@@ -175,10 +185,14 @@ class MatchCardInfoViewController: UIViewController {
     }
     
     //MARK: Controller Set Up
+    @objc func closeTapped(){
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .close)
+        let close = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(self.closeTapped))
+        self.navigationItem.rightBarButtonItem = close
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.backgroundColor = .clear
