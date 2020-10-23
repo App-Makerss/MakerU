@@ -157,7 +157,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         upStack.spacing = 8
         
         let headerContent = UIStackView(arrangedSubviews: [cardImageView, upStack])
-        headerContent.alignment = .center
+        headerContent.alignment = .top
         headerContent.spacing = 16
         return headerContent
     }
