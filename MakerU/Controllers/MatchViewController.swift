@@ -107,18 +107,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         navigationController?.navigationBar.backgroundColor = .clear
     }
     
-    @objc func configDisplayButtonTapped() {
-        let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
-        let navigation = UINavigationController(rootViewController: displayConfigurationVC)
-        present(navigation, animated: true, completion: nil)
-    }
-    
-    @objc func seeMoreButtonTapped() {
-        let displayInfoVC = MatchCardInfoViewController()
-        let navigation = UINavigationController(rootViewController: displayInfoVC)
-        present(navigation, animated: true, completion: nil)
-    }
-
     func setupContraints() {
         
         // constraint CollectionView
@@ -140,6 +128,12 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     @objc func configDisplayButtonTapped() {
         let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
         let navigation = UINavigationController(rootViewController: displayConfigurationVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func seeMoreButtonTapped() {
+        let displayInfoVC = MatchCardInfoViewController()
+        let navigation = UINavigationController(rootViewController: displayInfoVC)
         present(navigation, animated: true, completion: nil)
     }
     

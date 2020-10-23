@@ -18,7 +18,9 @@ class MatchCardInfoViewController: UIViewController {
     func config(with matchCard: MatchCard) {
         cardTitle.text = matchCard.title
         cardSubtitle.text = matchCard.subtitle
-        cardImageView.image = matchCard.image
+        if let imageData = matchCard.image {
+            cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
+        }
         
         cardFirstSessionTitle.text = matchCard.firstSessionTitle
         cardFirstSessionDescription.text = matchCard.firstSessionLabel
