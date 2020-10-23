@@ -27,7 +27,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         didSet{
             if cardFace == .front {
                 setupCardFrontalFace()
-                checkIfNeedsSeeMoreButton()
+                addOrRemoveButton()
             }else {
                 setupCardBackFace()
             }
@@ -173,8 +173,10 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let contentStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, cardFirstSessionDescription])
         contentStack.spacing = 8
         contentStack.axis = .vertical
+        contentStack.isUserInteractionEnabled = false
         
-        let uiview = UIView()
+        let uiview = UIControl()
+        uiview.isUserInteractionEnabled = true
         uiview.addSubview(contentStack)
         contentStack.setupConstraints(to: uiview)
         
@@ -210,19 +212,16 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return headerStack
     }
     
-    func checkIfNeedsSeeMoreButton() {
-        addOrRemoveButton()
-    }
-    
     func addOrRemoveButton() {
-        guard let uiview = cardFirstSessionDescription.superview?.superview,
+        guard let uiview = cardFirstSessionDescription.superview?.superview as? UIControl,
               let contentStack = uiview.subviews.first else {return}
-        print("notnil")
         if cardFirstSessionDescription.isTruncated || cardFirstSessionDescription.text!.count > 220 {
             uiview.addSubview(seeMoreButton)
             seeMoreButton.trailingAnchor.constraint(equalTo:uiview.trailingAnchor).isActive = true
             seeMoreButton.widthAnchor.constraint(equalTo: uiview.widthAnchor, multiplier: 0.2).isActive = true
             seeMoreButton.lastBaselineAnchor.constraint(equalTo: contentStack.lastBaselineAnchor).isActive = true
+            seeMoreButton.isUserInteractionEnabled = false
+            uiview.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
         }else {
             seeMoreButton.removeFromSuperview()
         }
@@ -326,7 +325,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         setupCardFrontConstraints()
         
         collaborateButton.addTarget(self, action: #selector(self.collaborateButtonTap), for: .touchUpInside)
-        seeMoreButton.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
     }
     
     
