@@ -27,6 +27,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         didSet{
             if cardFace == .front {
                 setupCardFrontalFace()
+                checkIfNeedsSeeMoreButton()
             }else {
                 setupCardBackFace()
             }
@@ -69,6 +70,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         btn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         btn.tintColor = .systemPurple
         btn.contentHorizontalAlignment = .right
+        btn.isHidden = true
         return btn
     }()
     
@@ -79,16 +81,15 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         title.tintColor = .label
         return title
     }()
-    
     let seeMoreButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        btn.setTitle("Ver tudo", for: .normal)
+        btn.setTitle("mais", for: .normal)
         btn.setTitleColor(.systemPurple, for: .normal)
-        btn.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         btn.contentHorizontalAlignment = .right
         btn.isEnabled = true
-                
+        btn.setBackgroundImage(UIImage(named: "seeMoreButtonBackgroundGradient"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
@@ -114,7 +115,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
         description.font = UIFont.preferredFont(forTextStyle: .callout)
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
-        description.numberOfLines = 6
+        description.numberOfLines = 5
         return description
     }()
     
@@ -168,14 +169,16 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     private func firstSessionStack() -> UIStackView {
         
-        let upStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, seeMoreButton])
-        upStack.distribution = .fillProportionally
         
-        let content = UIStackView(arrangedSubviews: [upStack, cardFirstSessionDescription])
-        content.spacing = 8
-        content.axis = .vertical
+        let contentStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, cardFirstSessionDescription])
+        contentStack.spacing = 8
+        contentStack.axis = .vertical
         
-        let firstSessionStack = UIStackView(arrangedSubviews: [content, genDivider()])
+        let uiview = UIView()
+        uiview.addSubview(contentStack)
+        contentStack.setupConstraints(to: uiview)
+        
+        let firstSessionStack = UIStackView(arrangedSubviews: [uiview, genDivider()])
         firstSessionStack.axis = .vertical
         firstSessionStack.spacing = 16
         
@@ -207,12 +210,30 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return headerStack
     }
     
+    func checkIfNeedsSeeMoreButton() {
+        addOrRemoveButton()
+    }
+    
+    func addOrRemoveButton() {
+        guard let uiview = cardFirstSessionDescription.superview?.superview,
+              let contentStack = uiview.subviews.first else {return}
+        print("notnil")
+        if cardFirstSessionDescription.isTruncated || cardFirstSessionDescription.text!.count > 220 {
+            uiview.addSubview(seeMoreButton)
+            seeMoreButton.trailingAnchor.constraint(equalTo:uiview.trailingAnchor).isActive = true
+            seeMoreButton.widthAnchor.constraint(equalTo: uiview.widthAnchor, multiplier: 0.2).isActive = true
+            seeMoreButton.lastBaselineAnchor.constraint(equalTo: contentStack.lastBaselineAnchor).isActive = true
+        }else {
+            seeMoreButton.removeFromSuperview()
+        }
+    }
+    
     fileprivate func setupCardFrontConstraints() {
         cardFrontContent.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
         cardFrontContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         cardFrontContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         
-       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 40).isActive = true
+       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 20).isActive = true
         collaborateButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         collaborateButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
     }
