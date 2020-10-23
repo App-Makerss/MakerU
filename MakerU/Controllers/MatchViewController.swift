@@ -192,8 +192,11 @@ extension MatchViewController  {
     func configureSnapshot() {
         var currentSnapshot = NSDiffableDataSourceSnapshot<String, MatchCard>()
         currentSnapshot.appendSections([""])
-        currentSnapshot.appendItems(matchSuggestions)
-        
+        matchSuggestions.forEach { suggestion in
+            if !currentSnapshot.itemIdentifiers.contains(suggestion) {
+                currentSnapshot.appendItems([suggestion])
+            }
+        }
         dataSource.apply(currentSnapshot,animatingDifferences: false)
     }
     
