@@ -155,8 +155,11 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     
     /// Present's the The MatchCardInfoViewController Modal
     /// - Parameter nextScreen: The MatchCardInfoViewController
-    func seeMoreButtonButtonTapped(nextScreen: MatchCardInfoViewController) {
+    func seeMoreButtonButtonTapped(_ cell: MatchCardCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell)
+        else {return}
         let displayInfoVC = MatchCardInfoViewController()
+        displayInfoVC.config(with: matchSuggestions[indexPath.row])
         let navigation = UINavigationController(rootViewController: displayInfoVC)
         present(navigation, animated: true, completion: nil)
     }
