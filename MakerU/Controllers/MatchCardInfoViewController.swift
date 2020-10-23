@@ -49,13 +49,7 @@ class MatchCardInfoViewController: UIViewController {
         return subtitle
     }()
     
-    let shareButton: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        btn.tintColor = .systemPurple
-        btn.contentHorizontalAlignment = .right
-        return btn
-    }()
+    //TODO: Share Button no Sprint 3
     
     let cardFirstSessionTitle: UILabel = {
         let title = UILabel()
@@ -113,7 +107,7 @@ class MatchCardInfoViewController: UIViewController {
     //MARK: Functions Set up
     
     private func headerContentStack() -> UIStackView {
-        let downStack = UIStackView(arrangedSubviews: [cardSubtitle, shareButton])
+        let downStack = UIStackView(arrangedSubviews: [cardSubtitle])
         downStack.distribution = .fill
         
         let upStack = UIStackView(arrangedSubviews: [cardTitle, downStack])
