@@ -20,15 +20,16 @@ final class MatchOnboardingViewController: UIViewController {
         label2.font = UIFont.systemFont(style: .subheadline)
         label2.text = description
         label2.numberOfLines = 0
-        label2.tintColor = .secondaryLabel
+        label2.textColor = .secondaryLabel
 
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(systemName: imageName)
-        let fullString = NSMutableAttributedString(attachment: imageAttachment)
-        let img = UILabel()
-        img.attributedText = fullString
-        img.font = .systemFont(style: .title1)
+        let img = UIImageView()
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.heightAnchor.constraint(equalToConstant: 34).isActive = true
+        img.widthAnchor.constraint(equalToConstant: 34).isActive = true
+        img.image = UIImage(systemName: imageName)
         img.tintColor = .systemPurple
+        img.clipsToBounds = true
+
 
         let VStack = UIStackView(arrangedSubviews: [label,label2])
         VStack.axis = .vertical
@@ -44,26 +45,46 @@ final class MatchOnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .systemBackground
+
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scroll)
+        scroll.isScrollEnabled = true
+        scroll.isDirectionalLockEnabled = true
+        scroll.alwaysBounceVertical = true
 
         let content = genContent()
         scroll.addSubview(content)
 
         setupConstraint(scroll, content)
+        setupNavigation()
     }
 
-   private func genContent() -> UIStackView {
+    @objc func closeTapped(){
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    func setupNavigation(){
+        let close = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(self.closeTapped))
+        self.navigationItem.rightBarButtonItem = close
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = .clear
+    }
+
+    private func genContent() -> UIStackView {
         let title = UILabel()
         title.font = .systemFont(style: .title1, weight: .bold)
-        title.text = "Funcionalidades do Match"
+        title.text = "Funcionalidades \n do Match"
+        title.textAlignment = .center
         title.numberOfLines = 0
         title.tintColor = .label
 
         let subtitle = UILabel()
         subtitle.font = .systemFont(style: .body)
         subtitle.text = "Encontre projetos para colaborar ou colaboradores para seu projeto!"
+        subtitle.textAlignment = .center
         subtitle.numberOfLines = 0
         subtitle.tintColor = .label
 
@@ -74,11 +95,16 @@ final class MatchOnboardingViewController: UIViewController {
 
         let blocksVStack = UIStackView(arrangedSubviews: [block1, block2, block3, block4])
         blocksVStack.axis = .vertical
+        blocksVStack.spacing = 24
 
-        let VStack = UIStackView(arrangedSubviews: [title, subtitle, blocksVStack])
+        let VStackHeader = UIStackView(arrangedSubviews: [title, subtitle])
+        VStackHeader.axis = .vertical
+        VStackHeader.spacing = 16
+
+        let VStack = UIStackView(arrangedSubviews: [VStackHeader, blocksVStack])
         VStack.axis = .vertical
-        VStack.spacing = 16
-        VStack.setCustomSpacing(46, after: subtitle)
+        VStack.spacing = 46
+        VStack.alignment = .center
         VStack.translatesAutoresizingMaskIntoConstraints = false
 
         return VStack
@@ -90,10 +116,12 @@ final class MatchOnboardingViewController: UIViewController {
         scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        scroll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
         content.topAnchor.constraint(equalTo: scroll.topAnchor).isActive = true
         content.bottomAnchor.constraint(equalTo: scroll.bottomAnchor).isActive = true
         content.trailingAnchor.constraint(equalTo: scroll.trailingAnchor).isActive = true
         content.leadingAnchor.constraint(equalTo: scroll.leadingAnchor).isActive = true
+        content.centerXAnchor.constraint(equalTo: scroll.centerXAnchor).isActive = true
     }
 }
