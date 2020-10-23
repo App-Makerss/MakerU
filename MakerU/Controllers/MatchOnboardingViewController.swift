@@ -9,6 +9,29 @@ import UIKit
 
 final class MatchOnboardingViewController: UIViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
+
+        let scroll = UIScrollView()
+        scroll.showsVerticalScrollIndicator = false
+        scroll.showsHorizontalScrollIndicator = true
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.isScrollEnabled = true
+        scroll.isDirectionalLockEnabled = true
+        scroll.alwaysBounceVertical = true
+        view.addSubview(scroll)
+
+        let content = genContent()
+        scroll.addSubview(content)
+
+        setupConstraint(scroll, content)
+        setupNavigation()
+    }
+
+    // MARK: Generation func
+
     private func genBlock(title: String, description: String, imageName: String ) -> UIStackView {
         let label = UILabel()
         label.font = UIFont.systemFont(style: .subheadline, weight: .semibold)
@@ -24,8 +47,9 @@ final class MatchOnboardingViewController: UIViewController {
 
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
-        img.heightAnchor.constraint(equalToConstant: 34).isActive = true
+        img.heightAnchor.constraint(equalToConstant: 32).isActive = true
         img.widthAnchor.constraint(equalToConstant: 34).isActive = true
+        img.contentMode = .scaleAspectFit
         img.image = UIImage(systemName: imageName)
         img.tintColor = .systemPurple
         img.clipsToBounds = true
@@ -40,37 +64,6 @@ final class MatchOnboardingViewController: UIViewController {
         HStack.alignment = .center
 
         return HStack
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-
-        let scroll = UIScrollView()
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scroll)
-        scroll.isScrollEnabled = true
-        scroll.isDirectionalLockEnabled = true
-        scroll.alwaysBounceVertical = true
-
-        let content = genContent()
-        scroll.addSubview(content)
-
-        setupConstraint(scroll, content)
-        setupNavigation()
-    }
-
-    @objc func closeTapped(){
-        self.dismiss(animated: true, completion: nil)
-    }
-
-    func setupNavigation(){
-        let close = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(self.closeTapped))
-        self.navigationItem.rightBarButtonItem = close
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.backgroundColor = .clear
     }
 
     private func genContent() -> UIStackView {
@@ -110,6 +103,8 @@ final class MatchOnboardingViewController: UIViewController {
         return VStack
     }
 
+    // MARK: SetupConstraint
+
     private func setupConstraint(_ scroll: UIScrollView, _ content: UIStackView) {
         let safeAnchors = view.safeAreaLayoutGuide
         scroll.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 34).isActive = true
@@ -123,5 +118,22 @@ final class MatchOnboardingViewController: UIViewController {
         content.trailingAnchor.constraint(equalTo: scroll.trailingAnchor).isActive = true
         content.leadingAnchor.constraint(equalTo: scroll.leadingAnchor).isActive = true
         content.centerXAnchor.constraint(equalTo: scroll.centerXAnchor).isActive = true
+    }
+
+
+    // MARK: SetupNavigation
+
+    func setupNavigation(){
+        let close = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(self.closeTapped))
+        self.navigationItem.rightBarButtonItem = close
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = .clear
+    }
+
+    // MARK: @obgc func
+
+    @objc func closeTapped(){
+        self.dismiss(animated: true, completion: nil)
     }
 }
