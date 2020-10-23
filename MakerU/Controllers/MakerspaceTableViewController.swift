@@ -8,12 +8,12 @@
 import UIKit
 
 class MakerspaceTableViewController: UITableViewController {
-    
+    var scrollEdgeAppearanceTintColor: UIColor = .white
+    var defaultTintColor: UIColor = .systemPurple
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let nav = navigationController as? ImageCoverNavigationController
-        navigationItem.scrollEdgeAppearance = nav?.configureAppearance(image: UIImage(named: "test"))
+        setupCoverImage(image: UIImage(named: "test"))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -28,7 +28,7 @@ class MakerspaceTableViewController: UITableViewController {
         item.image = UIImage(systemName: "house.fill")
         self.tabBarItem = item
         navigationItem.title = "Espaço"
-        navigationController?.navigationBar.barTintColor  = .systemPurple
+        setupNavigationBarColor()
     }
     
     required init?(coder: NSCoder) {
@@ -58,23 +58,8 @@ class MakerspaceTableViewController: UITableViewController {
 }
 
 //MARK: scrollViewDelegate
-extension MakerspaceTableViewController {
+extension MakerspaceTableViewController: ScrollableCover {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let navBar  = self.navigationController?.navigationBar
-        else {return}
-
-        let navBarHeight = navBar.bounds.height
-        if navBarHeight >= 46 {
-            
-            let backImage = UIImage(systemName: "chevron.left.circle.fill")
-            navigationItem.scrollEdgeAppearance?.setBackIndicatorImage(backImage, transitionMaskImage: backImage)
-            navigationController?.navigationBar.tintColor = .white
-            
-            
-        }else {
-            navigationItem.scrollEdgeAppearance?.setBackIndicatorImage(nil, transitionMaskImage: nil)
-            navigationController?.navigationBar.tintColor = .systemPurple
-        }
-        navigationController?.setNeedsStatusBarAppearanceUpdate()
+        self.adjustCoverScroll(scrollView)
     }
 }

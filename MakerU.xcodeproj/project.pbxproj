@@ -45,6 +45,7 @@
 		566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC896252E99AC00346846 /* IdentifiableEntity.swift */; };
 		566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */; };
 		5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692CB0C25363FCD0087358A /* ProjectDAO.swift */; };
+		569C44292542FA400099A44A /* ScrollableCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C44282542FA3F0099A44A /* ScrollableCover.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
 		56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33283252BA7B300FA03AA /* AppDelegate.swift */; };
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
@@ -95,6 +96,7 @@
 		566EC896252E99AC00346846 /* IdentifiableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEntity.swift; sourceTree = "<group>"; };
 		566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
 		5692CB0C25363FCD0087358A /* ProjectDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
+		569C44282542FA3F0099A44A /* ScrollableCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCover.swift; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
 		56C33280252BA7B300FA03AA /* MakerU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C33283252BA7B300FA03AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
 				562666792541B5470091C10C /* MakerspaceTableViewController.swift */,
 				5626667F254203B20091C10C /* ImageCoverNavigationController.swift */,
+				569C44282542FA3F0099A44A /* ScrollableCover.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
+				569C44292542FA400099A44A /* ScrollableCover.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
 				E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */,
 				56BE769E25389C5100F3E07F /* MatchService.swift in Sources */,
