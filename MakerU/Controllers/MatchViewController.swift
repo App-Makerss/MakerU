@@ -95,6 +95,12 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         collectionView.delegate = self
         
     }
+
+    @objc func presentMatchOnboarding(){
+        let presentMatchOnboardingVC = MatchOnboardingViewController()
+        let navigation = UINavigationController(rootViewController: presentMatchOnboardingVC)
+        present(navigation, animated: true, completion: nil)
+    }
     
     func setupNavigations() {
         navigationItem.title = "Encontrar pessoas"
@@ -105,6 +111,10 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
+
+        let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(self.presentMatchOnboarding))
+        infoButton.tintColor = .systemPurple
+        self.navigationItem.rightBarButtonItem = infoButton
     }
     
     func setupContraints() {
