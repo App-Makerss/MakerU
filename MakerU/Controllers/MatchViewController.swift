@@ -107,6 +107,18 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         navigationController?.navigationBar.backgroundColor = .clear
     }
     
+    @objc func configDisplayButtonTapped() {
+        let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
+        let navigation = UINavigationController(rootViewController: displayConfigurationVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func seeMoreButtonTapped() {
+        let displayInfoVC = MatchCardInfoViewController()
+        let navigation = UINavigationController(rootViewController: displayInfoVC)
+        present(navigation, animated: true, completion: nil)
+    }
+
     func setupContraints() {
         
         // constraint CollectionView
@@ -195,6 +207,18 @@ extension MatchViewController  {
 
 //MARK: MatchCardCollectionViewCellDelegate
 extension MatchViewController: MatchCardCollectionViewCellDelegate {
+    
+    /// Present's the The MatchCardInfoViewController Modal
+    /// - Parameter nextScreen: The MatchCardInfoViewController
+    func seeMoreButtonButtonTapped(_ cell: MatchCardCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell)
+        else {return}
+        let displayInfoVC = MatchCardInfoViewController()
+        displayInfoVC.config(with: matchSuggestions[indexPath.row])
+        let navigation = UINavigationController(rootViewController: displayInfoVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
     fileprivate func removeCard(for currentIndex: IndexPath) {
         self.collectionView.performBatchUpdates({
             self.collectionView.deleteItems(at: [currentIndex])
@@ -224,7 +248,6 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                     self.removeCard(for: currentIndex)
                 }
             }
-            
         }
     }
 }
