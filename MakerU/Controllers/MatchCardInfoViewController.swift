@@ -44,7 +44,7 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.systemFont(style: .title3, weight: .medium)
+        title.setDynamicType(font: .systemFont(style: .title3, weight: .medium), textStyle: .title3 )
         title.text = "Realidade aumentada para inclusão"
         title.numberOfLines = 0
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -55,7 +55,7 @@ class MatchCardInfoViewController: UIViewController {
         let subtitle = UILabel()
         subtitle.textColor = .secondaryLabel
         subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        subtitle.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        subtitle.setDynamicType(font: .preferredFont(forTextStyle: .subheadline))
         subtitle.text = "Tecnologia"
         subtitle.numberOfLines = 0
         return subtitle
@@ -65,7 +65,7 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardFirstSessionTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.setDynamicType(font: .preferredFont(forTextStyle: .headline))
         title.text = "Descrição"
         title.tintColor = .label
         return title
@@ -74,7 +74,7 @@ class MatchCardInfoViewController: UIViewController {
     let cardFirstSessionDescription: UILabel = {
         let description = UILabel()
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.setDynamicType(font: .preferredFont(forTextStyle: .callout))
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 0
         return description
@@ -82,7 +82,7 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardSecondSessionTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.setDynamicType(font: .preferredFont(forTextStyle: .headline))
         title.text = "Habilidades Procuradas"
         title.tintColor = .label
         return title
@@ -91,7 +91,7 @@ class MatchCardInfoViewController: UIViewController {
     let cardSecondSessionDescription: UILabel = {
         let description = UILabel()
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.setDynamicType(font: .preferredFont(forTextStyle: .callout))
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 0
         return description
