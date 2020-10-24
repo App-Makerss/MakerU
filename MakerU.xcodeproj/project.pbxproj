@@ -45,6 +45,7 @@
 		566EC894252E74B000346846 /* UserDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC893252E74B000346846 /* UserDAO.swift */; };
 		566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC896252E99AC00346846 /* IdentifiableEntity.swift */; };
 		566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */; };
+		568ACDFD2543EF7300200D48 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568ACDFC2543EF7300200D48 /* UILabel+Extensions.swift */; };
 		5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692CB0C25363FCD0087358A /* ProjectDAO.swift */; };
 		569C44292542FA400099A44A /* ScrollableCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C44282542FA3F0099A44A /* ScrollableCover.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
@@ -98,6 +99,7 @@
 		566EC893252E74B000346846 /* UserDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDAO.swift; sourceTree = "<group>"; };
 		566EC896252E99AC00346846 /* IdentifiableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEntity.swift; sourceTree = "<group>"; };
 		566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
+		568ACDFC2543EF7300200D48 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		5692CB0C25363FCD0087358A /* ProjectDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
 		569C44282542FA3F0099A44A /* ScrollableCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCover.swift; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			children = (
 				566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */,
 				566D51022539F262002B0CE1 /* UIFont+Extensions.swift */,
+				568ACDFC2543EF7300200D48 /* UILabel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				566EB3D52535EF6D0092F096 /* Project.swift in Sources */,
 				566D5106253A2B18002B0CE1 /* MatchCard.swift in Sources */,
 				56548DA8252E0BDC003AC229 /* CloudKitEncodable.swift in Sources */,
+				568ACDFD2543EF7300200D48 /* UILabel+Extensions.swift in Sources */,
 				56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */,
 				566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */,
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,
