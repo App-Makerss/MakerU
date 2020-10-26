@@ -8,28 +8,13 @@
 import Foundation
 import UIKit
 
-extension UILabel {
+extension UIFont {
     
-    var isTruncated: Bool {
-        guard let labelText = text, bounds.size.height > 0 else {return false}
-        let labelTextSize = (labelText as NSString).boundingRect(
-            with: CGSize(width: frame.size.width, height: .greatestFiniteMagnitude),
-            options: .usesLineFragmentOrigin,
-            attributes: [.font: font!],
-            context: nil).size
-        
-        return labelTextSize.height > bounds.size.height
-    }
-    
-    func setDynamicType(font: UIFont, textStyle: UIFont.TextStyle? = nil){
-        self.adjustsFontForContentSizeCategory = true
-        var style: UIFont.TextStyle!
-        if textStyle == nil {
-            style = font.textStyle
-        }else {
-            style = textStyle
+    static func systemFont(style: UIFont.TextStyle, weight: UIFont.Weight? = nil) -> UIFont {
+        if weight == nil {
+            return .preferredFont(forTextStyle: style)
         }
-        self.font = UIFontMetrics(forTextStyle: style).scaledFont(for: font,maximumPointSize: UIFont.maximumSize(for: style))
+        return .systemFont(ofSize: UIFont.preferredFont(forTextStyle: style).pointSize, weight: weight!)
     }
     
     var textStyle: UIFont.TextStyle {

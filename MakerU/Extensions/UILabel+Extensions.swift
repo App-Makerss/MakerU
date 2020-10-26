@@ -20,4 +20,16 @@ extension UILabel {
         
         return labelTextSize.height > bounds.size.height
     }
+    
+    func setDynamicType(font: UIFont, textStyle: UIFont.TextStyle? = nil){
+        self.adjustsFontForContentSizeCategory = true
+        var style: UIFont.TextStyle!
+        if textStyle == nil {
+            style = font.textStyle
+        }else {
+            style = textStyle
+        }
+        self.font = UIFontMetrics(forTextStyle: style).scaledFont(for: font,maximumPointSize: UIFont.maximumSize(for: style))
+    }
+
 }
