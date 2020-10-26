@@ -24,7 +24,10 @@ struct MatchCard: Codable, Hashable {
     var secondSessionLabel: String
     
     
-    
+    static func == (lhs: MatchCard, rhs: MatchCard) -> Bool {
+        return
+            lhs.id == rhs.id
+    }
     init(from project: Project, with category: Category) {
         id = project.id!
         type = .project
