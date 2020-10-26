@@ -34,6 +34,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    
     let cardImageView: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -241,19 +242,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     }
     
     fileprivate func setupCardFrontConstraints() {
-        cardFrontContent.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
-        cardFrontContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        cardFrontContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
+        cardFrontContent.topAnchor.constraint(equalTo: containerview.topAnchor, constant: 24).isActive = true
+        cardFrontContent.trailingAnchor.constraint(equalTo: containerview.trailingAnchor, constant: -24).isActive = true
+        cardFrontContent.leadingAnchor.constraint(equalTo: containerview.leadingAnchor, constant: 24).isActive = true
         
        collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 20).isActive = true
-        collaborateButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        collaborateButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        collaborateButton.centerXAnchor.constraint(equalTo: containerview.centerXAnchor).isActive = true
+        collaborateButton.bottomAnchor.constraint(equalTo: containerview.bottomAnchor, constant: -16).isActive = true
     }
     
     fileprivate func setupAppearance() {
         if cardFace == .front {
-            self.backgroundColor = .systemBackground
-            self.layer.cornerRadius = 10
+            self.backgroundColor = .clear
             self.layer.shadowColor = UIColor.black.cgColor
             self.layer.masksToBounds = false
             self.layer.shadowRadius = 30 / 2.0
@@ -322,6 +322,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         setupAppearance()
     }
+    let containerview = UIView()
     
     private func setupCardFrontalFace(){
         cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
@@ -331,8 +332,21 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         cardFrontContent.addArrangedSubview(secondSessionStack())
         cardFrontContent.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(cardFrontContent)
-        contentView.addSubview(collaborateButton)
+        containerview.layer.cornerRadius = 10
+        containerview.layer.masksToBounds = true
+        containerview.backgroundColor = .systemBackground
+        containerview.translatesAutoresizingMaskIntoConstraints = false
+
+        containerview.addSubview(cardFrontContent)
+        containerview.addSubview(collaborateButton)
+        
+        contentView.addSubview(containerview)
+        
+        containerview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        containerview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        containerview.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        containerview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
         
         setupAppearance()
         setupCardFrontConstraints()
