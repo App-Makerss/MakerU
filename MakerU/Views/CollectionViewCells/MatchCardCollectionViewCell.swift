@@ -212,11 +212,24 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return headerStack
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        let buttonAray =  self.superview?.subviews.filter({ (subViewObj) -> Bool in
+            return subViewObj.tag ==  9090
+        })
+        
+        if buttonAray?.isEmpty == true {
+            self.addOrRemoveButton()
+        }
+    }
+    
     func addOrRemoveButton() {
         guard let uiview = cardFirstSessionDescription.superview?.superview as? UIControl,
               let contentStack = uiview.subviews.first else {return}
-        if cardFirstSessionDescription.isTruncated || cardFirstSessionDescription.text!.count > 220 {
+        if cardFirstSessionDescription.isTruncated{
             uiview.addSubview(seeMoreButton)
+            seeMoreButton.tag = 9090
             seeMoreButton.trailingAnchor.constraint(equalTo:uiview.trailingAnchor).isActive = true
             seeMoreButton.widthAnchor.constraint(equalTo: uiview.widthAnchor, multiplier: 0.2).isActive = true
             seeMoreButton.lastBaselineAnchor.constraint(equalTo: contentStack.lastBaselineAnchor).isActive = true
