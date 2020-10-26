@@ -27,11 +27,13 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         didSet{
             if cardFace == .front {
                 setupCardFrontalFace()
+                addOrRemoveButton()
             }else {
                 setupCardBackFace()
             }
         }
     }
+    
     
     let cardImageView: UIImageView = {
         let img = UIImageView()
@@ -69,6 +71,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         btn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         btn.tintColor = .systemPurple
         btn.contentHorizontalAlignment = .right
+        btn.isHidden = true
         return btn
     }()
     
@@ -79,16 +82,15 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         title.tintColor = .label
         return title
     }()
-    
     let seeMoreButton: UIButton = {
         let btn = UIButton(type: .custom)
         btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        btn.setTitle("Ver tudo", for: .normal)
+        btn.setTitle("mais", for: .normal)
         btn.setTitleColor(.systemPurple, for: .normal)
-        btn.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         btn.contentHorizontalAlignment = .right
         btn.isEnabled = true
-                
+        btn.setBackgroundImage(UIImage(named: "seeMoreButtonBackgroundGradient"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
@@ -114,7 +116,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
         description.font = UIFont.preferredFont(forTextStyle: .callout)
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
-        description.numberOfLines = 6
+        description.numberOfLines = 5
         return description
     }()
     
@@ -168,14 +170,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     private func firstSessionStack() -> UIStackView {
         
-        let upStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, seeMoreButton])
-        upStack.distribution = .fillProportionally
         
-        let content = UIStackView(arrangedSubviews: [upStack, cardFirstSessionDescription])
-        content.spacing = 8
-        content.axis = .vertical
+        let contentStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, cardFirstSessionDescription])
+        contentStack.spacing = 8
+        contentStack.axis = .vertical
+        contentStack.isUserInteractionEnabled = false
         
-        let firstSessionStack = UIStackView(arrangedSubviews: [content, genDivider()])
+        let uiview = UIControl()
+        uiview.isUserInteractionEnabled = true
+        uiview.addSubview(contentStack)
+        contentStack.setupConstraints(to: uiview)
+        
+        let firstSessionStack = UIStackView(arrangedSubviews: [uiview, genDivider()])
         firstSessionStack.axis = .vertical
         firstSessionStack.spacing = 16
         
@@ -207,20 +213,47 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return headerStack
     }
     
-    fileprivate func setupCardFrontConstraints() {
-        cardFrontContent.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
-        cardFrontContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        cardFrontContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
-       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 40).isActive = true
-        collaborateButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        collaborateButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        let buttonAray =  self.superview?.subviews.filter({ (subViewObj) -> Bool in
+            return subViewObj.tag ==  9090
+        })
+        
+        if buttonAray?.isEmpty == true {
+            self.addOrRemoveButton()
+        }
+    }
+    
+    func addOrRemoveButton() {
+        guard let uiview = cardFirstSessionDescription.superview?.superview as? UIControl,
+              let contentStack = uiview.subviews.first else {return}
+        if cardFirstSessionDescription.isTruncated{
+            uiview.addSubview(seeMoreButton)
+            seeMoreButton.tag = 9090
+            seeMoreButton.trailingAnchor.constraint(equalTo:uiview.trailingAnchor).isActive = true
+            seeMoreButton.widthAnchor.constraint(equalTo: uiview.widthAnchor, multiplier: 0.2).isActive = true
+            seeMoreButton.lastBaselineAnchor.constraint(equalTo: contentStack.lastBaselineAnchor).isActive = true
+            seeMoreButton.isUserInteractionEnabled = false
+            uiview.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
+        }else {
+            seeMoreButton.removeFromSuperview()
+        }
+    }
+    
+    fileprivate func setupCardFrontConstraints() {
+        cardFrontContent.topAnchor.constraint(equalTo: containerview.topAnchor, constant: 24).isActive = true
+        cardFrontContent.trailingAnchor.constraint(equalTo: containerview.trailingAnchor, constant: -24).isActive = true
+        cardFrontContent.leadingAnchor.constraint(equalTo: containerview.leadingAnchor, constant: 24).isActive = true
+        
+       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 20).isActive = true
+        collaborateButton.centerXAnchor.constraint(equalTo: containerview.centerXAnchor).isActive = true
+        collaborateButton.bottomAnchor.constraint(equalTo: containerview.bottomAnchor, constant: -16).isActive = true
     }
     
     fileprivate func setupAppearance() {
         if cardFace == .front {
-            self.backgroundColor = .systemBackground
-            self.layer.cornerRadius = 10
+            self.backgroundColor = .clear
             self.layer.shadowColor = UIColor.black.cgColor
             self.layer.masksToBounds = false
             self.layer.shadowRadius = 30 / 2.0
@@ -289,6 +322,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         setupAppearance()
     }
+    let containerview = UIView()
     
     private func setupCardFrontalFace(){
         cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
@@ -298,14 +332,26 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         cardFrontContent.addArrangedSubview(secondSessionStack())
         cardFrontContent.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(cardFrontContent)
-        contentView.addSubview(collaborateButton)
+        containerview.layer.cornerRadius = 10
+        containerview.layer.masksToBounds = true
+        containerview.backgroundColor = .systemBackground
+        containerview.translatesAutoresizingMaskIntoConstraints = false
+
+        containerview.addSubview(cardFrontContent)
+        containerview.addSubview(collaborateButton)
+        
+        contentView.addSubview(containerview)
+        
+        containerview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        containerview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        containerview.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        containerview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
         
         setupAppearance()
         setupCardFrontConstraints()
         
         collaborateButton.addTarget(self, action: #selector(self.collaborateButtonTap), for: .touchUpInside)
-        seeMoreButton.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
     }
     
     

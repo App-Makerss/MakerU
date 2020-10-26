@@ -13,14 +13,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
 
     //MARK: Attributes
     let matchService = MatchService()
-    var matchSuggestions: [MatchCard] = [] {
-        didSet {
-            DispatchQueue.main.async { [self] in
-                configureDataSource()
-                configureSnapshot()
-            }
-        }
-    }
+    var matchSuggestions: [MatchCard] = []
     
     //MARK: Outlets
     var collectionView: UICollectionView!
@@ -57,7 +50,8 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
             if let categories = categories{
                 self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
                     if let matchCards = matchCards{
-                        self.matchSuggestions.append(contentsOf: matchCards)
+                        self.matchSuggestions = matchCards
+                        self.updateSnapshot()
                     }
                 }
             }
@@ -75,6 +69,9 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         setupCollecitonView()
         setupContraints()
         setupNavigations()
+        
+        configureDataSource()
+        configureSnapshot()
         
     }
     
@@ -199,17 +196,29 @@ extension MatchViewController  {
             return cell
         })
     }
+    func addSectionAndItens(_ currentSnapshot: inout NSDiffableDataSourceSnapshot<String, MatchCard>) {
+        currentSnapshot.appendSections(["cards"])
+        currentSnapshot.appendItems(self.matchSuggestions, toSection: "cards")
+    }
+    
     func configureSnapshot() {
         var currentSnapshot = NSDiffableDataSourceSnapshot<String, MatchCard>()
-        currentSnapshot.appendSections([""])
-        matchSuggestions.forEach { suggestion in
-            if !currentSnapshot.itemIdentifiers.contains(suggestion) {
-                currentSnapshot.appendItems([suggestion])
-            }
-        }
+        addSectionAndItens(&currentSnapshot)
         dataSource.apply(currentSnapshot,animatingDifferences: false)
     }
     
+    func updateSnapshot() {
+        var currentSnapshot = self.dataSource.snapshot()
+        if currentSnapshot.numberOfSections > 0 {
+            if currentSnapshot.numberOfItems == 0{
+                currentSnapshot.appendItems(self.matchSuggestions, toSection: "cards")
+            }else {
+                currentSnapshot.deleteAllItems()
+                addSectionAndItens(&currentSnapshot)
+            }
+            self.dataSource.apply(currentSnapshot,animatingDifferences: true)
+        }
+    }
 }
 
 //MARK: MatchCardCollectionViewCellDelegate
@@ -226,11 +235,12 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         present(navigation, animated: true, completion: nil)
     }
     
-    fileprivate func removeCard(for currentIndex: IndexPath) {
-        self.collectionView.performBatchUpdates({
-            self.collectionView.deleteItems(at: [currentIndex])
-            self.matchSuggestions.remove(at: currentIndex.row)
-        }, completion:nil)
+    fileprivate func removeCard(for card: MatchCard) {
+        var currentSnapshot = dataSource.snapshot()
+        currentSnapshot.deleteItems([card])
+        matchSuggestions.removeAll {$0.id == card.id}
+        dataSource.apply(currentSnapshot, animatingDifferences: true)
+        
     }
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
@@ -247,12 +257,12 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                 DispatchQueue.main.async {
                     cell.cardFace = .back
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    self.removeCard(for: currentIndex)
+                DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
+                    self.removeCard(for: card)
                 }
             }else{
-                DispatchQueue.main.async {
-                    self.removeCard(for: currentIndex)
+                DispatchQueue.global().async {
+                    self.removeCard(for: card)
                 }
             }
         }

@@ -45,8 +45,10 @@
 		566EC894252E74B000346846 /* UserDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC893252E74B000346846 /* UserDAO.swift */; };
 		566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC896252E99AC00346846 /* IdentifiableEntity.swift */; };
 		566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */; };
+		569103BD25472FB90094D071 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569103BC25472FB90094D071 /* UILabel+Extensions.swift */; };
 		5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692CB0C25363FCD0087358A /* ProjectDAO.swift */; };
 		569C44292542FA400099A44A /* ScrollableCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C44282542FA3F0099A44A /* ScrollableCover.swift */; };
+		569C4436254319710099A44A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C4435254319710099A44A /* UIView+Constraints.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
 		56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33283252BA7B300FA03AA /* AppDelegate.swift */; };
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
@@ -98,8 +100,10 @@
 		566EC893252E74B000346846 /* UserDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDAO.swift; sourceTree = "<group>"; };
 		566EC896252E99AC00346846 /* IdentifiableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEntity.swift; sourceTree = "<group>"; };
 		566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
+		569103BC25472FB90094D071 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		5692CB0C25363FCD0087358A /* ProjectDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
 		569C44282542FA3F0099A44A /* ScrollableCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCover.swift; sourceTree = "<group>"; };
+		569C4435254319710099A44A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
 		56C33280252BA7B300FA03AA /* MakerU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C33283252BA7B300FA03AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -212,8 +216,10 @@
 		566EC89E252E9A2D00346846 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				569103BC25472FB90094D071 /* UILabel+Extensions.swift */,
 				566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */,
 				566D51022539F262002B0CE1 /* UIFont+Extensions.swift */,
+				569C4435254319710099A44A /* UIView+Constraints.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -370,6 +376,7 @@
 				E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */,
 				5626667A2541B5470091C10C /* MakerspaceTableViewController.swift in Sources */,
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
+				569C4436254319710099A44A /* UIView+Constraints.swift in Sources */,
 				3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */,
 				3EB645712539388F008D437D /* SkillsTableViewCell.swift in Sources */,
 				564954B8253F0C790052125A /* SegmentedTableViewCell.swift in Sources */,
@@ -387,6 +394,7 @@
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
+				569103BD25472FB90094D071 /* UILabel+Extensions.swift in Sources */,
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
