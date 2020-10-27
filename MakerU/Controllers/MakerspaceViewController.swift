@@ -14,13 +14,11 @@ class MakerspaceViewController: UIViewController {
     
     var collectionView: UICollectionView!
     
-    var equipments: [Equipment] = [
-        Equipment(makerspace: "", title: "Equip1"),
-        Equipment(makerspace: "", title: "Equip2"),
-        Equipment(makerspace: "", title: "Equip3"),
-        Equipment(makerspace: "", title: "Equip4"),
-        Equipment(makerspace: "", title: "Equip5")
-    ]
+    var equipments: [Equipment] = [] {
+        didSet {
+            collectionView.reloadSections(IndexSet([0]))
+        }
+    }
     
     
     //MARK: Layout attributes
@@ -29,6 +27,16 @@ class MakerspaceViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupCoverImage(image: UIImage(named: "test"))
+        
+        let pred = NSPredicate(format: "makerspace == %@", "35D91B38-ED05-C6C6-DD97-CE01D997D55E")
+        EquipmentDAO().listAll(by: pred) { (equipments, error) in
+            if let equipments = equipments {
+                self.equipments = equipments
+            }
+        }
+        
+        
+        //load rooms
     }
     
     override func viewDidAppear(_ animated: Bool) {

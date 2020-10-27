@@ -7,10 +7,13 @@
 
 import Foundation
 
-struct Equipment {
+struct Equipment: IdentifiableEntity, Codable  {
+    var id: String?
     
-    var description: String = ""
-    var makerspace: String
-    var status: Bool = false
     var title: String
+    var description: String = ""
+    var status: Bool = false
+    var metrics: String = ""
+    var makerspace: String
+    var image: Data?
 }
