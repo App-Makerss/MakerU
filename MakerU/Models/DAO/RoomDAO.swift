@@ -17,7 +17,8 @@ struct RoomDAO: GenericsDAO {
         let id = record.recordID.recordName
         guard
             let title = record["title"] as? String,
-            let maxCapacity = record["maxCapacity"] as? Int,
+            let descriptionStrings = record["descriptionStrings"] as? [String],
+            let iconNames = record["descriptionIconNames"] as? [String],
             let statusInt = record["status"] as? Int,
             let makerspaceRef = record["makerspace"] as? CKRecord.Reference,
             let imageAsset = record["image"] as? CKAsset,
@@ -27,11 +28,7 @@ struct RoomDAO: GenericsDAO {
         let status = statusInt == 1
         let makerspace = makerspaceRef.recordID.recordName
 
-        // loads the optionals info
-        let media = record["media"] as? String ?? ""
-        let environment = record["environment"] as? String ?? ""
-
-        return Room(id: id, title: title, maxCapacity: maxCapacity, media: media, environment: environment, status: status, makerspace: makerspace, image: imageData)
+        return Room(id: id, title: title, descriptionStrings: descriptionStrings, descriptionIconNames: iconNames, status: status, makerspace: makerspace, image: imageData)
     }
 
 

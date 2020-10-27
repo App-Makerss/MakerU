@@ -10,9 +10,8 @@ import Foundation
 struct Room: IdentifiableEntity, Codable {
     var id: String?
     var title: String
-    var maxCapacity: Int
-    var media: String = ""
-    var environment: String = ""
+    var descriptionStrings: [String]
+    var descriptionIconNames: [String]
     var status: Bool = false
 
     var makerspace: String
