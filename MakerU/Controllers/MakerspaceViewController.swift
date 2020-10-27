@@ -22,6 +22,15 @@ class MakerspaceViewController: UIViewController {
         }
     }
     
+    var rooms: [Room] = []{
+        didSet {
+            DispatchQueue.main.async {
+                print("count \(self.rooms.count)")
+                self.collectionView.reloadSections(IndexSet([1]))
+            }
+        }
+    }
+    
     
     //MARK: Layout attributes
     let horizontalInset: CGFloat = 29
@@ -30,17 +39,6 @@ class MakerspaceViewController: UIViewController {
         super.viewWillAppear(animated)
         setupCoverImage(image: UIImage(named: "test"))
         
-        let makerspaceRef = EquipmentDAO().generateRecordReference(for: "35D91B38-ED05-C6C6-DD97-CE01D997D55E", action: .deleteSelf)
-        let pred = NSPredicate(format: "makerspace == %@", makerspaceRef)
-        EquipmentDAO().listAll(by: pred) { (equipments, error) in
-            print(error?.localizedDescription)
-            if let equipments = equipments {
-                self.equipments = equipments
-            }
-        }
-        
-        
-        //load rooms
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,7 +58,7 @@ class MakerspaceViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.setupConstraints(to: view, topConstant: 5)
+        collectionView.setupConstraintsRelatedToSafeArea(to: view)
         
     }
     
@@ -69,7 +67,20 @@ class MakerspaceViewController: UIViewController {
         setupCollecitonView()
         
         self.view.backgroundColor = .systemBackground
-        
+        let makerspaceRef = EquipmentDAO().generateRecordReference(for: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", action: .deleteSelf)
+        let pred = NSPredicate(format: "makerspace == %@", makerspaceRef)
+        EquipmentDAO().listAll(by: pred) { (equipments, error) in
+            print(error?.localizedDescription)
+            if let equipments = equipments {
+                self.equipments = equipments
+            }
+        }
+        RoomDAO().listAll(by: pred) { (rooms, error) in
+            print(error?.localizedDescription)
+            if let rooms = rooms {
+                self.rooms = rooms.shuffled()
+            }
+        }
     }
     
     fileprivate func initItems() {
@@ -97,10 +108,19 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
         3
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 2 {
-            return 2
+        var numberOfItens = 0
+        switch section {
+            case 1:
+                numberOfItens = !rooms.isEmpty && rooms.count >= 4 ? 4 :rooms.count
+                break
+            case 2:
+                numberOfItens = 2
+                break
+            default:
+                numberOfItens = equipments.count
+                break
         }
-        return section == 0 ? equipments.count : 10
+        return numberOfItens
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -112,6 +132,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
             header.textLabel.text = "Equipamentos"
         }else if indexPath.section == 1 {
             header.textLabel.text = "Salas"
+            header.showsTopDivider = true
         }else {
             header.textLabel.text = "Entrar em contato"
         }
@@ -123,7 +144,12 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
         var cell: UICollectionViewCell!
         switch indexPath.section {
             case 1:
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCollectionViewCell.reuseIdentifier, for: indexPath) as! RoomCollectionViewCell
+                let roomCell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCollectionViewCell.reuseIdentifier, for: indexPath) as! RoomCollectionViewCell
+                let item = rooms[indexPath.row]
+                roomCell.title.text = item.title
+                roomCell.imageView.image = UIImage(data: item.image ?? Data())
+                
+                cell = roomCell
                 break
             case 2:
                 let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! UICollectionViewListCell
@@ -168,7 +194,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                     break
             }
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(52))
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
 
             section.contentInsets.bottom = 29
@@ -226,7 +252,8 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 
         let section = NSCollectionLayoutSection.list(using: configuration,
                                                      layoutEnvironment: layoutEnvironment)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: horizontalInset, bottom: 0, trailing: horizontalInset)
+        
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: horizontalInset, bottom: 0, trailing: horizontalInset)
         return section
     }
 }

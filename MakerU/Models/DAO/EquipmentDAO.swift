@@ -28,9 +28,10 @@ struct EquipmentDAO: GenericsDAO {
         let makerspace = makerspaceRef.recordID.recordName
         let status = statusInt == 1
         let metrics = record["metrics"] as? String ?? ""
+        let guideLink = record["guideLink"] as? String ?? ""
  
         
-        return ManagedEntity(id: id, title: title, description: description, status: status, metrics: metrics, makerspace: makerspace, image: imageData)
+        return ManagedEntity(id: id, title: title, metrics: metrics, description: description, guideLink: guideLink, status: status, makerspace: makerspace, image: imageData)
     }
     
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any] {

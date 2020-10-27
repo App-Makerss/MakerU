@@ -11,6 +11,12 @@ import UIKit
 final class TitleSupplementaryView: UICollectionReusableView {
     static let reuseIdentifier = String(describing: TitleSupplementaryView.self)
     
+    var showsTopDivider: Bool = false {
+        didSet {
+            divider.backgroundColor = showsTopDivider ? .systemGray3 : .clear
+        }
+    }
+    let divider = UIView()
     let textLabel = UILabel()
     
     required init?(coder: NSCoder) {
@@ -24,15 +30,20 @@ final class TitleSupplementaryView: UICollectionReusableView {
     
     private func configure() {
         addSubview(textLabel)
-        
+        addSubview(divider)
+        divider.translatesAutoresizingMaskIntoConstraints = false
+
         textLabel.setDynamicType(font: .systemFont(style: .title3, weight: .bold), textStyle: .title3)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.activate([
+            divider.topAnchor.constraint(equalTo: topAnchor),
+            divider.heightAnchor.constraint(equalToConstant: 0.5),
+            divider.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1),
             textLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             textLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 1)
+            textLabel.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 16)
         ])
     }
     

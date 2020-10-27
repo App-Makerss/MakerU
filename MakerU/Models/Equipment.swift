@@ -11,9 +11,10 @@ struct Equipment: IdentifiableEntity, Codable  {
     var id: String?
     
     var title: String
-    var description: String = ""
-    var status: Bool = false
     var metrics: String = ""
+    var description: String = ""
+    var guideLink: String
+    var status: Bool = false
     var makerspace: String
     var image: Data?
 }

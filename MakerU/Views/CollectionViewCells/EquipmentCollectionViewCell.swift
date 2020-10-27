@@ -22,6 +22,7 @@ class EquipmentCollectionViewCell: UICollectionViewCell {
     let subtitle: UILabel = {
         let lbl = UILabel()
         lbl.text = "290x350 mm"
+        lbl.textColor = .secondaryLabel
         lbl.setDynamicType(font: .systemFont(style: .caption2, weight: .medium), textStyle: .caption2)
         return lbl
     }()
@@ -39,18 +40,18 @@ class EquipmentCollectionViewCell: UICollectionViewCell {
         let footer = UIStackView(arrangedSubviews: [title,subtitle])
         footer.axis = .vertical
         footer.alignment = .leading
-        footer.distribution = .fillProportionally
 
         let footerView = UIView()
         footerView.addSubview(footer)
-        footer.setupConstraints(to: footerView, leadingConstant: 8)
+        footer.setupConstraints(to: footerView, leadingConstant: 8, bottomConstant: -8)
         
         let stack = UIStackView(arrangedSubviews: [imageView, footerView])
         stack.axis = .vertical
-        stack.distribution = .fill
+        stack.distribution = .fillProportionally
         stack.spacing = 8
+        stack.backgroundColor = .systemGray6
         
-        imageView.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: 0.75).isActive = true
+        imageView.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: 0.7).isActive = true
         
         return stack
     }
@@ -72,9 +73,19 @@ class EquipmentCollectionViewCell: UICollectionViewCell {
         
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.masksToBounds = false
-        self.layer.shadowRadius = 30 / 2.0
-        self.layer.shadowOpacity = 0.10
-        self.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.layer.shadowRadius = 20 / 2.0
+        self.layer.shadowOpacity = 0.15
+        self.layer.shadowOffset = CGSize(width: 0, height: 5)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if traitCollection.preferredContentSizeCategory >= .extraExtraExtraLarge {
+            subtitle.isHidden = true
+        }else {
+            subtitle.isHidden = false
+        }
     }
     
     override init(frame: CGRect) {

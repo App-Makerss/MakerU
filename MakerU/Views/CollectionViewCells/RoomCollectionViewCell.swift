@@ -56,9 +56,9 @@ class RoomCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = .clear
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.masksToBounds = false
-        self.layer.shadowRadius = 30 / 2.0
-        self.layer.shadowOpacity = 0.10
-        self.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.layer.shadowRadius = 15 / 2.0
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize(width: 0, height: 5)
     }
     
     override init(frame: CGRect) {
