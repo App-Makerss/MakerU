@@ -16,7 +16,9 @@ class MakerspaceViewController: UIViewController {
     
     var equipments: [Equipment] = [] {
         didSet {
-            collectionView.reloadSections(IndexSet([0]))
+            DispatchQueue.main.async {
+                self.collectionView.reloadSections(IndexSet([0]))
+            }
         }
     }
     
@@ -28,8 +30,10 @@ class MakerspaceViewController: UIViewController {
         super.viewWillAppear(animated)
         setupCoverImage(image: UIImage(named: "test"))
         
-        let pred = NSPredicate(format: "makerspace == %@", "35D91B38-ED05-C6C6-DD97-CE01D997D55E")
+        let makerspaceRef = EquipmentDAO().generateRecordReference(for: "35D91B38-ED05-C6C6-DD97-CE01D997D55E", action: .deleteSelf)
+        let pred = NSPredicate(format: "makerspace == %@", makerspaceRef)
         EquipmentDAO().listAll(by: pred) { (equipments, error) in
+            print(error?.localizedDescription)
             if let equipments = equipments {
                 self.equipments = equipments
             }
@@ -116,7 +120,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell!
+        var cell: UICollectionViewCell!
         switch indexPath.section {
             case 1:
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCollectionViewCell.reuseIdentifier, for: indexPath) as! RoomCollectionViewCell
@@ -135,7 +139,13 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 listCell.accessories = [.disclosureIndicator()]
                 return listCell
             default:
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: EquipmentCollectionViewCell.reuseIdentifier, for: indexPath) as! EquipmentCollectionViewCell
+                let equipCell = collectionView.dequeueReusableCell(withReuseIdentifier: EquipmentCollectionViewCell.reuseIdentifier, for: indexPath) as! EquipmentCollectionViewCell
+                let equipItem = equipments[indexPath.row]
+                equipCell.title.text = equipItem.title
+                equipCell.subtitle.text = equipItem.metrics
+                equipCell.imageView.image = UIImage(data: equipItem.image ?? Data())
+                
+                cell = equipCell
                 break
         }
         return cell

@@ -44,5 +44,9 @@ struct EquipmentDAO: GenericsDAO {
     
     func treatSpecialValues(forRecord rec: CKRecord, entity: ManagedEntity) {
         rec["makerspace"] = generateRecordReference(for: entity.makerspace, action: .deleteSelf)
+        if let data = entity.image, let image = CKAsset(data: data, compression: 1) {
+            rec["image"] = image
+        }
+        
     }
 }

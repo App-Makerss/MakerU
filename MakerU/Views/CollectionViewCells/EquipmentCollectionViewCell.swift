@@ -30,6 +30,7 @@ class EquipmentCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imgView = UIImageView(image: UIImage(named: "testEquip"))
         imgView.contentMode = .scaleAspectFill
+        imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
     }()
     
@@ -48,6 +49,8 @@ class EquipmentCollectionViewCell: UICollectionViewCell {
         stack.axis = .vertical
         stack.distribution = .fill
         stack.spacing = 8
+        
+        imageView.heightAnchor.constraint(equalTo: stack.heightAnchor, multiplier: 0.75).isActive = true
         
         return stack
     }
