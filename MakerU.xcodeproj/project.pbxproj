@@ -47,6 +47,7 @@
 		566EC894252E74B000346846 /* UserDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC893252E74B000346846 /* UserDAO.swift */; };
 		566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC896252E99AC00346846 /* IdentifiableEntity.swift */; };
 		566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */; };
+		567C514A25499BB30003BCCB /* AboutItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567C514925499BB30003BCCB /* AboutItemViewController.swift */; };
 		569103BD25472FB90094D071 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569103BC25472FB90094D071 /* UILabel+Extensions.swift */; };
 		569103CB254754040094D071 /* Equipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569103CA254754040094D071 /* Equipment.swift */; };
 		569103D0254763900094D071 /* EquipmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569103CF254763900094D071 /* EquipmentCollectionViewCell.swift */; };
@@ -65,7 +66,6 @@
 		E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */; };
 		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E247C090254260B00093833C /* MatchOnboardingViewController.swift */; };
-		E2568CF22547A79200AE5AC7 /* AboutItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2568CF12547A79200AE5AC7 /* AboutItemTableViewController.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +111,7 @@
 		566EC893252E74B000346846 /* UserDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDAO.swift; sourceTree = "<group>"; };
 		566EC896252E99AC00346846 /* IdentifiableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableEntity.swift; sourceTree = "<group>"; };
 		566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
+		567C514925499BB30003BCCB /* AboutItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutItemViewController.swift; sourceTree = "<group>"; };
 		569103BC25472FB90094D071 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		569103CA254754040094D071 /* Equipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equipment.swift; sourceTree = "<group>"; };
 		569103CF254763900094D071 /* EquipmentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -131,7 +132,6 @@
 		E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSelectorTableViewCell.swift; sourceTree = "<group>"; };
 		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E247C090254260B00093833C /* MatchOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchOnboardingViewController.swift; sourceTree = "<group>"; };
-		E2568CF12547A79200AE5AC7 /* AboutItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutItemTableViewController.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,8 +224,8 @@
 		566EB3CC2535E56B0092F096 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				567C514925499BB30003BCCB /* AboutItemViewController.swift */,
 				566EB3CD2535E58B0092F096 /* MatchViewController.swift */,
-				E2568CF12547A79200AE5AC7 /* AboutItemTableViewController.swift */,
 				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
 				562666792541B5470091C10C /* MakerspaceViewController.swift */,
 				5626667F254203B20091C10C /* ImageCoverNavigationController.swift */,
@@ -414,7 +414,6 @@
 			files = (
 				569103D0254763900094D071 /* EquipmentCollectionViewCell.swift in Sources */,
 				569103D8254780F10094D071 /* TitleSupplementaryView.swift in Sources */,
-				E2568CF22547A79200AE5AC7 /* AboutItemTableViewController.swift in Sources */,
 				566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */,
 				566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */,
 				3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */,
@@ -462,6 +461,7 @@
 				566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */,
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,
 				5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */,
+				567C514A25499BB30003BCCB /* AboutItemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
