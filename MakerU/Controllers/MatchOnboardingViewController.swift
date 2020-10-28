@@ -16,9 +16,6 @@ final class MatchOnboardingViewController: UIViewController {
 
         let scroll = UIScrollView()
         scroll.showsVerticalScrollIndicator = false
-        scroll.showsHorizontalScrollIndicator = true
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.isScrollEnabled = true
         scroll.isDirectionalLockEnabled = true
         scroll.alwaysBounceVertical = true
         view.addSubview(scroll)
@@ -98,7 +95,6 @@ final class MatchOnboardingViewController: UIViewController {
         VStack.axis = .vertical
         VStack.spacing = 46
         VStack.alignment = .center
-        VStack.translatesAutoresizingMaskIntoConstraints = false
 
         return VStack
     }
@@ -106,17 +102,10 @@ final class MatchOnboardingViewController: UIViewController {
     // MARK: SetupConstraint
 
     private func setupConstraint(_ scroll: UIScrollView, _ content: UIStackView) {
-        let safeAnchors = view.safeAreaLayoutGuide
-        scroll.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 34).isActive = true
-        scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-        scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        scroll.setupConstraints(to: view, leadingConstant: 30,topConstant: 34, trailingConstant: -30, topSafeArea: true)
         scroll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-        content.topAnchor.constraint(equalTo: scroll.topAnchor).isActive = true
-        content.bottomAnchor.constraint(equalTo: scroll.bottomAnchor).isActive = true
-        content.trailingAnchor.constraint(equalTo: scroll.trailingAnchor).isActive = true
-        content.leadingAnchor.constraint(equalTo: scroll.leadingAnchor).isActive = true
+        content.setupConstraints(to: scroll)
         content.centerXAnchor.constraint(equalTo: scroll.centerXAnchor).isActive = true
     }
 

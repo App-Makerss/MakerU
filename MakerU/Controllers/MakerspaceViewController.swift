@@ -72,7 +72,6 @@ class MakerspaceViewController: UIViewController {
     //MARK: Setups
     func setupCollecitonView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
@@ -83,7 +82,7 @@ class MakerspaceViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.setupConstraintsRelatedToSafeArea(to: view)
+        collectionView.setupConstraints(to: view, topSafeArea: true)
         
     }
 

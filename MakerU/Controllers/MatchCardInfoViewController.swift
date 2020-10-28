@@ -102,7 +102,6 @@ class MatchCardInfoViewController: UIViewController {
         root.axis = .vertical
         root.spacing = 16
         root.distribution = .fillProportionally
-        root.translatesAutoresizingMaskIntoConstraints = false
         
         return root
     }()
@@ -172,8 +171,6 @@ class MatchCardInfoViewController: UIViewController {
     
     
     private func setupScroll(){
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        modalContent.translatesAutoresizingMaskIntoConstraints = false
         modalContent.addArrangedSubview(firstSessionStack())
         modalContent.addArrangedSubview(secondSessionStack())
         view.addSubview(scrollView)
@@ -208,21 +205,14 @@ class MatchCardInfoViewController: UIViewController {
     func setupContraints(header: UIView) {
         
         header.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        header.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-        header.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        header.topAnchor.constraint(equalTo: view.topAnchor, constant: 29).isActive = true
+        header.setupConstraintsOnlyTo(to: view, leadingConstant: 24, topConstant: 29, trailingConstant: -24)
         header.bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: -16).isActive = true
         
         scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.setupConstraintsOnlyTo(to: view, leadingConstant: 24, trailingConstant: -24,bottomConstant: 0)
         
         modalContent.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        modalContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        modalContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        modalContent.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        modalContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        modalContent.setupConstraints(to: scrollView)
         
     }
 

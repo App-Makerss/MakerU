@@ -60,7 +60,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
-        segmented.translatesAutoresizingMaskIntoConstraints = false
         segmented.selectedSegmentIndex = 0
         segmented.addTarget(self, action: #selector(Self.selectedSegmentChanged), for: .valueChanged)
 
@@ -94,25 +93,9 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "SkillsTableViewCell", bundle: nil), forCellReuseIdentifier: "SkillsTableViewCell")
         tableView.register(UINib(nibName: "ShowProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "ShowProfileTableViewCell")
 
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
         hideKeyboardWhenTappedAround()
     }
 
-//    @objc func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-//            if self.view.frame.origin.y == 0  {
-//                self.view.frame.origin.y -= keyboardSize.height
-//            }
-//        }
-//    }
-//
-//    @objc func keyboardWillHide(notification: NSNotification) {
-//        if self.view.frame.origin.y != 0  {
-//            self.view.frame.origin.y = 0
-//        }
-//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -216,10 +199,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         case 0:
             let cell = UITableViewCell()
             cell.contentView.addSubview(configSegmentedControl)
-            configSegmentedControl.topAnchor.constraint(equalTo: cell.contentView.topAnchor).isActive = true
-            configSegmentedControl.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor).isActive = true
-            configSegmentedControl.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor).isActive = true
-            configSegmentedControl.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor).isActive = true
+            configSegmentedControl.setupConstraints(to: cell.contentView)
             
             resultCell = cell
             break

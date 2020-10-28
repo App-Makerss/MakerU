@@ -22,23 +22,17 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         let control = UIControl()
         control.backgroundColor = .secondarySystemGroupedBackground
         control.layer.cornerRadius = 10
-        control.translatesAutoresizingMaskIntoConstraints = false
         
         let cell = UITableViewCell(style: .default, reuseIdentifier: "notToReuse")
         cell.accessoryType = .disclosureIndicator
         cell.imageView?.image = UIImage(systemName: "person.2.square.stack")
         cell.imageView?.tintColor = .systemPurple
         cell.textLabel?.text = "Configurações de exibição"
-        cell.translatesAutoresizingMaskIntoConstraints = false
         cell.isUserInteractionEnabled = false
         
         control.addSubview(cell)
         
         cell.setupConstraints(to: control)
-//        cell.topAnchor.constraint(equalTo: control.topAnchor).isActive = true
-//        cell.leadingAnchor.constraint(equalTo: control.leadingAnchor, constant: 5).isActive = true
-//        cell.trailingAnchor.constraint(equalTo: control.trailingAnchor, constant: -5).isActive = true
-//        cell.bottomAnchor.constraint(equalTo: control.bottomAnchor).isActive = true
         
         control.addTarget(self, action: #selector(Self.configDisplayButtonTapped), for: .touchUpInside)
         
@@ -94,12 +88,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
     }
 
-    @objc func presentMatchOnboarding(){
-        let presentMatchOnboardingVC = MatchOnboardingViewController()
-        let navigation = UINavigationController(rootViewController: presentMatchOnboardingVC)
-        present(navigation, animated: true, completion: nil)
-    }
-    
     func setupNavigations() {
         navigationItem.title = "Encontrar pessoas"
         let item = UITabBarItem()
@@ -119,17 +107,12 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         // constraint CollectionView
         collectionView.backgroundColor = .clear
-        let safeAnchors = view.safeAreaLayoutGuide
-        collectionView.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 0).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        collectionView.setupConstraints(to: view, leadingConstant: 0,topConstant: 0, trailingConstant: 0, topSafeArea: true)
         collectionView.bottomAnchor.constraint(equalTo: configDisplayButton.topAnchor, constant: -16).isActive = true
         
         // constraint Button
         configDisplayButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        configDisplayButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        configDisplayButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        configDisplayButton.bottomAnchor.constraint(equalTo: safeAnchors.bottomAnchor, constant: -16).isActive = true
+        configDisplayButton.setupConstraintsOnlyTo(to: view, leadingConstant: 16, trailingConstant: -16, bottomConstant: -16, bottomSafeArea: true)
     }
     
     //MARK: @ojbc funcs
@@ -142,6 +125,12 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     @objc func seeMoreButtonTapped() {
         let displayInfoVC = MatchCardInfoViewController()
         let navigation = UINavigationController(rootViewController: displayInfoVC)
+        present(navigation, animated: true, completion: nil)
+    }
+    
+    @objc func presentMatchOnboarding(){
+        let presentMatchOnboardingVC = MatchOnboardingViewController()
+        let navigation = UINavigationController(rootViewController: presentMatchOnboardingVC)
         present(navigation, animated: true, completion: nil)
     }
     

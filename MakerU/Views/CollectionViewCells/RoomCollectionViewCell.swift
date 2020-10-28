@@ -26,7 +26,6 @@ class RoomCollectionViewCell: UICollectionViewCell {
         lbl.text = "Estúdio de Gravação Gleb Wataghin"
         lbl.textColor = .white
         lbl.numberOfLines = 0
-        lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
@@ -46,9 +45,8 @@ class RoomCollectionViewCell: UICollectionViewCell {
         containerView.layer.masksToBounds = true
         contentView.addSubview(containerView)
         
-        title.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16).isActive = true
+        title.setupConstraintsOnlyTo(to: containerView, leadingConstant: 16, topConstant: 16)
         title.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.85).isActive = true
-        title.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16).isActive = true
         
         containerView.setupConstraints(to: contentView)
 

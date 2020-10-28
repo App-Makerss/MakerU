@@ -59,7 +59,7 @@ class AboutItemViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
 
-        tableView.setupConstraintsRelatedToSafeArea(to: view, topConstant: 16)
+        tableView.setupConstraints(to: view, topConstant: 16, topSafeArea: true)
     }
 
     fileprivate func initItems() {
