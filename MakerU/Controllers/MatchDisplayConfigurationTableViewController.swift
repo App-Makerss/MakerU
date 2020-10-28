@@ -94,8 +94,25 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "SkillsTableViewCell", bundle: nil), forCellReuseIdentifier: "SkillsTableViewCell")
         tableView.register(UINib(nibName: "ShowProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "ShowProfileTableViewCell")
 
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        hideKeyboardWhenTappedAround()
     }
 
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+//            if self.view.frame.origin.y == 0  {
+//                self.view.frame.origin.y -= keyboardSize.height
+//            }
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        if self.view.frame.origin.y != 0  {
+//            self.view.frame.origin.y = 0
+//        }
+//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -241,7 +258,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             let skills = configSegmentedControl.selectedSegmentIndex == 0 ? selectedUser?.skills : selectedProject?.skillsInNeed
             (cell as! SkillsTableViewCell).skillsTextView.text = skills
             (cell as! SkillsTableViewCell).delegate = self
-            resultCell.selectionStyle = .none
+            cell.selectionStyle = .none
             resultCell = cell
             break
         default:
