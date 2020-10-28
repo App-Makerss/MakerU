@@ -8,12 +8,16 @@
 import UIKit
 
 class MakerspaceViewController: UIViewController {
-    
+
+    // MARK: Layout Config
     var scrollEdgeAppearanceTintColor: UIColor = .white
     var defaultTintColor: UIColor = .systemPurple
-    
+    let horizontalInset: CGFloat = 29
+
+    // MARK: Outlet
     var collectionView: UICollectionView!
-    
+
+    // MARK: Attributes
     var equipments: [Equipment] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -32,9 +36,7 @@ class MakerspaceViewController: UIViewController {
     }
     
     
-    //MARK: Layout attributes
-    let horizontalInset: CGFloat = 29
-    
+    //MARK: View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupCoverImage(image: UIImage(named: "test"))
@@ -45,27 +47,11 @@ class MakerspaceViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
-    func setupCollecitonView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .clear
-        collectionView.clipsToBounds = false
-        collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
-        collectionView.register(RoomCollectionViewCell.self, forCellWithReuseIdentifier: RoomCollectionViewCell.reuseIdentifier)
-        collectionView.register(EquipmentCollectionViewCell.self, forCellWithReuseIdentifier: EquipmentCollectionViewCell.reuseIdentifier)
-        collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: "listCell")
-        view.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.setupConstraintsRelatedToSafeArea(to: view)
-        
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollecitonView()
-        
+
         self.view.backgroundColor = .systemBackground
         let makerspaceRef = EquipmentDAO().generateRecordReference(for: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", action: .deleteSelf)
         let pred = NSPredicate(format: "makerspace == %@", makerspaceRef)
@@ -82,7 +68,26 @@ class MakerspaceViewController: UIViewController {
             }
         }
     }
-    
+
+    //MARK: Setups
+    func setupCollecitonView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .clear
+        collectionView.clipsToBounds = false
+        collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
+        collectionView.register(RoomCollectionViewCell.self, forCellWithReuseIdentifier: RoomCollectionViewCell.reuseIdentifier)
+        collectionView.register(EquipmentCollectionViewCell.self, forCellWithReuseIdentifier: EquipmentCollectionViewCell.reuseIdentifier)
+        collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: "listCell")
+        view.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        collectionView.setupConstraintsRelatedToSafeArea(to: view)
+        
+    }
+
+    //MARK: Inits
     fileprivate func initItems() {
         let item =  UITabBarItem()
         item.title = "Espaço"
@@ -103,6 +108,7 @@ class MakerspaceViewController: UIViewController {
     
 }
 
+//MARK: CollectionView Delegte and Data Source
 extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         3
@@ -180,7 +186,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let vc = AboutItemTableViewController(style: .insetGrouped)
+        let vc = AboutItemViewController()
         switch indexPath.section {
         case 1:
             let item = rooms[indexPath.row]
@@ -225,7 +231,10 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
         
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
-    
+
+
+    /// Create first section of CollectionView - the equipment collection section
+    /// - Returns: a section
     func makeSection0() -> NSCollectionLayoutSection? {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
         
@@ -244,7 +253,9 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
         
         return section
     }
-    
+
+    /// Create second section of CollectionView - the room list section
+    /// - Returns: a section
     func makeSection1() -> NSCollectionLayoutSection? {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
         
@@ -263,7 +274,9 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
         
         return section
     }
-    
+
+    /// Create third section of CollectionView - the static section
+    /// - Returns: a section
     func makeSection2(_ layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         
         var configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)

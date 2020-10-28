@@ -9,9 +9,14 @@ import UIKit
 
 class AboutItemViewController: UIViewController {
 
+    // MARK: Layout Config
     var scrollEdgeAppearanceTintColor: UIColor = .white
     var defaultTintColor: UIColor = .systemPurple
 
+    // MARK: Outlet
+    var tableView: UITableView!
+
+    // MARK: Attributes
     var selectedRoom: Room? {
         didSet {
             navigationItem.title = selectedRoom?.title
@@ -23,9 +28,10 @@ class AboutItemViewController: UIViewController {
         }
     }
 
+    // MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        setupTableView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -43,38 +49,50 @@ class AboutItemViewController: UIViewController {
         navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
 
+    func setupTableView() {
+        tableView = UITableView(frame: .zero, style: .insetGrouped)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.addSubview(tableView)
+        view.backgroundColor = .systemGray5
+
+        tableView.backgroundColor = .clear
+        tableView.clipsToBounds = false
+        tableView.delegate = self
+        tableView.dataSource = self
+
+        tableView.setupConstraintsRelatedToSafeArea(to: view, topConstant: 16)
+    }
+
     fileprivate func initItems() {
         setupNavigationBarColor()
     }
 
-    override init(style: UITableView.Style) {
-        super.init(style: style)
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         initItems()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-
 }
+
+// MARK: - Table view delegate and data source
 extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
+     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if selectedRoom != nil {
             return selectedRoom!.descriptionStrings.count
         }
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let view = UIView()
         let label = UILabel()
@@ -93,11 +111,11 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         44
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
@@ -121,7 +139,7 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: scrollViewDelegate
 extension AboutItemViewController: ScrollableCover {
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.adjustCoverScroll(scrollView)
     }
 }
