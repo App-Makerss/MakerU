@@ -176,7 +176,26 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
         }
         return cell
     }
-    
+
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        let vc = AboutItemTableViewController(style: .insetGrouped)
+        switch indexPath.section {
+        case 1:
+            let item = rooms[indexPath.row]
+            vc.selectedRoom = item
+            break
+        case 2:
+            break
+        default:
+            let item = equipments[indexPath.row]
+            vc.selectedEquip = item
+            break
+        }
+        navigationController?.pushViewController(vc, animated: true)
+    }
+
     func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         
         let sectionProvider = {(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
