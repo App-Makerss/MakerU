@@ -14,6 +14,8 @@ protocol PickerSelectorTableViewCellDelegate: class {
 class ProjectSelectorTableViewCell: UITableViewCell {
 
     var projects: [Project] = []
+    
+    var selectedProject: Project?
 
     weak var delegate: PickerSelectorTableViewCellDelegate?
 
@@ -24,11 +26,16 @@ class ProjectSelectorTableViewCell: UITableViewCell {
     }()
 
     
-    init(projects: [Project]) {
+    init(projects: [Project], selectedProject: Project? = nil) {
         super.init(style: .default, reuseIdentifier: nil)
         
         
         self.projects = projects
+        if selectedProject == nil {
+            self.selectedProject = projects.first
+        }else {
+            self.selectedProject = selectedProject
+        }
         commonInit()
     }
     
@@ -37,6 +44,11 @@ class ProjectSelectorTableViewCell: UITableViewCell {
         picker.delegate = self
         contentView.addSubview(picker)
         self.selectionStyle = .none
+        
+        if selectedProject != nil,
+           let row = projects.firstIndex(where: {$0.id == selectedProject!.id}) {
+            picker.selectRow(row, inComponent: 0, animated: true)
+        }
         setupContraint()
     }
     
@@ -71,7 +83,8 @@ extension ProjectSelectorTableViewCell: UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.didSelected(project: projects[row])
+        selectedProject = projects[row]
+        delegate?.didSelected(project: selectedProject!)
     }
 
 //    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

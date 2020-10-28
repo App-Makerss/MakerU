@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -18,48 +17,32 @@
                 <rect key="frame" x="0.0" y="0.0" width="343" height="52"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uM8-AZ-T2D">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="52"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OdP-UU-S6X">
+                        <rect key="frame" x="16" y="8" width="311" height="36"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="177" translatesAutoresizingMaskIntoConstraints="NO" id="OdP-UU-S6X">
-                                <rect key="frame" x="16" y="10.5" width="311.5" height="31"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exibir Perfil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ab-pc-pC5">
-                                        <rect key="frame" x="0.0" y="0.0" width="85.5" height="31"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xza-HP-FLc">
-                                        <rect key="frame" x="262.5" y="0.0" width="51" height="31"/>
-                                        <color key="onTintColor" systemColor="systemPurpleColor"/>
-                                    </switch>
-                                </subviews>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.makeBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exibir Perfil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ab-pc-pC5">
+                                <rect key="frame" x="0.0" y="8" width="262" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xza-HP-FLc">
+                                <rect key="frame" x="262" y="2.5" width="51" height="31"/>
+                                <color key="onTintColor" systemColor="systemPurpleColor"/>
+                            </switch>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="OdP-UU-S6X" firstAttribute="centerY" secondItem="uM8-AZ-T2D" secondAttribute="centerY" id="Ftj-5R-lty"/>
-                            <constraint firstItem="OdP-UU-S6X" firstAttribute="centerX" secondItem="uM8-AZ-T2D" secondAttribute="centerX" id="bAf-Zr-zDN"/>
-                        </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.makeBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
-                    </view>
+                    </stackView>
                 </subviews>
-                <color key="backgroundColor" systemColor="systemGray6Color"/>
                 <constraints>
-                    <constraint firstItem="uM8-AZ-T2D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8T0-ov-P6V"/>
-                    <constraint firstAttribute="trailing" secondItem="uM8-AZ-T2D" secondAttribute="trailing" id="EA7-lM-QUg"/>
-                    <constraint firstItem="uM8-AZ-T2D" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="IYl-rp-WQI"/>
-                    <constraint firstAttribute="bottom" secondItem="uM8-AZ-T2D" secondAttribute="bottom" id="fk6-Jx-XzI"/>
+                    <constraint firstAttribute="bottom" secondItem="OdP-UU-S6X" secondAttribute="bottom" constant="8" id="15V-kK-0iz"/>
+                    <constraint firstItem="OdP-UU-S6X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="5qh-iO-kdk"/>
+                    <constraint firstItem="OdP-UU-S6X" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="awa-V9-uil"/>
+                    <constraint firstAttribute="trailing" secondItem="OdP-UU-S6X" secondAttribute="trailing" constant="16" id="o0m-eT-LPL"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -71,12 +54,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

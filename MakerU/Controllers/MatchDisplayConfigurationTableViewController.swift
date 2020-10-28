@@ -12,7 +12,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     var isPickerVisible = false {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+                self.tableView.reloadSections([1], with: .automatic)
             }
         }
     }
@@ -35,8 +35,20 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     var projects: [Project] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+            reloadRowOrSection(at: IndexPath(row: 1, section: 1), numberOfRowsValidation: 2)
+        }
+    }
+    
+    var secondSectionRowCount: Int {
+        configSegmentedControl.selectedSegmentIndex == 1 && isPickerVisible ? 2 : 1
+    }
+    
+    func reloadRowOrSection(at indexPath: IndexPath, numberOfRowsValidation: Int) {
+        DispatchQueue.main.async {
+            if self.tableView.numberOfRows(inSection: indexPath.section) >= numberOfRowsValidation {
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }else {
+                self.tableView.reloadSections([indexPath.section], with: .automatic)
             }
         }
     }
@@ -60,8 +72,9 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
         cancelBarItem.tintColor = UIColor.systemPurple
         
-        let okButtonItem = UIBarButtonItem(title: "OK", style: .plain, target: self, action: #selector(self.okBarItemTapped))
+        let okButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(self.okBarItemTapped))
         okButtonItem.tintColor = UIColor.systemPurple
+        
         
         self.navigationItem.rightBarButtonItem = okButtonItem
         self.navigationItem.leftBarButtonItem = cancelBarItem
@@ -107,20 +120,12 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }
     
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 1 ? 2 : 1
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        guard indexPath.section == 1 && indexPath.row == 1 && !isPickerVisible
-        else { return UITableView.automaticDimension }
-        return 0
+        section == 1 ? secondSectionRowCount : 1
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 && indexPath.row == 0 && configSegmentedControl.selectedSegmentIndex == 1 {
             isPickerVisible.toggle()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
@@ -186,6 +191,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var resultCell: UITableViewCell!
         let row = indexPath.row
         let section = indexPath.section
 
@@ -198,23 +204,27 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             configSegmentedControl.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor).isActive = true
             configSegmentedControl.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor).isActive = true
             
-            return cell
+            resultCell = cell
+            break
         case 1:
             if row == 0 {
                 let cell = UITableViewCell(style: .value1, reuseIdentifier: "PickerSelectorHeader")
                 if configSegmentedControl.selectedSegmentIndex == 0 {
-                    cell.textLabel?.text = "perfil"
+                    cell.textLabel?.text = "Perfil"
                     cell.detailTextLabel?.text = selectedUser?.name
+                    cell.selectionStyle = .none
                 }else {
                     cell.textLabel?.text = "Projeto"
                     cell.detailTextLabel?.text = selectedProject?.title
                 }
-                cell.detailTextLabel?.textColor = isPickerVisible ? .systemPurple : .label
-                return cell
+                cell.detailTextLabel?.textColor = isPickerVisible ? .systemPurple : .secondaryLabel
+                resultCell = cell
+                break
             } else {
-                let cell = ProjectSelectorTableViewCell(projects: self.projects)
+                let cell = ProjectSelectorTableViewCell(projects: self.projects, selectedProject: selectedProject)
                 cell.delegate = self
-                return cell
+                resultCell = cell
+                break
             }
         case 2:
             let identifier = configSegmentedControl.selectedSegmentIndex == 0 ? "UserBioTableViewCell" : "ProjectDescriptionTableViewCell"
@@ -224,20 +234,25 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             }else {
                 (cell as! ProjectDescriptionTableViewCell).descriptionLabel.text = selectedProject?.description
             }
-            return cell
+            resultCell = cell
+            break
         case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SkillsTableViewCell")!
             let skills = configSegmentedControl.selectedSegmentIndex == 0 ? selectedUser?.skills : selectedProject?.skillsInNeed
             (cell as! SkillsTableViewCell).skillsTextView.text = skills
             (cell as! SkillsTableViewCell).delegate = self
-            return cell
+            resultCell.selectionStyle = .none
+            resultCell = cell
+            break
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowProfileTableViewCell")!
             let isOn = configSegmentedControl.selectedSegmentIndex == 0 ? (selectedUser?.canAppearOnMatch == true) : (selectedProject?.canAppearOnMatch == true)
             (cell as! ShowProfileTableViewCell).showSwitchControll.setOn(isOn, animated: true)
             (cell as! ShowProfileTableViewCell).showSwitchControll.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
-            return cell
+            resultCell = cell
+            break
         }
+        return resultCell
     }
     
     
