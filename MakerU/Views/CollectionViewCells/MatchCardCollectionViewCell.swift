@@ -123,7 +123,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     let collaborateButton: UIControl = {
         let img = UIImageView()
         img.image = UIImage(systemName: "chevron.up.circle.fill")
-        img.tintColor = .black
+        img.tintColor = .label
         img.translatesAutoresizingMaskIntoConstraints = false
         img.heightAnchor.constraint(equalToConstant: 24).isActive = true
         img.widthAnchor.constraint(equalToConstant: 24).isActive = true
@@ -334,7 +334,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         containerview.layer.cornerRadius = 10
         containerview.layer.masksToBounds = true
-        containerview.backgroundColor = .systemBackground
+        containerview.backgroundColor = .secondarySystemGroupedBackground
         containerview.translatesAutoresizingMaskIntoConstraints = false
 
         containerview.addSubview(cardFrontContent)

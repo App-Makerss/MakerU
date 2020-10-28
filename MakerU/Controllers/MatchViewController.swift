@@ -20,7 +20,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     let configDisplayButton: UIControl = {
         
         let control = UIControl()
-        control.backgroundColor = .systemBackground
+        control.backgroundColor = .secondarySystemGroupedBackground
         control.layer.cornerRadius = 10
         control.translatesAutoresizingMaskIntoConstraints = false
         
@@ -34,10 +34,11 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         control.addSubview(cell)
         
-        cell.topAnchor.constraint(equalTo: control.topAnchor).isActive = true
-        cell.leadingAnchor.constraint(equalTo: control.leadingAnchor, constant: 5).isActive = true
-        cell.trailingAnchor.constraint(equalTo: control.trailingAnchor, constant: -5).isActive = true
-        cell.bottomAnchor.constraint(equalTo: control.bottomAnchor).isActive = true
+        cell.setupConstraints(to: control)
+//        cell.topAnchor.constraint(equalTo: control.topAnchor).isActive = true
+//        cell.leadingAnchor.constraint(equalTo: control.leadingAnchor, constant: 5).isActive = true
+//        cell.trailingAnchor.constraint(equalTo: control.trailingAnchor, constant: -5).isActive = true
+//        cell.bottomAnchor.constraint(equalTo: control.bottomAnchor).isActive = true
         
         control.addTarget(self, action: #selector(Self.configDisplayButtonTapped), for: .touchUpInside)
         
@@ -64,7 +65,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         super.viewDidLoad()
         
         view.addSubview(configDisplayButton)
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .systemGroupedBackground
         
         setupCollecitonView()
         setupContraints()
@@ -109,7 +110,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
 
-        let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(self.presentMatchOnboarding))
+        let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(self.presentMatchOnboarding))
         infoButton.tintColor = .systemPurple
         self.navigationItem.rightBarButtonItem = infoButton
     }
@@ -128,7 +129,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         configDisplayButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         configDisplayButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         configDisplayButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        configDisplayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -99).isActive = true
+        configDisplayButton.bottomAnchor.constraint(equalTo: safeAnchors.bottomAnchor, constant: -16).isActive = true
     }
     
     //MARK: @ojbc funcs
