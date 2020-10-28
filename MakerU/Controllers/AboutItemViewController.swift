@@ -53,9 +53,8 @@ class AboutItemViewController: UIViewController {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
-        view.backgroundColor = .systemGray5
-
-        tableView.backgroundColor = .clear
+        view.backgroundColor = tableView.backgroundColor
+        
         tableView.clipsToBounds = false
         tableView.delegate = self
         tableView.dataSource = self
