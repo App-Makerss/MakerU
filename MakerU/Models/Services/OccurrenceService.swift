@@ -15,8 +15,9 @@ struct OccurrenceService {
     func report(problem: String, onEquipment: String? = nil, completion: @escaping (Occurrence?, Error?) -> ()) {
         guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
         let equipment = onEquipment ?? ""
+        let isRelatedToEquip = equipment != ""
         
-        let occurrenceToSave = Occurrence(id: nil, largeText: problem, equipment: equipment, reportedByUser: loggedUserID)
+        let occurrenceToSave = Occurrence(id: nil, largeText: problem, equipment: equipment, reportedByUser: loggedUserID, isRelatedToEquipment: isRelatedToEquip)
         
         dao.save(entity: occurrenceToSave, completion: completion)
     }

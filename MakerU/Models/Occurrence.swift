@@ -13,4 +13,5 @@ struct Occurrence: IdentifiableEntity, Codable {
     var largeText: String
     var equipment: String
     var reportedByUser: String
+    var isRelatedToEquipment: Bool = false
 }

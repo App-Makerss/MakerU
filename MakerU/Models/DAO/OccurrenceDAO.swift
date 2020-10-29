@@ -16,7 +16,8 @@ struct OccurrenceDAO: GenericsDAO {
         
         guard
             let largeText = record["largeText"] as? String,
-            let reportedByUserRef = record["reportedByUser"] as? CKRecord.Reference
+            let reportedByUserRef = record["reportedByUser"] as? CKRecord.Reference,
+            let isRelatedToEquipInt = record["isRelatedToEquipment"] as? Int
         else {return nil}
         
         let id = record.recordID.recordName
@@ -25,7 +26,7 @@ struct OccurrenceDAO: GenericsDAO {
         let equipment = equipmentRef?.recordID.recordName ?? ""
         
         
-        return ManagedEntity(id: id, largeText: largeText, equipment: equipment, reportedByUser: reportedByUser)
+        return ManagedEntity(id: id, largeText: largeText, equipment: equipment, reportedByUser: reportedByUser, isRelatedToEquipment: isRelatedToEquipInt == 1)
     }
     
     func removeReferences(fromDictionary dictionary: [String : Any]) -> [String : Any] {
