@@ -30,7 +30,7 @@ struct MatchService {
                 }
             }else {
                 // new match interest
-                let _ = matchDAO.save(entity: match)
+                let _ = matchDAO.save(entity: match, completion: nil)
             }
             completion(false)
         }

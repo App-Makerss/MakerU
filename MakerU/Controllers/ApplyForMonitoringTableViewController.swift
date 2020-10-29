@@ -10,6 +10,8 @@ import UIKit
 
 class ApplyForMonitoringTableViewController: SingleTextTableViewController {
     
+    let monitorInterestService = MonitorInterestService()
+    
     override func setupNavigations() {
         super.setupNavigations()
         navigationItem.title = "Monitoria"
@@ -18,10 +20,22 @@ class ApplyForMonitoringTableViewController: SingleTextTableViewController {
     
     override func okBarItemTapped() {
         super.okBarItemTapped()
-        print("num é que deu...")
-        presentSuccessAlert(title: "Mensagem enviada!", message: "Agradecemos seu contato.") { _ in
+        if !stringUpdate.isEmpty {
+            monitorInterestService.submitInterest(message: stringUpdate) { (saved, error) in
+                DispatchQueue.main.async {
+                    if saved?.id != nil {
+                        self.presentSuccessAlert(title: "Mensagem enviada!", message: "Agradecemos seu contato.") { _ in
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }else {
+                        print(error?.localizedDescription)
+                    }
+                }
+            }
+        }else {
             self.dismiss(animated: true, completion: nil)
         }
+        
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

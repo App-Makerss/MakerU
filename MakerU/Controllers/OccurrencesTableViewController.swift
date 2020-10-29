@@ -10,6 +10,10 @@ import UIKit
 
 class OccurrencesTableViewController: SingleTextTableViewController {
     
+    var selectedEquipment: Equipment?
+    
+    let occurrenceService = OccurrenceService()
+    
     override func setupNavigations() {
         super.setupNavigations()
         navigationItem.title = "Ocorrência"
@@ -19,8 +23,19 @@ class OccurrencesTableViewController: SingleTextTableViewController {
         
     override func okBarItemTapped() {
         super.okBarItemTapped()
-        print("num é que deu...")
-        presentSuccessAlert(title: "Ocorrência Reportada!", message: "Agradecemos a sua contribuição.") { _ in
+        if !stringUpdate.isEmpty {
+            occurrenceService.report(problem: stringUpdate, onEquipment: selectedEquipment?.id) { (saved, error) in
+                DispatchQueue.main.async {
+                    if saved?.id != nil {
+                        self.presentSuccessAlert(title: "Ocorrência Reportada!", message: "Agradecemos a sua contribuição.") { _ in
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }else {
+                        print(error?.localizedDescription)
+                    }
+                }
+            }
+        }else {
             self.dismiss(animated: true, completion: nil)
         }
     }

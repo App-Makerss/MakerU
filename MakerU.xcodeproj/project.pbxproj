@@ -60,6 +60,12 @@
 		5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692CB0C25363FCD0087358A /* ProjectDAO.swift */; };
 		569714B6254ADD5B00419049 /* OccurrencesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */; };
 		569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */; };
+		569714BF254B252C00419049 /* Occurrence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714BE254B252C00419049 /* Occurrence.swift */; };
+		569714C2254B257500419049 /* OccurrenceDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714C1254B257500419049 /* OccurrenceDAO.swift */; };
+		569714C5254B277F00419049 /* OccurrenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714C4254B277F00419049 /* OccurrenceService.swift */; };
+		569714C8254B412C00419049 /* MonitorInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714C7254B412C00419049 /* MonitorInterest.swift */; };
+		569714CB254B416400419049 /* MonitorInterestDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714CA254B416400419049 /* MonitorInterestDAO.swift */; };
+		569714CE254B49BD00419049 /* MonitorInterestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714CD254B49BD00419049 /* MonitorInterestService.swift */; };
 		569C44292542FA400099A44A /* ScrollableCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C44282542FA3F0099A44A /* ScrollableCover.swift */; };
 		569C4436254319710099A44A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C4435254319710099A44A /* UIView+Constraints.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
@@ -128,6 +134,12 @@
 		5692CB0C25363FCD0087358A /* ProjectDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
 		569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrencesTableViewController.swift; sourceTree = "<group>"; };
 		569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyForMonitoringTableViewController.swift; sourceTree = "<group>"; };
+		569714BE254B252C00419049 /* Occurrence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Occurrence.swift; sourceTree = "<group>"; };
+		569714C1254B257500419049 /* OccurrenceDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceDAO.swift; sourceTree = "<group>"; };
+		569714C4254B277F00419049 /* OccurrenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrenceService.swift; sourceTree = "<group>"; };
+		569714C7254B412C00419049 /* MonitorInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorInterest.swift; sourceTree = "<group>"; };
+		569714CA254B416400419049 /* MonitorInterestDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorInterestDAO.swift; sourceTree = "<group>"; };
+		569714CD254B49BD00419049 /* MonitorInterestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorInterestService.swift; sourceTree = "<group>"; };
 		569C44282542FA3F0099A44A /* ScrollableCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCover.swift; sourceTree = "<group>"; };
 		569C4435254319710099A44A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
@@ -170,6 +182,8 @@
 				566D5108253A2DFE002B0CE1 /* Category.swift */,
 				569103CA254754040094D071 /* Equipment.swift */,
 				5618B73925484AB600DF5675 /* Room.swift */,
+				569714BE254B252C00419049 /* Occurrence.swift */,
+				569714C7254B412C00419049 /* MonitorInterest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -225,6 +239,8 @@
 				56389D772534DB43004B358D /* CKAsset+UIImage.swift */,
 				566D510B253A3164002B0CE1 /* CategoryDAO.swift */,
 				569103E32547A8660094D071 /* EquipmentDAO.swift */,
+				569714C1254B257500419049 /* OccurrenceDAO.swift */,
+				569714CA254B416400419049 /* MonitorInterestDAO.swift */,
 			);
 			path = DAO;
 			sourceTree = "<group>";
@@ -280,6 +296,8 @@
 			children = (
 				56BE769D25389C5100F3E07F /* MatchService.swift */,
 				E22EB021253E87F400EA7FDD /* ProjectService.swift */,
+				569714C4254B277F00419049 /* OccurrenceService.swift */,
+				569714CD254B49BD00419049 /* MonitorInterestService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -443,6 +461,7 @@
 				5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */,
 				566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */,
 				569103DC254782410094D071 /* RoomCollectionViewCell.swift in Sources */,
+				569714CB254B416400419049 /* MonitorInterestDAO.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,
@@ -450,13 +469,16 @@
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,
 				566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */,
 				3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */,
+				569714C8254B412C00419049 /* MonitorInterest.swift in Sources */,
 				569103DF25478F040094D071 /* GradientView.swift in Sources */,
 				E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */,
+				569714BF254B252C00419049 /* Occurrence.swift in Sources */,
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
 				569103BD25472FB90094D071 /* UILabel+Extensions.swift in Sources */,
 				569714B6254ADD5B00419049 /* OccurrencesTableViewController.swift in Sources */,
+				569714C5254B277F00419049 /* OccurrenceService.swift in Sources */,
 				569103CB254754040094D071 /* Equipment.swift in Sources */,
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
@@ -466,6 +488,8 @@
 				569C44292542FA400099A44A /* ScrollableCover.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
 				E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */,
+				569714CE254B49BD00419049 /* MonitorInterestService.swift in Sources */,
+				569714C2254B257500419049 /* OccurrenceDAO.swift in Sources */,
 				569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */,
 				56BE769E25389C5100F3E07F /* MatchService.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,
