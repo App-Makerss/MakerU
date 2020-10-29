@@ -19,6 +19,9 @@ extension UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         let deleteAction = UIAlertAction(title: destructiveTitle ?? "Descartar Alterações", style: .destructive, handler: onDiscardHandler)
+        actionSheet.view.tintColor = .systemPurple
+        
+        
         
         actionSheet.addAction(deleteAction)
         actionSheet.addAction(cancelAction)
@@ -30,6 +33,7 @@ extension UIViewController {
     func presentSuccessAlert(title: String, message: String, onOKHandler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: onOKHandler)
+        alert.view.tintColor = .systemPurple
         alert.addAction(okAction)
         
         self.present(alert, animated: true, completion: nil)

@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWD-4s-c4O">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="231"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30j-Wc-eKq">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="30j-Wc-eKq">
                                 <rect key="frame" x="8" y="8" width="327" height="215"/>
                                 <color key="tintColor" systemColor="systemPurpleColor"/>
                                 <constraints>

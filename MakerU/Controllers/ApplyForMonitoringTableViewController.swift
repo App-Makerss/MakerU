@@ -12,19 +12,19 @@ class ApplyForMonitoringTableViewController: SingleTextTableViewController {
     
     override func setupNavigations() {
         super.setupNavigations()
-        navigationItem.title = "Monitoria?"
-        navigationItem.rightBarButtonItem?.title = "Enviar?"
+        navigationItem.title = "Monitoria"
+        navigationItem.rightBarButtonItem?.title = "Aplicar"
     }
     
     override func okBarItemTapped() {
         super.okBarItemTapped()
         print("num é que deu...")
-        presentSuccessAlert(title: "Interesse Enviado!?", message: "Qual o texto?") { _ in
+        presentSuccessAlert(title: "Mensagem enviada!", message: "Agradecemos seu contato.") { _ in
             self.dismiss(animated: true, completion: nil)
         }
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        "Qual o texto?"
+        "Manifeste seu interesse em ser monitor. Não esqueça de enviar seu contato. Se possível, passe informações sobre sua disponibilidade de horários."
     }
 }
