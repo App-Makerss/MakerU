@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */; };
 		3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E633ACB252F6DB400EAF3B8 /* Match.swift */; };
+		3EA8FEC925485E970041B9D5 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA8FEC825485E970041B9D5 /* Notification.swift */; };
 		3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */; };
 		3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */; };
 		3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */; };
@@ -21,6 +22,7 @@
 		3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB645702539388F008D437D /* SkillsTableViewCell.xib */; };
 		3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */; };
 		3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */; };
+		3EC3460E254A5754001C4D06 /* NotificationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3460D254A5754001C4D06 /* NotificationDAO.swift */; };
 		5626667A2541B5470091C10C /* MakerspaceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562666792541B5470091C10C /* MakerspaceTableViewController.swift */; };
 		56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626667F254203B20091C10C /* ImageCoverNavigationController.swift */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
@@ -61,6 +63,7 @@
 /* Begin PBXFileReference section */
 		3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardInfoViewController.swift; sourceTree = "<group>"; };
 		3E633ACB252F6DB400EAF3B8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		3EA8FEC825485E970041B9D5 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTagTableViewCell.swift; sourceTree = "<group>"; };
 		3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTagTableViewCell.xib; sourceTree = "<group>"; };
 		3EB64563253922D6008D437D /* UserProjectTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProjectTagTableViewCell.swift; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		3EB645702539388F008D437D /* SkillsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsTableViewCell.xib; sourceTree = "<group>"; };
 		3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowProfileTableViewCell.xib; sourceTree = "<group>"; };
+		3EC3460D254A5754001C4D06 /* NotificationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDAO.swift; sourceTree = "<group>"; };
 		562666792541B5470091C10C /* MakerspaceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerspaceTableViewController.swift; sourceTree = "<group>"; };
 		5626667F254203B20091C10C /* ImageCoverNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCoverNavigationController.swift; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				566EB3D42535EF6D0092F096 /* Project.swift */,
 				566D5105253A2B18002B0CE1 /* MatchCard.swift */,
 				566D5108253A2DFE002B0CE1 /* Category.swift */,
+				3EA8FEC825485E970041B9D5 /* Notification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 				566EC893252E74B000346846 /* UserDAO.swift */,
 				56389D772534DB43004B358D /* CKAsset+UIImage.swift */,
 				566D510B253A3164002B0CE1 /* CategoryDAO.swift */,
+				3EC3460D254A5754001C4D06 /* NotificationDAO.swift */,
 			);
 			path = DAO;
 			sourceTree = "<group>";
@@ -366,6 +372,7 @@
 				566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */,
 				566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */,
 				3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */,
+				3EC3460E254A5754001C4D06 /* NotificationDAO.swift in Sources */,
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
 				E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */,
 				5626667A2541B5470091C10C /* MakerspaceTableViewController.swift in Sources */,
@@ -399,6 +406,7 @@
 				566EB3D52535EF6D0092F096 /* Project.swift in Sources */,
 				566D5106253A2B18002B0CE1 /* MatchCard.swift in Sources */,
 				56548DA8252E0BDC003AC229 /* CloudKitEncodable.swift in Sources */,
+				3EA8FEC925485E970041B9D5 /* Notification.swift in Sources */,
 				56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */,
 				566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */,
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,

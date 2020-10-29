@@ -21,6 +21,7 @@ struct MatchService {
         matchDAO.search(for: match) { (matchFound, searchesCount, error) in
             if matchFound != nil {
                 if searchesCount == 2 && !matchFound!.isMutual {
+                    //TODO: send push notification
                     //there is a match!
                     var matchUpdated = matchFound!
                     matchUpdated.isMutual = true
