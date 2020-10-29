@@ -11,7 +11,5 @@ struct Notification: IdentifiableEntity, Codable {
     var id: String?
     
     var content: String?
-    var title: String?
-    var message: String?
     
 }

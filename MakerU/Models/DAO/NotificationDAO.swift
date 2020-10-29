@@ -25,9 +25,6 @@ struct NotificationDAO: GenericsDAO {
             let content = record["content"] as? String
         else {return nil}
         
-// TODO: Define push notification icon
-//            let iconAsset = record["icon"] as? CKAsset,
-//            let iconData = iconAsset.image?.jpegData(compressionQuality: 1)
         
         return Notification(id: id, content: content)
     }
@@ -39,6 +36,8 @@ struct NotificationDAO: GenericsDAO {
     func treatSpecialValues(forRecord rec: CKRecord, entity: Notification) {
         //needed for the protocol
     }
+    
+    
     
     
     func listAll(completion: @escaping ([Notification]?, Error?) -> ()) {

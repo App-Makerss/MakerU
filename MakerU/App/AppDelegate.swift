@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound], completionHandler: { authorized, error in
             if authorized {
@@ -27,10 +28,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         })
         
+        let subscription = CKQuerySubscription(recordType: "GlobalNotification", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
+        
+        
+        
+        subscription.notificationInfo = NotificationService.createNotificationInfo(title: "Teste Sei la", message: "Deveria funcionar")
+        
+        DatabaseAccess.shared.publicDB.save(subscription, completionHandler: { subscription, error in
+            if error == nil {
+                // Subscription saved successfully
+                print("Deveria funcionar")
+            } else {
+                // An error occurred
+                print(error?.localizedDescription ?? "")
+            }
+        })
+        
         //simulation of a loggedUser
-//        UserDefaults.standard.setValue("22ABF1B6-D0B5-4AB1-8549-29ECD125FCF9",forKey: "loggedUserId") //Adam
-        UserDefaults.standard.setValue("276C6229-1F9E-4B91-8A50-D364A7A3C852", forKey: "loggedUserId") // Mary
+        UserDefaults.standard.setValue("22ABF1B6-D0B5-4AB1-8549-29ECD125FCF9",forKey: "loggedUserId") //Adam
+        
+//        UserDefaults.standard.setValue("276C6229-1F9E-4B91-8A50-D364A7A3C852", forKey: "loggedUserId") // Mary
 //            UserDefaults.standard.setValue("3AFCA70E-7A52-4B67-B7D7-113B1B8BCF98", forKey: "loggedUserId")
+        
+        
         return true
     }
 
@@ -84,29 +104,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let subscription = CKQuerySubscription(recordType: "GlobalNotification", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
-        
-        let info = CKSubscription.NotificationInfo()
-        info.alertBody = "A new notification has been posted!"
-        info.shouldBadge = true
-        info.soundName = "default"
-        
-        subscription.notificationInfo = info
-         
-        CKContainer.default().publicCloudDatabase.save(subscription, completionHandler: { subscription, error in
-            if error == nil {
-                // Subscription saved successfully
-                print("Deveria funcionar")
-            } else {
-                // An error occurred
-                print(error?.localizedDescription ?? "")
-            }
-        })
+//        let subscription = CKQuerySubscription(recordType: "GlobalNotification", predicate: NSPredicate(value: true), options: .firesOnRecordCreation)
+//
+//
+//
+//        subscription.notificationInfo = NotificationService.createNotificationInfo(title: "Teste Sei la", message: "Deveria funcionar")
+//
+//        DatabaseAccess.shared.publicDB.save(subscription, completionHandler: { subscription, error in
+//            if error == nil {
+//                // Subscription saved successfully
+//                print("Deveria funcionar")
+//            } else {
+//                // An error occurred
+//                print(error?.localizedDescription ?? "")
+//            }
+//        })
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.banner,.sound])
-        //completionHandler([.alert, .sound])
     }
 
 
