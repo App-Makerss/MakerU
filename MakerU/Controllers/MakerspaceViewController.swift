@@ -184,7 +184,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        collectionView.deselectItem(at: indexPath, animated: true)
         let vc = AboutItemViewController()
         switch indexPath.section {
         case 1:
@@ -192,7 +192,12 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
             vc.selectedRoom = item
             break
         case 2:
-            break
+            if indexPath.row == 0 {
+                let vc = ApplyForMonitoringTableViewController(style: .insetGrouped)
+                present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+            }
+            
+            return
         default:
             let item = equipments[indexPath.row]
             vc.selectedEquip = item

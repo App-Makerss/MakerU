@@ -21,6 +21,7 @@
 		3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB645702539388F008D437D /* SkillsTableViewCell.xib */; };
 		3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */; };
 		3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */; };
+		56133E38254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56133E37254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift */; };
 		5618B73A25484AB700DF5675 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618B73925484AB600DF5675 /* Room.swift */; };
 		5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618B73C25484AE000DF5675 /* RoomDAO.swift */; };
 		5626667A2541B5470091C10C /* MakerspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562666792541B5470091C10C /* MakerspaceViewController.swift */; };
@@ -85,6 +86,7 @@
 		3EB645702539388F008D437D /* SkillsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsTableViewCell.xib; sourceTree = "<group>"; };
 		3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowProfileTableViewCell.xib; sourceTree = "<group>"; };
+		56133E37254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyForMonitoringTableViewController.swift; sourceTree = "<group>"; };
 		5618B73925484AB600DF5675 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		5618B73C25484AE000DF5675 /* RoomDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomDAO.swift; sourceTree = "<group>"; };
 		562666792541B5470091C10C /* MakerspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerspaceViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				569C44282542FA3F0099A44A /* ScrollableCover.swift */,
 				3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */,
 				E247C090254260B00093833C /* MatchOnboardingViewController.swift */,
+				56133E37254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
+				56133E38254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
 				569C44292542FA400099A44A /* ScrollableCover.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
