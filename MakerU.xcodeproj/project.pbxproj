@@ -17,11 +17,11 @@
 		3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64568253924F4008D437D /* UserBioTableViewCell.xib */; };
 		3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6456B25392A79008D437D /* ProjectDescriptionTableViewCell.swift */; };
 		3EB6456E25392A79008D437D /* ProjectDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */; };
-		3EB645712539388F008D437D /* SkillsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */; };
-		3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB645702539388F008D437D /* SkillsTableViewCell.xib */; };
+		3EB645712539388F008D437D /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6456F2539388F008D437D /* TextViewTableViewCell.swift */; };
+		3EB645722539388F008D437D /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB645702539388F008D437D /* TextViewTableViewCell.xib */; };
 		3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */; };
 		3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */; };
-		56133E38254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56133E37254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift */; };
+		56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */; };
 		5618B73A25484AB700DF5675 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618B73925484AB600DF5675 /* Room.swift */; };
 		5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618B73C25484AE000DF5675 /* RoomDAO.swift */; };
 		5626667A2541B5470091C10C /* MakerspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562666792541B5470091C10C /* MakerspaceViewController.swift */; };
@@ -58,6 +58,8 @@
 		569103DF25478F040094D071 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569103DE25478F040094D071 /* GradientView.swift */; };
 		569103E42547A8660094D071 /* EquipmentDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569103E32547A8660094D071 /* EquipmentDAO.swift */; };
 		5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692CB0C25363FCD0087358A /* ProjectDAO.swift */; };
+		569714B6254ADD5B00419049 /* OccurrencesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */; };
+		569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */; };
 		569C44292542FA400099A44A /* ScrollableCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C44282542FA3F0099A44A /* ScrollableCover.swift */; };
 		569C4436254319710099A44A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C4435254319710099A44A /* UIView+Constraints.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
@@ -82,11 +84,11 @@
 		3EB64568253924F4008D437D /* UserBioTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserBioTableViewCell.xib; sourceTree = "<group>"; };
 		3EB6456B25392A79008D437D /* ProjectDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectDescriptionTableViewCell.xib; sourceTree = "<group>"; };
-		3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsTableViewCell.swift; sourceTree = "<group>"; };
-		3EB645702539388F008D437D /* SkillsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsTableViewCell.xib; sourceTree = "<group>"; };
+		3EB6456F2539388F008D437D /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
+		3EB645702539388F008D437D /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowProfileTableViewCell.xib; sourceTree = "<group>"; };
-		56133E37254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyForMonitoringTableViewController.swift; sourceTree = "<group>"; };
+		56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTextTableViewController.swift; sourceTree = "<group>"; };
 		5618B73925484AB600DF5675 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		5618B73C25484AE000DF5675 /* RoomDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomDAO.swift; sourceTree = "<group>"; };
 		562666792541B5470091C10C /* MakerspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerspaceViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,8 @@
 		569103DE25478F040094D071 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		569103E32547A8660094D071 /* EquipmentDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquipmentDAO.swift; sourceTree = "<group>"; };
 		5692CB0C25363FCD0087358A /* ProjectDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDAO.swift; sourceTree = "<group>"; };
+		569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccurrencesTableViewController.swift; sourceTree = "<group>"; };
+		569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyForMonitoringTableViewController.swift; sourceTree = "<group>"; };
 		569C44282542FA3F0099A44A /* ScrollableCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCover.swift; sourceTree = "<group>"; };
 		569C4435254319710099A44A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
@@ -181,8 +185,8 @@
 				3EB64568253924F4008D437D /* UserBioTableViewCell.xib */,
 				3EB6456B25392A79008D437D /* ProjectDescriptionTableViewCell.swift */,
 				3EB6456C25392A79008D437D /* ProjectDescriptionTableViewCell.xib */,
-				3EB6456F2539388F008D437D /* SkillsTableViewCell.swift */,
-				3EB645702539388F008D437D /* SkillsTableViewCell.xib */,
+				3EB6456F2539388F008D437D /* TextViewTableViewCell.swift */,
+				3EB645702539388F008D437D /* TextViewTableViewCell.xib */,
 				3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */,
 				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
 				E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */,
@@ -236,7 +240,9 @@
 				569C44282542FA3F0099A44A /* ScrollableCover.swift */,
 				3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */,
 				E247C090254260B00093833C /* MatchOnboardingViewController.swift */,
-				56133E37254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift */,
+				56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */,
+				569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */,
+				569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -405,7 +411,7 @@
 				564954C2253F56510052125A /* Futura_Bold_font.ttf in Resources */,
 				3EB6456E25392A79008D437D /* ProjectDescriptionTableViewCell.xib in Resources */,
 				3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */,
-				3EB645722539388F008D437D /* SkillsTableViewCell.xib in Resources */,
+				3EB645722539388F008D437D /* TextViewTableViewCell.xib in Resources */,
 				3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */,
 				56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */,
 			);
@@ -429,7 +435,7 @@
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
 				569C4436254319710099A44A /* UIView+Constraints.swift in Sources */,
 				3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */,
-				3EB645712539388F008D437D /* SkillsTableViewCell.swift in Sources */,
+				3EB645712539388F008D437D /* TextViewTableViewCell.swift in Sources */,
 				564954B8253F0C790052125A /* SegmentedTableViewCell.swift in Sources */,
 				56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */,
 				56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */,
@@ -450,15 +456,17 @@
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
 				569103BD25472FB90094D071 /* UILabel+Extensions.swift in Sources */,
+				569714B6254ADD5B00419049 /* OccurrencesTableViewController.swift in Sources */,
 				569103CB254754040094D071 /* Equipment.swift in Sources */,
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
-				56133E38254A23B7009E1CEF /* ApplyForMonitoringTableViewController.swift in Sources */,
+				56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
 				569C44292542FA400099A44A /* ScrollableCover.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
 				E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */,
+				569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */,
 				56BE769E25389C5100F3E07F /* MatchService.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,
 				566EB3D52535EF6D0092F096 /* Project.swift in Sources */,

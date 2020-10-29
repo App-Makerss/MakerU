@@ -195,6 +195,9 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
             if indexPath.row == 0 {
                 let vc = ApplyForMonitoringTableViewController(style: .insetGrouped)
                 present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+            }else {
+                let vc = OccurrencesTableViewController(style: .insetGrouped)
+                present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
             }
             
             return
