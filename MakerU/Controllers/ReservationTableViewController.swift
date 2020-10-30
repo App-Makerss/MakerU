@@ -19,16 +19,27 @@ class ReservationTableViewController: UITableViewController {
         let dp = UIDatePicker()
         dp.datePickerMode = .dateAndTime
         dp.preferredDatePickerStyle = .inline
+        dp.minuteInterval = 5
+        dp.minimumDate = Date()
         dp.tintColor = .systemPurple
-        dp.locale = .current
+        dp.timeZone = TimeZone(identifier: "America/Sao_Paulo")
+        dp.locale = Locale.init(identifier: "es-AR")//TODO: remover quando a apple corrigir
         return dp
     }()
     
+    var isTimepickerVisible = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadSections([1], with: .automatic)
+            }
+        }
+    }
+    
     var isDatepickerVisible = false {
         didSet {
-            let datePickerRow = IndexPath(row: 1, section: 1)
-            let datePickerHeaderRow = IndexPath(row: 0, section: 1)
-            tableView.reloadRows(at: [datePickerHeaderRow,datePickerRow], with: .automatic)
+            DispatchQueue.main.async {
+                self.tableView.reloadSections([1], with: .automatic)
+            }
         }
     }
 
@@ -56,6 +67,10 @@ class ReservationTableViewController: UITableViewController {
         datePicker.addTarget(self, action: #selector(self.datePickerValueChanged(sender:)), for: .valueChanged)
     }
 
+    var dateSelectorsRowCount: Int {
+        isTimepickerVisible ? 4 : 3
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -63,7 +78,7 @@ class ReservationTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 1 ? 3 : 1
+        section == 1 ? dateSelectorsRowCount : 1
     }
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         section == 0 ? "Associe uma atividade a sua reserva" : ""
@@ -80,20 +95,34 @@ class ReservationTableViewController: UITableViewController {
                         datePicker.setupConstraints(to: resultCell.contentView)
                         break
                     case 2:
+                        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
+                        cell.textLabel?.text = "Termina"
+                        cell.detailTextLabel?.textColor = isTimepickerVisible ? .systemPurple : .label
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateStyle = .none
+                        dateFormatter.timeStyle = .short
+                        dateFormatter.locale = Locale.init(identifier: "pt-BR")
+                        cell.detailTextLabel?.text = dateFormatter.string(from: datetimeUpdates["time"] ?? Date())
+                        cell.accessibilityHint = "Toque duas vezess para editar"
+                        resultCell = cell
+                        break
+                    case 3:
                         let cell = SegmentedTableViewCell()
-                        cell.textLbl.text = "Termina"
+                        cell.textLbl.text = "Horário"
                         cell.timePicker.addTarget(self, action: #selector(self.timePickerValueChanged(sender:)), for: .valueChanged)
+                        cell.timePicker.minimumDate = selectedDate
                         resultCell = cell
                         break
                     default:
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
                         cell.textLabel?.text = "Começa"
-                        cell.detailTextLabel?.textColor = isDatepickerVisible ? .systemPurple : .secondaryLabel
+                        cell.detailTextLabel?.textColor = isDatepickerVisible ? .systemPurple : .label
                         let dateFormatter = DateFormatter()
-                        dateFormatter.dateStyle = .full
+                        dateFormatter.dateStyle = .medium
                         dateFormatter.timeStyle = .short
-                        dateFormatter.timeZone = .current
+                        dateFormatter.locale = Locale.init(identifier: "pt-BR")
                         cell.detailTextLabel?.text = dateFormatter.string(from: selectedDate!)
+                        cell.accessibilityHint = "Toque duas vezess para editar"
                         resultCell = cell
                         break
                 }
@@ -107,11 +136,21 @@ class ReservationTableViewController: UITableViewController {
         if  indexPath.section == 1 && indexPath.row == 1 && !isDatepickerVisible {
             return 0
         }
+        if indexPath.section == 1 && indexPath.row == 3 && !isTimepickerVisible {
+            return 0
+        }
         return UITableView.automaticDimension
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 && indexPath.row == 0 {
             isDatepickerVisible.toggle()
+            isTimepickerVisible = false
+        }else if indexPath.section == 1 && indexPath.row == 2 {
+            isTimepickerVisible.toggle()
+            isDatepickerVisible = false
+        }else if isDatepickerVisible || isTimepickerVisible {
+            isDatepickerVisible = false
+            isTimepickerVisible = false
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -139,9 +178,8 @@ class ReservationTableViewController: UITableViewController {
     }
     
     @objc func timePickerValueChanged(sender: UIDatePicker) {
-        print(sender.date)
         datetimeUpdates["time"] = sender.date
-        let datePickerHeaderRow = IndexPath(row: 0, section: 1)
+        let datePickerHeaderRow = IndexPath(row: 2, section: 1)
         tableView.reloadRows(at: [datePickerHeaderRow], with: .automatic)
     }
 }

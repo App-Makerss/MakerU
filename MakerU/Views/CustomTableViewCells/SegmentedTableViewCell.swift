@@ -13,23 +13,28 @@ class SegmentedTableViewCell: UITableViewCell {
        let dp = UIDatePicker()
         dp.datePickerMode = .time
         dp.preferredDatePickerStyle = .inline
+        dp.tintColor = .systemPurple
+        dp.minuteInterval = 5
         return dp
     }()
     
     
     var textLbl: UILabel = {
         let textLabel = UILabel()
-        textLabel.setDynamicType(font: .systemFont(style: .body))
+        textLabel.setDynamicType(font: .systemFont(style: .body, weight: .semibold), textStyle: .body)
         textLabel.textColor = .label
+        
         return textLabel
     }()
     
     func commonInit() {
-        let stackView = UIStackView(arrangedSubviews: [textLbl, timePicker])
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        contentView.addSubview(stackView)
-        stackView.setupConstraints(to: contentView, leadingConstant: 13, trailingConstant: -8)
+        let contentStackView = UIStackView()
+        contentStackView.addArrangedSubview(textLbl)
+        contentStackView.addArrangedSubview(timePicker)
+        contentStackView.alignment = .center
+        contentStackView.distribution = .fill
+        contentView.addSubview(contentStackView)
+        contentStackView.setupConstraints(to: contentView, leadingConstant: 16, trailingConstant: -8)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,5 +47,4 @@ class SegmentedTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
