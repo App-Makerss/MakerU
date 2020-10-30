@@ -80,11 +80,13 @@ class AboutItemViewController: UIViewController {
 extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        selectedEquip != nil ? 2 : 1
+        selectedEquip != nil ? 3 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
+            case 2:
+                return 1
             case 1:
                 return 1
             default:
@@ -104,8 +106,10 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
 
         switch section {
-            case 1:
+            case 2:
                 label.text = "Ocorrências"
+            case 1:
+                label.text = "Reservas"
             default:
                 label.text = "Sobre"
         }
@@ -120,11 +124,26 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         let row = indexPath.row
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         switch indexPath.section{
-            case 1:
+            case 2:
                 cell.accessoryType = .disclosureIndicator
                 cell.textLabel?.text = "Reportar"
                 cell.textLabel?.setDynamicType(font: .systemFont(style: .body))
                 cell.textLabel?.textColor = .systemPurple
+                break
+            case 1:
+                cell.accessoryType = .none
+                cell.selectionStyle = .none
+                let button = UIButton(type: .system)
+                button.setTitle("AGENDAR", for: .normal)
+                button.accessibilityLabel = "agendar"
+                button.backgroundColor = .systemPurple
+                button.layer.cornerRadius = 13
+                button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 14, bottom: 4, right: 14)
+                button.setTitleColor(.white, for: .normal)
+                cell.contentView.addSubview(button)
+                button.titleLabel?.setDynamicType(font: .systemFont(style: .footnote, weight: .semibold), textStyle: .footnote)
+                button.setupConstraintsOnlyTo(to: cell.contentView,topConstant: 18, trailingConstant: -22, bottomConstant: -18)
+                button.addTarget(self, action: #selector(self.reservationButtonTap), for: .touchUpInside)
                 break
             default:
                 if selectedRoom != nil {
@@ -148,11 +167,17 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 1 && indexPath.row == 0 {
+        if indexPath.section == 2 && indexPath.row == 0 {
             let vc = OccurrencesTableViewController(style: .insetGrouped)
             vc.selectedEquipment = self.selectedEquip
             present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
         }
+    }
+    
+    
+    @objc func reservationButtonTap() {
+        //opens reservation flow
+        print("it will open reservation flow")
     }
 }
 
