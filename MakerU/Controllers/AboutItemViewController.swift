@@ -178,6 +178,8 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func reservationButtonTap() {
         //opens reservation flow
         print("it will open reservation flow")
+        let vc = ReservationTableViewController(style: .insetGrouped)
+        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }
 

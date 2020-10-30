@@ -8,16 +8,39 @@
 import UIKit
 
 class SegmentedTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    var timePicker: UIDatePicker = {
+       let dp = UIDatePicker()
+        dp.datePickerMode = .time
+        dp.preferredDatePickerStyle = .inline
+        return dp
+    }()
+    
+    
+    var textLbl: UILabel = {
+        let textLabel = UILabel()
+        textLabel.setDynamicType(font: .systemFont(style: .body))
+        textLabel.textColor = .label
+        return textLabel
+    }()
+    
+    func commonInit() {
+        let stackView = UIStackView(arrangedSubviews: [textLbl, timePicker])
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        contentView.addSubview(stackView)
+        stackView.setupConstraints(to: contentView, leadingConstant: 13, trailingConstant: -8)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        commonInit()
+        
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
