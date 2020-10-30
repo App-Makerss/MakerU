@@ -49,7 +49,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     let cardTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.systemFont(style: .title3, weight: .medium)
+        title.setDynamicType(font: .systemFont(style: .title3, weight: .medium), textStyle: .title3)
         title.text = "Realidade aumentada para inclusão"
         title.numberOfLines = 0
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -60,7 +60,9 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let subtitle = UILabel()
         subtitle.textColor = .secondaryLabel
         subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        subtitle.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        subtitle.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        subtitle.setDynamicType(font: .systemFont(style: .subheadline))
+        subtitle.tag = 1091
         subtitle.text = "Tecnologia"
         subtitle.numberOfLines = 0
         return subtitle
@@ -77,14 +79,20 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     let cardFirstSessionTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.setDynamicType(font: .systemFont(style: .headline))
         title.text = "Descrição"
+        title.setContentCompressionResistancePriority(.init(1000), for: .vertical)
         title.tintColor = .label
+        title.accessibilityTraits = .header
         return title
     }()
     let seeMoreButton: UIButton = {
+        let btn = genSeeMoreButton()
+        return btn
+    }()
+    private static func genSeeMoreButton() -> UIButton {
         let btn = UIButton(type: .custom)
-        btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        btn.titleLabel?.setDynamicType(font: .systemFont(style: .subheadline))
         btn.setTitle("mais", for: .normal)
         btn.setTitleColor(.systemPurple, for: .normal)
         btn.contentHorizontalAlignment = .right
@@ -92,12 +100,16 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         btn.setBackgroundImage(UIImage(named: "seeMoreButtonBackgroundGradient"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
+    }
+    let seeMoreButton1: UIButton = {
+        let btn = genSeeMoreButton()
+        return btn
     }()
     
     let cardFirstSessionDescription: UILabel = {
         let description = UILabel()
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.setDynamicType(font: .systemFont(style: .callout))
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 6
         return description
@@ -105,16 +117,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     let cardSecondSessionTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        title.setDynamicType(font: .systemFont(style: .headline))
         title.text = "Habilidades Procuradas"
         title.tintColor = .label
+        title.accessibilityTraits = .header
         return title
     }()
     
     let cardSecondSessionDescription: UILabel = {
         let description = UILabel()
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.setDynamicType(font: .systemFont(style: .callout))
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 5
         return description
@@ -129,9 +143,11 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         img.widthAnchor.constraint(equalToConstant: 24).isActive = true
         
         let label = UILabel()
-        label.font = UIFont.systemFont(style: .footnote, weight: .semibold)
+        label.setDynamicType(font: .systemFont(style: .footnote, weight: .semibold), textStyle: .footnote)
         label.text = "Vamos Colaborar?"
+        label.accessibilityTraits = .button
         label.textColor = .systemPurple
+        label.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         
         let sv = UIStackView(arrangedSubviews: [img, label])
         sv.axis = .vertical
@@ -155,6 +171,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     private func headerContentStack() -> UIStackView {
         
         let downStack = UIStackView(arrangedSubviews: [cardSubtitle])
+        downStack.tag = 1092
         //TODO: shareButton removed till sprint3
         downStack.distribution = .fill
         
@@ -174,10 +191,8 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let contentStack = UIStackView(arrangedSubviews: [cardFirstSessionTitle, cardFirstSessionDescription])
         contentStack.spacing = 8
         contentStack.axis = .vertical
-        contentStack.isUserInteractionEnabled = false
         
         let uiview = UIControl()
-        uiview.isUserInteractionEnabled = true
         uiview.addSubview(contentStack)
         contentStack.setupConstraints(to: uiview)
         
@@ -196,18 +211,22 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return divider
     }
     
-    private func secondSessionStack() -> UIStackView {
+    private func secondSessionStack() -> UIControl {
+        let contentStack = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardSecondSessionDescription])
+        contentStack.spacing = 8
+        contentStack.axis = .vertical
         
-        let content = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardSecondSessionDescription])
-        content.spacing = 8
-        content.axis = .vertical
+        let uiview = UIControl()
+        uiview.addSubview(contentStack)
+        contentStack.setupConstraints(to: uiview)
         
-        return content
+        return uiview
     }
     
     private func headerStack() -> UIStackView {
         
         let headerStack = UIStackView(arrangedSubviews: [headerContentStack(),genDivider()])
+        headerStack.tag = 1093
         headerStack.axis = .vertical
         headerStack.spacing = 24
         return headerStack
@@ -217,7 +236,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         super.draw(rect)
         
         let buttonAray =  self.superview?.subviews.filter({ (subViewObj) -> Bool in
-            return subViewObj.tag ==  9090
+            return subViewObj.tag == 9090 || subViewObj.tag == 9091
         })
         
         if buttonAray?.isEmpty == true {
@@ -225,19 +244,51 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func addOrRemoveButton() {
-        guard let uiview = cardFirstSessionDescription.superview?.superview as? UIControl,
-              let contentStack = uiview.subviews.first else {return}
+    fileprivate func configFirstSectionSeeMoreButton(_ uiview: UIControl, _ contentStack: UIView) {
         if cardFirstSessionDescription.isTruncated{
-            uiview.addSubview(seeMoreButton)
-            seeMoreButton.tag = 9090
-            seeMoreButton.trailingAnchor.constraint(equalTo:uiview.trailingAnchor).isActive = true
-            seeMoreButton.widthAnchor.constraint(equalTo: uiview.widthAnchor, multiplier: 0.2).isActive = true
-            seeMoreButton.lastBaselineAnchor.constraint(equalTo: contentStack.lastBaselineAnchor).isActive = true
-            seeMoreButton.isUserInteractionEnabled = false
-            uiview.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
+            addAndConfigButton(seeMoreButton, uiview, contentStack, tag: 9090)
         }else {
+            uiview.removeTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
             seeMoreButton.removeFromSuperview()
+        }
+    }
+    
+    fileprivate func configSecondSectionSeeMoreButton(_ uiview: UIControl, _ contentStack: UIView) {
+        if cardSecondSessionDescription.isTruncated{
+            
+            addAndConfigButton(seeMoreButton1, uiview, contentStack, tag: 9091)
+            
+        }else {
+            uiview.removeTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
+            seeMoreButton1.removeFromSuperview()
+        }
+    }
+    
+    fileprivate func addAndConfigButton(_ button: UIButton, _ uiview: UIControl, _ contentStack: UIView, tag: Int) {
+        contentStack.isUserInteractionEnabled = false
+
+        uiview.addSubview(button)
+        uiview.isUserInteractionEnabled = true
+        uiview.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
+        
+        button.tag = tag
+        button.trailingAnchor.constraint(equalTo: uiview.trailingAnchor).isActive = true
+        button.widthAnchor.constraint(equalTo: uiview.widthAnchor, multiplier: 0.2).isActive = true
+        button.lastBaselineAnchor.constraint(equalTo: contentStack.lastBaselineAnchor).isActive = true
+        button.isUserInteractionEnabled = false
+        button.isAccessibilityElement = false
+        
+        
+    }
+    
+    func addOrRemoveButton() {
+        if let uiview = cardFirstSessionDescription.superview?.superview as? UIControl,
+           let contentStack = uiview.subviews.first{
+            configFirstSectionSeeMoreButton(uiview, contentStack)
+        }
+        if let uiview = cardSecondSessionDescription.superview?.superview as? UIControl,
+           let contentStack = uiview.subviews.first{
+            configSecondSectionSeeMoreButton(uiview, contentStack)
         }
     }
     
@@ -290,12 +341,13 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let label1 = UILabel()
         label1.text = "Match!"
         label1.font = UIFont(name: "Futura-Bold", size: 50)
+        label1.adjustsFontForContentSizeCategory = true
         label1.textColor = .systemPurple
         label1.textAlignment = .center
         
         let label2 = UILabel()
         label2.text = "O contato para colaboração está disponível na área de notificações do seu perfil."
-        label2.font = UIFont.systemFont(style: .callout)
+        label2.setDynamicType(font: .systemFont(style: .callout))
         label2.numberOfLines = 0
         label2.textAlignment = .center
         
@@ -305,8 +357,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         root.distribution = .fillProportionally
         root.alignment = .center
         root.spacing = 29
-        
-        root.translatesAutoresizingMaskIntoConstraints = false
         
         return root
     }()
@@ -362,4 +412,57 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     @objc func seeMoreButtonTap() {
         delegate?.seeMoreButtonButtonTapped(self)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        layoutSubviews()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let sizeCategory = traitCollection.preferredContentSizeCategory
+        
+        if  sizeCategory <= .large {
+            if UIDevice().hasNotch{
+                cardFirstSessionDescription.numberOfLines = 6
+                cardSecondSessionDescription.numberOfLines = 5
+            }else {
+                cardFirstSessionDescription.numberOfLines = 3
+                cardSecondSessionDescription.numberOfLines = 3
+            }
+            
+            addOrRemoveButton()
+            changeSubTitlePlace()
+            
+        }else if sizeCategory > .large &&
+                    sizeCategory < .extraExtraExtraLarge {
+            cardFirstSessionDescription.numberOfLines = 4
+            cardSecondSessionDescription.numberOfLines = 4
+        }else {
+            if UIDevice().hasNotch{
+                cardFirstSessionDescription.numberOfLines = 3
+                cardSecondSessionDescription.numberOfLines = 3
+            }else {
+                cardFirstSessionDescription.numberOfLines = 2
+                cardSecondSessionDescription.numberOfLines = 2
+            }
+            addOrRemoveButton()
+            changeSubTitlePlace()
+        }
+    }
+    
+    func changeSubTitlePlace() {
+        if cardTitle.bounds.height <= 93 {
+            let foundView = viewWithTag(1092) as? UIStackView
+            cardSubtitle.removeFromSuperview()
+            foundView?.addArrangedSubview(cardSubtitle)
+        }else {
+            let headerStack = viewWithTag(1093) as? UIStackView
+            cardSubtitle.removeFromSuperview()
+            headerStack?.insertArrangedSubview(cardSubtitle, at: 1)
+            headerStack?.spacing = 8
+            headerStack?.setCustomSpacing(24, after: cardSubtitle)
+            
+        }
+    }
+    
 }
