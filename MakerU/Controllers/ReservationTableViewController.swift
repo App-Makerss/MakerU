@@ -23,7 +23,7 @@ class ReservationTableViewController: UITableViewController {
         dp.minimumDate = Date()
         dp.tintColor = .systemPurple
         dp.timeZone = TimeZone(identifier: "America/Sao_Paulo")
-        dp.locale = Locale.init(identifier: "es-AR")//TODO: remover quando a apple corrigir
+        dp.locale = Locale.init(identifier: "pt-BR")//TODO: remover quando a apple corrigir
         return dp
     }()
     
@@ -107,7 +107,7 @@ class ReservationTableViewController: UITableViewController {
                         resultCell = cell
                         break
                     case 3:
-                        let cell = SegmentedTableViewCell()
+                        let cell = TimePickerTableViewCell()
                         cell.textLbl.text = "Horário"
                         cell.timePicker.addTarget(self, action: #selector(self.timePickerValueChanged(sender:)), for: .valueChanged)
                         cell.timePicker.minimumDate = selectedDate

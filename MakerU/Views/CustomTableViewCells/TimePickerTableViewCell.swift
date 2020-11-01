@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SegmentedTableViewCell: UITableViewCell {
+class TimePickerTableViewCell: UITableViewCell {
     
     var timePicker: UIDatePicker = {
        let dp = UIDatePicker()
