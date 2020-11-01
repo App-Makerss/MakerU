@@ -7,14 +7,44 @@
 
 import UIKit
 
+enum ReservationTableViewControllerPickerViews {
+    case category
+    case dateAndTime
+    case time
+    case none
+}
+
 class ReservationTableViewController: UITableViewController {
     
     var projectUpdate: Project?
     var datetimeUpdates: [String: Date] = [:]
     
-    var selectedProject: Project?
-    var selectedDate: Date? = Date()
+    var selectedCategory: Category? {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadSections([0], with: .automatic)
+            }
+        }
+    }
+    var categories: [Category] = []
     
+    var selectedProject: Project? {
+        didSet {
+            if selectedProject?.id == nil && !categories.isEmpty {
+                selectedCategory = categories.first(where: {$0.id == selectedProject?.category}) ?? categories.first
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadSections([0], with: .automatic)
+            }
+        }
+    }
+    var projects: [Project] = [] {
+        didSet {
+            selectedProject = projects.first
+        }
+    }
+    
+    var selectedDate: Date? = Date()
     let datePicker: UIDatePicker = {
         let dp = UIDatePicker()
         dp.datePickerMode = .dateAndTime
@@ -27,21 +57,24 @@ class ReservationTableViewController: UITableViewController {
         return dp
     }()
     
-    var isTimepickerVisible = false {
+    var pickerKind: ReservationTableViewControllerPickerViews = .none{
         didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadSections([1], with: .automatic)
+            if oldValue == pickerKind {
+                pickerKind = .none
+                isInlinePickerVisible = false
             }
         }
     }
     
-    var isDatepickerVisible = false {
+    var isInlinePickerVisible = false {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadSections([1], with: .automatic)
+                self.tableView.reloadSections([0,1], with: .automatic)
             }
         }
     }
+    
+    let projectService = ProjectService()
 
     func setupNavigations() {
         navigationItem.title = "Agendamento"
@@ -63,12 +96,35 @@ class ReservationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigations()
+        hideKeyboardWhenTappedAround()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         datePicker.addTarget(self, action: #selector(self.datePickerValueChanged(sender:)), for: .valueChanged)
+        projectService.listLoggedUserProjectsSortedByCreationDate(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77") { (projects, error) in
+            if let projects = projects{
+                self.projects = projects
+            }
+        }
+        
+        CategoryDAO().listAll { (categories, error) in
+            print(error?.localizedDescription)
+            if let categories = categories {
+                self.categories = categories
+            }
+        }
+    }
+    
+    var projectSectionRowCount: Int {
+        if selectedProject == nil || selectedProject?.id == nil{
+            if isInlinePickerVisible && pickerKind == .category {
+                return 4
+            }
+            return 3
+        }
+        return 1
     }
 
     var dateSelectorsRowCount: Int {
-        isTimepickerVisible ? 4 : 3
+        isInlinePickerVisible && pickerKind == .time ? 4 : 3
     }
     
     // MARK: - Table view data source
@@ -78,7 +134,7 @@ class ReservationTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 1 ? dateSelectorsRowCount : 1
+        section == 1 ? dateSelectorsRowCount : projectSectionRowCount
     }
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         section == 0 ? "Associe uma atividade a sua reserva" : ""
@@ -97,7 +153,7 @@ class ReservationTableViewController: UITableViewController {
                     case 2:
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
                         cell.textLabel?.text = "Termina"
-                        cell.detailTextLabel?.textColor = isTimepickerVisible ? .systemPurple : .label
+                        cell.detailTextLabel?.textColor = (isInlinePickerVisible && pickerKind == .time) ? .systemPurple : .label
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateStyle = .none
                         dateFormatter.timeStyle = .short
@@ -116,7 +172,7 @@ class ReservationTableViewController: UITableViewController {
                     default:
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
                         cell.textLabel?.text = "Começa"
-                        cell.detailTextLabel?.textColor = isDatepickerVisible ? .systemPurple : .label
+                        cell.detailTextLabel?.textColor = (isInlinePickerVisible && pickerKind == .dateAndTime) ? .systemPurple : .label
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateStyle = .medium
                         dateFormatter.timeStyle = .short
@@ -127,32 +183,99 @@ class ReservationTableViewController: UITableViewController {
                         break
                 }
             default:
+                switch indexPath.row {
+                    case 1:
+                        let cell = FormFieldTableViewCell()
+                        cell.label.text = "Título"
+                        cell.value.text = selectedProject?.title
+                        cell.value.addTarget(self, action: #selector(Self.newProjectTitleValueChanged(sender:)), for: .editingDidEnd)
+                        resultCell = cell
+                    case 2:
+                        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
+                        cell.textLabel?.text = "Categoria"
+                        cell.detailTextLabel?.text = selectedCategory?.name
+                        cell.detailTextLabel?.textColor = (isInlinePickerVisible && pickerKind == .category) ? .systemPurple : .secondaryLabel
+                        resultCell = cell
+                    case 3:
+                        let items = categories.map({
+                            GenericRow<Category>(type: $0, showText: $0.name)
+                        })
+                        let cell = PickerViewTableViewCell<Category>(withItems:items)
+                        cell.selectedItem = items.first
+                        cell.pickerDelegate = self
+                        resultCell = cell
+                    default:
+                        let cell = UITableViewCell(style: .value1, reuseIdentifier: "project")
+                        cell.textLabel?.text = "Atividade"
+                        var detailText: String?
+                        if selectedProject != nil && selectedProject?.id != nil  && selectedProject?.title != "" {
+                            detailText = selectedProject?.title
+                        }else {
+                            detailText = "Novo projeto"
+                        }
+                        cell.detailTextLabel?.text = detailText
+                        cell.accessoryType = .disclosureIndicator
+                        resultCell = cell
+                }
                 break
         }
 
         return resultCell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if  indexPath.section == 1 && indexPath.row == 1 && !isDatepickerVisible {
-            return 0
-        }
-        if indexPath.section == 1 && indexPath.row == 3 && !isTimepickerVisible {
+        if  indexPath.section == 1 && indexPath.row == 1 && ( pickerKind != .dateAndTime) {
             return 0
         }
         return UITableView.automaticDimension
     }
+    func openProjectSelectorTableView() {
+        var items = projects.map({
+            GenericRow<Project>(type: $0, showText: $0.title)
+        })
+        items.insert(GenericRow<Project>(type: Project(title: "", category: "", owner: "", makerspace: "", collaborators: []), showText: "Novo projeto"), at: 0)
+        let vc = PickerViewTableViewController(withItems: items)
+        vc.selectedItem = selectedProject != nil ? GenericRow<Project>(type: selectedProject!, showText: selectedProject!.title) : items.first
+        vc.pickerDelegate = self
+        vc.navigationItem.title = "Atividade"
+        navigationController?.pushViewController(vc, animated: true)
+    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 {
-            isDatepickerVisible.toggle()
-            isTimepickerVisible = false
-        }else if indexPath.section == 1 && indexPath.row == 2 {
-            isTimepickerVisible.toggle()
-            isDatepickerVisible = false
-        }else if isDatepickerVisible || isTimepickerVisible {
-            isDatepickerVisible = false
-            isTimepickerVisible = false
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        switch section {
+            case 1:
+                switch row {
+                    case 0,2:
+                        isInlinePickerVisible = true
+                        if row == 0 {
+                            pickerKind = .dateAndTime
+                        }else {
+                            pickerKind = .time
+                        }
+                    default:
+                        isInlinePickerVisible = false
+                }
+            default:
+                switch row {
+                    case 2:
+                        isInlinePickerVisible = true
+                        pickerKind = .category
+                    default:
+                        if row == 0 {
+                            openProjectSelectorTableView()
+                        }
+                        isInlinePickerVisible = false
+                }
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        nil
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        0
     }
     //MARK: - objc funcs
     @objc func cancelBarItemTapped() {
@@ -181,5 +304,26 @@ class ReservationTableViewController: UITableViewController {
         datetimeUpdates["time"] = sender.date
         let datePickerHeaderRow = IndexPath(row: 2, section: 1)
         tableView.reloadRows(at: [datePickerHeaderRow], with: .automatic)
+    }
+    
+    @objc func newProjectTitleValueChanged(sender: UITextField) {
+        selectedProject?.title = sender.text ?? ""
+    }
+}
+
+extension ReservationTableViewController: PickerViewTableViewControllerDelegate {
+    func pickerTableViewDidSelected(_ viewController: UIViewController, item: Any) {
+        navigationController?.popViewController(animated: true)
+        if let row = item as? GenericRow<Project> {
+            selectedProject = row.type
+        }
+    }
+}
+
+extension ReservationTableViewController: PickerViewTableViewCellDelegate {
+    func pickerCellDidSelected(item: Any) {
+        if let row = item as? GenericRow<Category> {
+            selectedProject?.category = row.type.id ?? ""
+        }
     }
 }

@@ -23,3 +23,9 @@ struct Project: IdentifiableEntity, Codable {
     var canAppearOnMatch: Bool = false
     
 }
+
+extension Project: Equatable {
+    static func ==(lhs: Project, rhs: Project) -> Bool {
+        lhs.id == rhs.id
+    }
+}

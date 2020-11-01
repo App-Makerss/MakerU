@@ -14,3 +14,9 @@ struct Category: IdentifiableEntity, Codable {
     var name: String
     var icon: Data
 }
+
+extension Category: Equatable {
+    static func ==(lhs: Category, rhs: Category) -> Bool {
+        lhs.id == rhs.id
+    }
+}

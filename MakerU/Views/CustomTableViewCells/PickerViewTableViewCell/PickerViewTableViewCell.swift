@@ -8,10 +8,10 @@
 import UIKit
 
 protocol PickerViewTableViewCellDelegate: class{
-    func didSelected(item: Any)
+    func pickerCellDidSelected(item: Any)
 }
 
-class PickerViewTableViewCell<T>: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
+class PickerViewTableViewCell<T: Equatable>: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
     
     //MARK: - Outlets
     private lazy var pickerView: UIPickerView = {
@@ -23,7 +23,13 @@ class PickerViewTableViewCell<T>: UITableViewCell, UIPickerViewDelegate, UIPicke
 
     //MARK: - Attributes
     var items: [GenericRow<T>]
-    var selectedItem: GenericRow<T>?
+    var selectedItem: GenericRow<T>?{
+        didSet {
+            if let selectedIndex = items.firstIndex(where: {$0.type == selectedItem?.type}) {
+                pickerView.selectRow(selectedIndex, inComponent: 0, animated: true)
+            }
+        }
+    }
     weak var pickerDelegate: PickerViewTableViewCellDelegate?
     
     // MARK: - Initializers
@@ -66,7 +72,7 @@ class PickerViewTableViewCell<T>: UITableViewCell, UIPickerViewDelegate, UIPicke
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedItem = items[row]
-        pickerDelegate?.didSelected(item: items[row])
+        pickerDelegate?.pickerCellDidSelected(item: items[row])
     }
 }
 

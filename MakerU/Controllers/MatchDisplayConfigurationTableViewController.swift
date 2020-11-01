@@ -306,7 +306,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 }
 
 extension MatchDisplayConfigurationTableViewController: PickerViewTableViewCellDelegate {
-    func didSelected(item: Any) {
+    func pickerCellDidSelected(item: Any) {
         if let row = item as? GenericRow<Project> {
             selectedProject = row.type
         }

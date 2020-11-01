@@ -13,7 +13,7 @@ protocol GenericsDAO where Self: CloudKitEncodable {
     func update(entity: ManagedEntity)
     func save(entity: ManagedEntity, completion:  ((ManagedEntity?,Error?) -> ())?)
     func find(byId id: String, completion:  @escaping (ManagedEntity?,Error?) -> ())
-    func listAll(by predicate: NSPredicate, completion: @escaping ([ManagedEntity]?, Error?) -> ())
+    func listAll(by predicate: NSPredicate, sortBy sortDescriptors: [String: Bool], completion: @escaping ([ManagedEntity]?, Error?) -> ())
 }
 
 extension GenericsDAO {
@@ -91,9 +91,14 @@ extension GenericsDAO {
         }
     }
     
-    func listAll(by predicate: NSPredicate, completion: @escaping ([ManagedEntity]?, Error?) -> ()) {
-        let op = CKQueryOperation(query: CKQuery(recordType: referenceName, predicate: predicate))
-        
+    func listAll(by predicate: NSPredicate, sortBy sortDescriptors: [String: Bool] = [:], completion: @escaping ([ManagedEntity]?, Error?) -> ()) {
+        var descriptors: [CKLocationSortDescriptor] = []
+        sortDescriptors.forEach { (key, isAscending) in
+            descriptors.append(CKLocationSortDescriptor(key: key, ascending: isAscending))
+        }
+        let query = CKQuery(recordType: referenceName, predicate: predicate)
+        query.sortDescriptors = descriptors
+        let op = CKQueryOperation(query: query )
         var list: [ManagedEntity] = []
         
         op.recordFetchedBlock = { record in

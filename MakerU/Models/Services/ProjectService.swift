@@ -21,4 +21,16 @@ struct ProjectService {
         let predicate = NSPredicate(format: "makerspace == %@ AND owner == %@", makerspaceReference, userReference)
         projectDAO.listAll(by: predicate, completion: completion)
     }
+    
+    func listLoggedUserProjectsSortedByCreationDate(by makerspace: String, completion: @escaping ([Project]?, Error?) -> ()){
+        
+        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+        let userReference = projectDAO.generateRecordReference(for: loggedUserID)
+        
+        let makerspaceReference = projectDAO.generateRecordReference(for: makerspace)
+        
+        let predicate = NSPredicate(format: "makerspace == %@ AND owner == %@", makerspaceReference, userReference)
+        let sortBy = ["creationDate": false]
+        projectDAO.listAll(by: predicate, sortBy: sortBy, completion: completion)
+    }
 }
