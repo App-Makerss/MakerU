@@ -22,6 +22,8 @@ class SkillsTableViewCell: UITableViewCell {
         // Initialization code
         
         skillsTextView.delegate = self
+        skillsTextView.textContainer.maximumNumberOfLines = 6
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

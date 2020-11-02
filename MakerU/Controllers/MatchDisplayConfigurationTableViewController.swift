@@ -67,7 +67,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }()
     
     func setupNavigations() {
-        navigationItem.title = "Exibição"
+        navigationItem.title = configSegmentedControl.selectedSegmentIndex == 0 ? "Perfil" : "Projeto"
         let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
         cancelBarItem.tintColor = UIColor.systemPurple
         
@@ -111,6 +111,10 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 self.selectedProject = firstProject
             }
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
     // MARK: - Table view data source
@@ -254,6 +258,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     
     @objc func selectedSegmentChanged(sender: UISegmentedControl) {
+        navigationItem.title = configSegmentedControl.selectedSegmentIndex == 0 ? "Perfil" : "Projeto"
         tableView.reloadData()
     }
     
