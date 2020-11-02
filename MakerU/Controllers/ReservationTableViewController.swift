@@ -16,7 +16,6 @@ enum ReservationTableViewControllerPickerViews {
 
 class ReservationTableViewController: UITableViewController {
     
-    var projectUpdate: Project?
     var datetimeUpdates: [String: Date] = [:]
     
     var selectedCategory: Category? {
@@ -166,7 +165,7 @@ class ReservationTableViewController: UITableViewController {
                         let cell = TimePickerTableViewCell()
                         cell.textLbl.text = "Horário"
                         cell.timePicker.addTarget(self, action: #selector(self.timePickerValueChanged(sender:)), for: .valueChanged)
-                        cell.timePicker.minimumDate = selectedDate
+                        cell.timePicker.minimumDate = datetimeUpdates["date&time"] ?? selectedDate
                         resultCell = cell
                         break
                     default:
@@ -232,7 +231,7 @@ class ReservationTableViewController: UITableViewController {
         var items = projects.map({
             GenericRow<Project>(type: $0, showText: $0.title)
         })
-        items.insert(GenericRow<Project>(type: Project(title: "", category: "", owner: "", makerspace: "", collaborators: []), showText: "Novo projeto"), at: 0)
+        items.insert(GenericRow<Project>(type: Project(), showText: "Novo projeto"), at: 0)
         let vc = PickerViewTableViewController(withItems: items)
         vc.selectedItem = selectedProject != nil ? GenericRow<Project>(type: selectedProject!, showText: selectedProject!.title) : items.first
         vc.pickerDelegate = self
@@ -280,7 +279,7 @@ class ReservationTableViewController: UITableViewController {
     //MARK: - objc funcs
     @objc func cancelBarItemTapped() {
         
-        if projectUpdate != nil || !datetimeUpdates.isEmpty {
+        if  !datetimeUpdates.isEmpty || (selectedProject?.id == nil && selectedProject?.title != "") {
             presentDiscardChangesActionSheet { _ in
                 self.dismiss(animated: true, completion: nil)
             }
@@ -296,8 +295,10 @@ class ReservationTableViewController: UITableViewController {
     @objc func datePickerValueChanged(sender: UIDatePicker) {
         selectedDate = sender.date
         datetimeUpdates["date&time"] = sender.date
+        datetimeUpdates["time"] = sender.date
         let datePickerHeaderRow = IndexPath(row: 0, section: 1)
-        tableView.reloadRows(at: [datePickerHeaderRow], with: .automatic)
+        let timePickerHeaderRow = IndexPath(row: 2, section: 1)
+        tableView.reloadRows(at: [datePickerHeaderRow,timePickerHeaderRow], with: .automatic)
     }
     
     @objc func timePickerValueChanged(sender: UIDatePicker) {
