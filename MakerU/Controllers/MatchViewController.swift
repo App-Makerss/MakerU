@@ -60,6 +60,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         view.addSubview(configDisplayButton)
         view.backgroundColor = .systemGroupedBackground
+//        view.addGestureRecognizer(swipeUpGestureRecognizer)
         
         setupCollecitonView()
         setupContraints()
@@ -67,6 +68,11 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         configureDataSource()
         configureSnapshot()
+
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(swipedUp(sender:)))
+//        tapGesture.delegate = self
+//        collectionView.isUserInteractionEnabled = true
+//        collectionView.addGestureRecognizer(tapGesture)
         
     }
     
@@ -74,18 +80,34 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         super.viewWillAppear(animated)
         loadMatchSuggestions()
     }
+
+
+//
+//    @objc func swipedUp(sender: UISwipeGestureRecognizer) {
+//        if sender.state == .ended {
+//            print("Swiped Up")
+//            // funcão de abrir a tela de vamos colaborar
+//        }
+//    }
+//
+//    var swipeUpGestureRecognizer: UISwipeGestureRecognizer = {
+//        let gesture = UISwipeGestureRecognizer()
+//        gesture.direction = .up
+//        gesture.addTarget(self, action: #selector(swipedUp))
+//        return gesture
+//    }()
     
     //MARK: Setups
     func setupCollecitonView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.alwaysBounceVertical = true
+        collectionView.alwaysBounceVertical = false
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
         collectionView.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: MatchCardCollectionViewCell.reuseIdentifier)
         view.addSubview(collectionView)
         collectionView.delegate = self
-        
+
     }
 
     func setupNavigations() {
@@ -137,7 +159,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
 }
 
 //MARK: UICollectionViewDiffableDataSource & UICollectionViewCompositionalLayout
-extension MatchViewController  {
+extension MatchViewController {
     typealias cardsDataSource = UICollectionViewDiffableDataSource<String,MatchCard>
     
     func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
@@ -171,6 +193,7 @@ extension MatchViewController  {
                 fatalError("Cannot create MatchCardCollectionViewCell")
             }
             cell.delegate = self
+            cell.selectedAtIndex = indexPath
             cell.cardFace = .front
             let item = self.matchSuggestions[indexPath.row]
             cell.cardTitle.text = item.title
@@ -182,10 +205,21 @@ extension MatchViewController  {
             cell.cardFirstSessionDescription.text = item.firstSessionLabel
             cell.cardSecondSessionTitle.text = item.secondSessionTitle
             cell.cardSecondSessionDescription.text = item.secondSessionLabel
-            
+
             return cell
         })
     }
+
+
+    func showCardSwiped(indexPath: IndexPath?) {
+        if let ip = indexPath {
+            let cell = collectionView.cellForItem(at: ip)
+            collaborateButtonTapped(cell as! MatchCardCollectionViewCell)
+            print("subiuuu galera \(ip)")
+        }
+    }
+
+
     func addSectionAndItens(_ currentSnapshot: inout NSDiffableDataSourceSnapshot<String, MatchCard>) {
         currentSnapshot.appendSections(["cards"])
         currentSnapshot.appendItems(self.matchSuggestions, toSection: "cards")
@@ -234,24 +268,28 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     }
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
-        //TODO: animates the card flowing up
+        let startY = cell.frame.origin.y
+        let animator = UIViewPropertyAnimator(duration:0.2, curve: .linear) { //1
+            cell.frame.origin.y = -self.view.bounds.height
+        }
         guard let currentIndex = collectionView.indexPath(for: cell),
-              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else {return}
-        
+              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
         let card = matchSuggestions[currentIndex.row]
-        
         let match = Match(id: nil, part1: loggedUserID, part2: card.id)
-        
         matchService.verifyMatch(match: match) { isMutual in
+            DispatchQueue.main.async {
+                animator.startAnimation() //2
+            }
             if isMutual {
-                DispatchQueue.main.async {
+                animator.addCompletion { _ in
                     cell.cardFace = .back
+                    cell.frame.origin.y = startY
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
+                        self.removeCard(for: card)
+                    }
                 }
-                DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
-                    self.removeCard(for: card)
-                }
-            }else{
-                DispatchQueue.global().async {
+            } else {
+                animator.addCompletion { _ in
                     self.removeCard(for: card)
                 }
             }

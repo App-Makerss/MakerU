@@ -10,9 +10,8 @@ import UIKit
 protocol MatchCardCollectionViewCellDelegate: class {
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell)
     func seeMoreButtonButtonTapped(_ cell: MatchCardCollectionViewCell)
-    
+    func showCardSwiped(indexPath: IndexPath?)
 }
-
 
 enum CardFace {
     case front
@@ -21,8 +20,10 @@ enum CardFace {
 
 class MatchCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: self)
+
     var delegate: MatchCardCollectionViewCellDelegate?
-    
+    var selectedAtIndex: IndexPath?
+
     var cardFace: CardFace = .front {
         didSet{
             if cardFace == .front {
@@ -33,8 +34,19 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
-    
+
+    public func showSwipeUp(){
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp))
+        gesture.direction = .up
+        gesture.numberOfTouchesRequired = 1
+        containerview.isUserInteractionEnabled = true
+        containerview.addGestureRecognizer(gesture)
+    }
+
+    @objc func swipeUp(){
+        delegate?.showCardSwiped(indexPath: selectedAtIndex)
+    }
+
     let cardImageView: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -223,6 +235,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         if buttonAray?.isEmpty == true {
             self.addOrRemoveButton()
         }
+        showSwipeUp()
     }
     
     func addOrRemoveButton() {
@@ -323,7 +336,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         setupAppearance()
     }
     let containerview = UIView()
-    
+
     private func setupCardFrontalFace(){
         cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
         contentView.subviews.forEach {$0.removeFromSuperview()}
