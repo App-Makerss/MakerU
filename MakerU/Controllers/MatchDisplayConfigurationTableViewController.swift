@@ -60,6 +60,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
+        segmented.layer.cornerRadius = 8.91
         segmented.selectedSegmentIndex = 0
         segmented.addTarget(self, action: #selector(Self.selectedSegmentChanged), for: .valueChanged)
 
@@ -193,14 +194,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             return 0
         }
     }
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.section == 2 {
-//            return 200
-//        }
-//        else {
-//            return UITableView.automaticDimension
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var resultCell: UITableViewCell!
@@ -211,6 +204,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         case 0:
             let cell = UITableViewCell()
             cell.contentView.addSubview(configSegmentedControl)
+            cell.contentView.clipsToBounds = false
             configSegmentedControl.setupConstraints(to: cell.contentView)
             
             resultCell = cell
@@ -258,7 +252,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowProfileTableViewCell")!
             let show = configSegmentedControl.selectedSegmentIndex == 0 ? "Exibir perfil" : "Exibir projeto"
             (cell as! ShowProfileTableViewCell).showProjectOrProfile.text = show
-//            (cell as! ShowProfileTableViewCell).delegate = self
             let isOn = configSegmentedControl.selectedSegmentIndex == 0 ? (selectedUser?.canAppearOnMatch == true) : (selectedProject?.canAppearOnMatch == true)
             
             (cell as! ShowProfileTableViewCell).showSwitchControll.setOn(isOn, animated: true)
