@@ -81,9 +81,8 @@
 		56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */; };
 		56DE940B254E29630054CF6E /* GenericRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940A254E29630054CF6E /* GenericRow.swift */; };
 		56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */; };
-		56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C838254C9883000441C4 /* ReservationTableViewController.swift */; };
 		56E9C835254C590F000441C4 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */; };
-		E22EB01F253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */; };
+		56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C838254C9883000441C4 /* ReservationTableViewController.swift */; };
 		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E247C090254260B00093833C /* MatchOnboardingViewController.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
@@ -167,9 +166,8 @@
 		56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		56DE940A254E29630054CF6E /* GenericRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRow.swift; sourceTree = "<group>"; };
 		56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
-		56E9C838254C9883000441C4 /* ReservationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTableViewController.swift; sourceTree = "<group>"; };
 		56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
-		E22EB01E253E663E00EA7FDD /* ProjectSelectorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSelectorTableViewCell.swift; sourceTree = "<group>"; };
+		56E9C838254C9883000441C4 /* ReservationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTableViewController.swift; sourceTree = "<group>"; };
 		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E247C090254260B00093833C /* MatchOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchOnboardingViewController.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };

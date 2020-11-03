@@ -101,7 +101,7 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         label.setDynamicType(font: .systemFont(style: .title3, weight: .bold), textStyle: .title3)
 
         view.addSubview(label)
-        
+        label.accessibilityTraits = .header
         label.setupConstraints(to: view, leadingConstant: 4)
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
 

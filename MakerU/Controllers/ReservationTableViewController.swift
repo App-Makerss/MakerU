@@ -179,7 +179,7 @@ class ReservationTableViewController: UITableViewController {
                         dateFormatter.timeStyle = .short
                         dateFormatter.locale = Locale.init(identifier: "pt-BR")
                         cell.detailTextLabel?.text = dateFormatter.string(from: datetimeUpdates["time"] ?? Date())
-                        cell.accessibilityHint = "Toque duas vezess para editar"
+                        cell.accessibilityHint = "Toque duas vezes para editar"
                         resultCell = cell
                         break
                     case 3:
@@ -198,7 +198,7 @@ class ReservationTableViewController: UITableViewController {
                         dateFormatter.timeStyle = .short
                         dateFormatter.locale = Locale.init(identifier: "pt-BR")
                         cell.detailTextLabel?.text = dateFormatter.string(from: selectedDate!)
-                        cell.accessibilityHint = "Toque duas vezess para editar"
+                        cell.accessibilityHint = "Toque duas vezes para editar"
                         resultCell = cell
                         break
                 }
@@ -214,6 +214,7 @@ class ReservationTableViewController: UITableViewController {
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
                         cell.textLabel?.text = "Categoria"
                         cell.detailTextLabel?.text = selectedCategory?.name
+                        cell.accessibilityHint = "toque duas vezes para editar"
                         cell.detailTextLabel?.textColor = (isInlinePickerVisible && pickerKind == .category) ? .systemPurple : .secondaryLabel
                         resultCell = cell
                     case 3:
@@ -227,6 +228,7 @@ class ReservationTableViewController: UITableViewController {
                     default:
                         let cell = UITableViewCell(style: .value1, reuseIdentifier: "project")
                         cell.textLabel?.text = "Atividade"
+                        cell.accessibilityHint = "toque duas vezes para editar"
                         var detailText: String?
                         if selectedProject != nil && selectedProject?.id != nil  && selectedProject?.title != "" {
                             detailText = selectedProject?.title

@@ -152,6 +152,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 let roomCell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCollectionViewCell.reuseIdentifier, for: indexPath) as! RoomCollectionViewCell
                 let item = rooms[indexPath.row]
                 roomCell.title.text = item.title
+                roomCell.title.accessibilityTraits = .button
                 roomCell.imageView.image = UIImage(data: item.image ?? Data())
                 
                 cell = roomCell
@@ -166,6 +167,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 }else {
                     content.text = "Reportar ocorrência"
                 }
+                listCell.accessibilityTraits = [.button]
                 listCell.contentConfiguration = content
                 listCell.accessories = [.disclosureIndicator()]
                 return listCell
@@ -173,6 +175,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 let equipCell = collectionView.dequeueReusableCell(withReuseIdentifier: EquipmentCollectionViewCell.reuseIdentifier, for: indexPath) as! EquipmentCollectionViewCell
                 let equipItem = equipments[indexPath.row]
                 equipCell.title.text = equipItem.title
+                equipCell.title.accessibilityTraits = .button
                 equipCell.subtitle.text = equipItem.metrics
                 equipCell.imageView.image = UIImage(data: equipItem.image ?? Data())
                 
