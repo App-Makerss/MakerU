@@ -312,8 +312,12 @@ class ReservationTableViewController: UITableViewController {
     }
     
     @objc func okBarItemTapped() {
-        if  let project = self.selectedProject,
+        if  var project = self.selectedProject,
+            let category = selectedCategory?.id,
             let endDate = datetimeUpdates["time"] {
+            if project.category == ""{
+                project.category = category
+            }
             let startDate = datetimeUpdates["date&time"] ?? Date()
             reservationService.checkAvailability(reservedItemID, from: startDate, to: endDate) { (isAvailable, error) in
                 if isAvailable == true {

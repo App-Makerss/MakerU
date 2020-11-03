@@ -17,6 +17,7 @@ struct ProjectService {
         }else {
             var projectToSave = project
             guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+            projectToSave.makerspace = "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77"
             projectToSave.owner = loggedUserID
             projectDAO.save(entity: projectToSave) { project, error in
                 completion(project, error, true)
