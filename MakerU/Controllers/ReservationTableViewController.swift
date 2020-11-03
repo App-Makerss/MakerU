@@ -49,7 +49,7 @@ class ReservationTableViewController: UITableViewController {
     }
     var projects: [Project] = [] {
         didSet {
-            selectedProject = projects.first
+            selectedProject = projects.first ?? Project()
         }
     }
     
