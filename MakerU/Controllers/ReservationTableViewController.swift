@@ -53,7 +53,11 @@ class ReservationTableViewController: UITableViewController {
         }
     }
     
-    var selectedDate: Date? = Date()
+    var selectedDate: Date? = Date() {
+        didSet {
+            datetimeUpdates["date&time"] = selectedDate
+        }
+    }
     let datePicker: UIDatePicker = {
         let dp = UIDatePicker()
         dp.datePickerMode = .dateAndTime
@@ -78,7 +82,13 @@ class ReservationTableViewController: UITableViewController {
     var isInlinePickerVisible = false {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadSections([0,1], with: .automatic)
+                if self.pickerKind == .category{
+                    self.tableView.reloadSections([0], with: .automatic)
+                }else if self.pickerKind == .dateAndTime || self.pickerKind == .time {
+                    self.tableView.reloadSections([1], with: .automatic)
+                }else {
+                    self.tableView.reloadSections([0,1], with: .automatic)
+                }
             }
         }
     }
@@ -285,7 +295,7 @@ class ReservationTableViewController: UITableViewController {
         nil
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        0
+        section == 1 ? 16 : 8
     }
     //MARK: - objc funcs
     @objc func cancelBarItemTapped() {
@@ -301,8 +311,8 @@ class ReservationTableViewController: UITableViewController {
     
     @objc func okBarItemTapped() {
         if  let project = self.selectedProject,
-            let startDate = datetimeUpdates["date&time"],
             let endDate = datetimeUpdates["time"] {
+            let startDate = datetimeUpdates["date&time"] ?? Date()
             reservationService.checkAvailability(reservedItemID, from: startDate, to: endDate) { (isAvailable, error) in
                 if isAvailable == true {
                     self.projectService.saveIfNeeded(project)

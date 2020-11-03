@@ -36,7 +36,8 @@ class FormFieldTableViewCell: UITableViewCell {
     
     func commonInit() {
         selectionStyle = .none
-        
+        label.setDynamicType(font: .systemFont(style: .body))
+        value.setDynamicType(font: .systemFont(style: .body))
         label.setContentHuggingPriority(.init(251), for: .horizontal)
         
         let layoutStackView = UIStackView(arrangedSubviews: [label,value])

@@ -78,6 +78,7 @@
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
 		56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328C252BA7B500FA03AA /* Assets.xcassets */; };
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
+		56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */; };
 		56DE940B254E29630054CF6E /* GenericRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940A254E29630054CF6E /* GenericRow.swift */; };
 		56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */; };
 		56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C838254C9883000441C4 /* ReservationTableViewController.swift */; };
@@ -161,6 +162,7 @@
 		56C3328C252BA7B500FA03AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56C3328F252BA7B500FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56C33291252BA7B500FA03AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		56DE940A254E29630054CF6E /* GenericRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRow.swift; sourceTree = "<group>"; };
 		56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
 		56E9C838254C9883000441C4 /* ReservationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTableViewController.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				566D51022539F262002B0CE1 /* UIFont+Extensions.swift */,
 				569C4435254319710099A44A /* UIView+Constraints.swift */,
 				567C51712549B4250003BCCB /* UIViewController+Extensions.swift */,
+				56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */,
 				569714BF254B252C00419049 /* Occurrence.swift in Sources */,
 				56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */,
+				56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */,
 				566EB3CE2535E58B0092F096 /* MatchViewController.swift in Sources */,
 				566620CA252F9054009821E9 /* Coordinate.swift in Sources */,
 				3EB64569253924F4008D437D /* UserBioTableViewCell.swift in Sources */,
