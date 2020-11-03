@@ -67,7 +67,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }()
     
     func setupNavigations() {
-        navigationItem.title = configSegmentedControl.selectedSegmentIndex == 0 ? "Perfil" : "Projeto"
+        navigationItem.title = "Exibição"
         let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
         cancelBarItem.tintColor = UIColor.systemPurple
         
@@ -89,6 +89,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         setupNavigations()
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "UserBioTableViewCell", bundle: nil), forCellReuseIdentifier: "UserBioTableViewCell")
+        
         tableView.register(UINib(nibName: "ProjectDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "ProjectDescriptionTableViewCell")
         tableView.register(UINib(nibName: "SkillsTableViewCell", bundle: nil), forCellReuseIdentifier: "SkillsTableViewCell")
         tableView.register(UINib(nibName: "ShowProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "ShowProfileTableViewCell")
@@ -186,13 +187,20 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         }
     }
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        
         if section > 1 {
             return UITableView.automaticDimension
         }else {
             return 0
         }
     }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if indexPath.section == 2 {
+//            return 200
+//        }
+//        else {
+//            return UITableView.automaticDimension
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var resultCell: UITableViewCell!
@@ -246,8 +254,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             resultCell = cell
             break
         default:
+            //Exibir projeto e exibir perfil no segmented
             let cell = tableView.dequeueReusableCell(withIdentifier: "ShowProfileTableViewCell")!
+            let show = configSegmentedControl.selectedSegmentIndex == 0 ? "Exibir perfil" : "Exibir projeto"
+            (cell as! ShowProfileTableViewCell).showProjectOrProfile.text = show
+//            (cell as! ShowProfileTableViewCell).delegate = self
             let isOn = configSegmentedControl.selectedSegmentIndex == 0 ? (selectedUser?.canAppearOnMatch == true) : (selectedProject?.canAppearOnMatch == true)
+            
             (cell as! ShowProfileTableViewCell).showSwitchControll.setOn(isOn, animated: true)
             (cell as! ShowProfileTableViewCell).showSwitchControll.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
             resultCell = cell
@@ -258,7 +271,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     
     @objc func selectedSegmentChanged(sender: UISegmentedControl) {
-        navigationItem.title = configSegmentedControl.selectedSegmentIndex == 0 ? "Perfil" : "Projeto"
         tableView.reloadData()
     }
     

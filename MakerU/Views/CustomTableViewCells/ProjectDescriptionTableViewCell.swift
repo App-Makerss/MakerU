@@ -8,11 +8,13 @@
 import UIKit
 
 class ProjectDescriptionTableViewCell: UITableViewCell {
+    @IBOutlet weak var data: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.data.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
