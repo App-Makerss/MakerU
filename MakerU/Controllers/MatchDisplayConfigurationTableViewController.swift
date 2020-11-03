@@ -60,7 +60,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
-        segmented.layer.cornerRadius = 8.91
+//        segmented.layer.cornerRadius = 8.91
         segmented.selectedSegmentIndex = 0
         segmented.addTarget(self, action: #selector(Self.selectedSegmentChanged), for: .valueChanged)
 
@@ -205,6 +205,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             let cell = UITableViewCell()
             cell.contentView.addSubview(configSegmentedControl)
             cell.contentView.clipsToBounds = false
+            
             configSegmentedControl.setupConstraints(to: cell.contentView)
             
             resultCell = cell
@@ -232,6 +233,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         case 2:
             let identifier = configSegmentedControl.selectedSegmentIndex == 0 ? "UserBioTableViewCell" : "ProjectDescriptionTableViewCell"
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier)!
+            cell.selectionStyle = .none
             if configSegmentedControl.selectedSegmentIndex == 0 {
                 (cell as! UserBioTableViewCell).descriptionText.text = selectedUser?.description
             }else {
