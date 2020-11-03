@@ -60,7 +60,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         view.addSubview(configDisplayButton)
         view.backgroundColor = .systemGroupedBackground
-//        view.addGestureRecognizer(swipeUpGestureRecognizer)
         
         setupCollecitonView()
         setupContraints()
@@ -69,11 +68,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         configureDataSource()
         configureSnapshot()
 
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(swipedUp(sender:)))
-//        tapGesture.delegate = self
-//        collectionView.isUserInteractionEnabled = true
-//        collectionView.addGestureRecognizer(tapGesture)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,21 +76,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     }
 
 
-//
-//    @objc func swipedUp(sender: UISwipeGestureRecognizer) {
-//        if sender.state == .ended {
-//            print("Swiped Up")
-//            // funcão de abrir a tela de vamos colaborar
-//        }
-//    }
-//
-//    var swipeUpGestureRecognizer: UISwipeGestureRecognizer = {
-//        let gesture = UISwipeGestureRecognizer()
-//        gesture.direction = .up
-//        gesture.addTarget(self, action: #selector(swipedUp))
-//        return gesture
-//    }()
-    
     //MARK: Setups
     func setupCollecitonView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
@@ -193,7 +172,6 @@ extension MatchViewController {
                 fatalError("Cannot create MatchCardCollectionViewCell")
             }
             cell.delegate = self
-            cell.selectedAtIndex = indexPath
             cell.cardFace = .front
             let item = self.matchSuggestions[indexPath.row]
             cell.cardTitle.text = item.title
@@ -211,12 +189,9 @@ extension MatchViewController {
     }
 
 
-    func showCardSwiped(indexPath: IndexPath?) {
-        if let ip = indexPath {
-            let cell = collectionView.cellForItem(at: ip)
-            collaborateButtonTapped(cell as! MatchCardCollectionViewCell)
-            print("subiuuu galera \(ip)")
-        }
+    func showCardSwiped(_ cell: MatchCardCollectionViewCell) {
+        collaborateButtonTapped(cell)
+        print("subiuuu galera \(cell.cardTitle)")
     }
 
 
@@ -269,8 +244,8 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         let startY = cell.frame.origin.y
-        let animator = UIViewPropertyAnimator(duration:0.2, curve: .linear) { //1
-            cell.frame.origin.y = -self.view.bounds.height
+        let animator = UIViewPropertyAnimator(duration:0.6, curve: .linear) { //1
+            cell.frame.origin.y = -self.view.bounds.height*3
         }
         guard let currentIndex = collectionView.indexPath(for: cell),
               let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }

@@ -10,7 +10,7 @@ import UIKit
 protocol MatchCardCollectionViewCellDelegate: class {
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell)
     func seeMoreButtonButtonTapped(_ cell: MatchCardCollectionViewCell)
-    func showCardSwiped(indexPath: IndexPath?)
+    func showCardSwiped(_ cell: MatchCardCollectionViewCell)
 }
 
 enum CardFace {
@@ -22,7 +22,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: self)
 
     var delegate: MatchCardCollectionViewCellDelegate?
-    var selectedAtIndex: IndexPath?
 
     var cardFace: CardFace = .front {
         didSet{
@@ -44,7 +43,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     }
 
     @objc func swipeUp(){
-        delegate?.showCardSwiped(indexPath: selectedAtIndex)
+        delegate?.showCardSwiped(self)
     }
 
     let cardImageView: UIImageView = {
