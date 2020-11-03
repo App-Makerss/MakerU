@@ -218,8 +218,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 resultCell = cell
                 break
             } else {
-                let cell = ProjectSelectorTableViewCell(projects: self.projects, selectedProject: selectedProject)
-                cell.delegate = self
+                let items = projects.map {
+                    GenericRow<Project>(type: $0, showText: $0.title)
+                }
+                let selectedItem = selectedProject != nil ? GenericRow<Project>(type: selectedProject!, showText: selectedProject!.title) : items.first
+                let cell = PickerViewTableViewCell<Project>(withItems:items)
+                cell.selectedItem = selectedItem
+                cell.pickerDelegate = self
                 resultCell = cell
                 break
             }
@@ -300,10 +305,11 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }
 }
 
-extension MatchDisplayConfigurationTableViewController: PickerSelectorTableViewCellDelegate {
-    
-    func didSelected(project: Project) {
-        selectedProject = project
+extension MatchDisplayConfigurationTableViewController: PickerViewTableViewCellDelegate {
+    func pickerCellDidSelected(item: Any) {
+        if let row = item as? GenericRow<Project> {
+            selectedProject = row.type
+        }
     }
 }
 
