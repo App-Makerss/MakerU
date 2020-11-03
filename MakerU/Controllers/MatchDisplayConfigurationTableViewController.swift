@@ -28,7 +28,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     var selectedUser: User? {
         didSet{
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.tableView.reloadSections([1,2,3,4], with: .automatic)
             }
         }
     }
@@ -271,7 +271,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     
     @objc func selectedSegmentChanged(sender: UISegmentedControl) {
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            if sender.selectedSegmentIndex == 1 {
+                self.tableView.reloadSections([1,2,3,4], with: .automatic)
+            }else {
+                self.tableView.reloadSections([2,3,4], with: .automatic)
+            }
+        }
     }
     
     @objc func cancelBarItemTapped() {
