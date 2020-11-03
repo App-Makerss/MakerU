@@ -92,7 +92,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         tableView.register(UINib(nibName: "UserBioTableViewCell", bundle: nil), forCellReuseIdentifier: "UserBioTableViewCell")
         
         tableView.register(UINib(nibName: "ProjectDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "ProjectDescriptionTableViewCell")
-        tableView.register(UINib(nibName: "SkillsTableViewCell", bundle: nil), forCellReuseIdentifier: "SkillsTableViewCell")
+        tableView.register(UINib(nibName: "TextViewTableViewCell", bundle: nil), forCellReuseIdentifier: "TextViewTableViewCell")
         tableView.register(UINib(nibName: "ShowProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "ShowProfileTableViewCell")
 
         hideKeyboardWhenTappedAround()
@@ -225,8 +225,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 resultCell = cell
                 break
             } else {
-                let cell = ProjectSelectorTableViewCell(projects: self.projects, selectedProject: selectedProject)
-                cell.delegate = self
+                let items = projects.map {
+                    GenericRow<Project>(type: $0, showText: $0.title)
+                }
+                let selectedItem = selectedProject != nil ? GenericRow<Project>(type: selectedProject!, showText: selectedProject!.title) : items.first
+                let cell = PickerViewTableViewCell<Project>(withItems:items)
+                cell.selectedItem = selectedItem
+                cell.pickerDelegate = self
                 resultCell = cell
                 break
             }
@@ -242,10 +247,10 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             resultCell = cell
             break
         case 3:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SkillsTableViewCell")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewTableViewCell")!
             let skills = configSegmentedControl.selectedSegmentIndex == 0 ? selectedUser?.skills : selectedProject?.skillsInNeed
-            (cell as! SkillsTableViewCell).skillsTextView.text = skills
-            (cell as! SkillsTableViewCell).delegate = self
+            (cell as! TextViewTableViewCell).textView.text = skills
+            (cell as! TextViewTableViewCell).delegate = self
             cell.selectionStyle = .none
             resultCell = cell
             break
@@ -274,16 +279,9 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         if stringUpdates.isEmpty && boolUpdates.isEmpty {
             self.dismiss(animated: true, completion: nil)
         }else  {
-            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
-            let deleteAction = UIAlertAction(title: "Descartar Alterações", style: .destructive) { _ in
+            presentDiscardChangesActionSheet { _ in
                 self.dismiss(animated: true, completion: nil)
             }
-            
-            actionSheet.addAction(deleteAction)
-            actionSheet.addAction(cancelAction)
-            
-            self.present(actionSheet, animated: true, completion: nil)
         }
     }
     
@@ -319,19 +317,20 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }
 }
 
-extension MatchDisplayConfigurationTableViewController: PickerSelectorTableViewCellDelegate {
-    
-    func didSelected(project: Project) {
-        selectedProject = project
+extension MatchDisplayConfigurationTableViewController: PickerViewTableViewCellDelegate {
+    func pickerCellDidSelected(item: Any) {
+        if let row = item as? GenericRow<Project> {
+            selectedProject = row.type
+        }
     }
 }
 
-extension MatchDisplayConfigurationTableViewController: SkillsTableViewCellDelegate {
-    func skillsDidChanged(skills: String) {
+extension MatchDisplayConfigurationTableViewController: TextViewTableViewCellDelegate {
+    func textDidChanged(_ text: String) {
         if configSegmentedControl.selectedSegmentIndex == 0 {
-            stringUpdates["userSkills"] = skills
+            stringUpdates["userSkills"] = text
         }else {
-            stringUpdates["projectSkills"] = skills
+            stringUpdates["projectSkills"] = text
             
         }
     }

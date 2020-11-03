@@ -32,7 +32,7 @@ final class TitleSupplementaryView: UICollectionReusableView {
         addSubview(textLabel)
         addSubview(divider)
         divider.translatesAutoresizingMaskIntoConstraints = false
-
+        textLabel.accessibilityTraits = .header
         textLabel.setDynamicType(font: .systemFont(style: .title3, weight: .bold), textStyle: .title3)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         

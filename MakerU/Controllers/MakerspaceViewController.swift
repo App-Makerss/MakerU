@@ -152,6 +152,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 let roomCell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCollectionViewCell.reuseIdentifier, for: indexPath) as! RoomCollectionViewCell
                 let item = rooms[indexPath.row]
                 roomCell.title.text = item.title
+                roomCell.title.accessibilityTraits = .button
                 roomCell.imageView.image = UIImage(data: item.image ?? Data())
                 
                 cell = roomCell
@@ -166,6 +167,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 }else {
                     content.text = "Reportar ocorrência"
                 }
+                listCell.accessibilityTraits = [.button]
                 listCell.contentConfiguration = content
                 listCell.accessories = [.disclosureIndicator()]
                 return listCell
@@ -173,6 +175,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
                 let equipCell = collectionView.dequeueReusableCell(withReuseIdentifier: EquipmentCollectionViewCell.reuseIdentifier, for: indexPath) as! EquipmentCollectionViewCell
                 let equipItem = equipments[indexPath.row]
                 equipCell.title.text = equipItem.title
+                equipCell.title.accessibilityTraits = .button
                 equipCell.subtitle.text = equipItem.metrics
                 equipCell.imageView.image = UIImage(data: equipItem.image ?? Data())
                 
@@ -184,7 +187,7 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        collectionView.deselectItem(at: indexPath, animated: true)
         let vc = AboutItemViewController()
         switch indexPath.section {
         case 1:
@@ -192,7 +195,15 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
             vc.selectedRoom = item
             break
         case 2:
-            break
+            if indexPath.row == 0 {
+                let vc = ApplyForMonitoringTableViewController(style: .insetGrouped)
+                present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+            }else {
+                let vc = OccurrencesTableViewController(style: .insetGrouped)
+                present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+            }
+            
+            return
         default:
             let item = equipments[indexPath.row]
             vc.selectedEquip = item
