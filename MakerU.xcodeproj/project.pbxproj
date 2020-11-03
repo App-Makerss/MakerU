@@ -70,6 +70,9 @@
 		569C4436254319710099A44A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C4435254319710099A44A /* UIView+Constraints.swift */; };
 		56A6FC52254E5285006198BF /* PickerViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */; };
 		56A6FC55254E7185006198BF /* FormFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6FC54254E7185006198BF /* FormFieldTableViewCell.swift */; };
+		56BA67362550891A006F8BF8 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA67352550891A006F8BF8 /* Reservation.swift */; };
+		56BA673925508A2F006F8BF8 /* ReservationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA673825508A2F006F8BF8 /* ReservationDAO.swift */; };
+		56BA673C255096F0006F8BF8 /* ReservationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA673B255096EF006F8BF8 /* ReservationService.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
 		56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33283252BA7B300FA03AA /* AppDelegate.swift */; };
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
@@ -148,6 +151,9 @@
 		569C4435254319710099A44A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewController.swift; sourceTree = "<group>"; };
 		56A6FC54254E7185006198BF /* FormFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormFieldTableViewCell.swift; sourceTree = "<group>"; };
+		56BA67352550891A006F8BF8 /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
+		56BA673825508A2F006F8BF8 /* ReservationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDAO.swift; sourceTree = "<group>"; };
+		56BA673B255096EF006F8BF8 /* ReservationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationService.swift; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
 		56C33280252BA7B300FA03AA /* MakerU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C33283252BA7B300FA03AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +198,7 @@
 				5618B73925484AB600DF5675 /* Room.swift */,
 				569714BE254B252C00419049 /* Occurrence.swift */,
 				569714C7254B412C00419049 /* MonitorInterest.swift */,
+				56BA67352550891A006F8BF8 /* Reservation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -250,6 +257,7 @@
 				569103E32547A8660094D071 /* EquipmentDAO.swift */,
 				569714C1254B257500419049 /* OccurrenceDAO.swift */,
 				569714CA254B416400419049 /* MonitorInterestDAO.swift */,
+				56BA673825508A2F006F8BF8 /* ReservationDAO.swift */,
 			);
 			path = DAO;
 			sourceTree = "<group>";
@@ -318,6 +326,7 @@
 				E22EB021253E87F400EA7FDD /* ProjectService.swift */,
 				569714C4254B277F00419049 /* OccurrenceService.swift */,
 				569714CD254B49BD00419049 /* MonitorInterestService.swift */,
+				56BA673B255096EF006F8BF8 /* ReservationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -471,6 +480,7 @@
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
 				E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */,
 				5626667A2541B5470091C10C /* MakerspaceViewController.swift in Sources */,
+				56BA673C255096F0006F8BF8 /* ReservationService.swift in Sources */,
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
 				569C4436254319710099A44A /* UIView+Constraints.swift in Sources */,
 				3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */,
@@ -479,11 +489,13 @@
 				564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */,
 				56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */,
 				56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */,
+				56BA673925508A2F006F8BF8 /* ReservationDAO.swift in Sources */,
 				569103E42547A8660094D071 /* EquipmentDAO.swift in Sources */,
 				5692CB0D25363FCD0087358A /* ProjectDAO.swift in Sources */,
 				566EC8A2252EA22B00346846 /* Encodable+Extensions.swift in Sources */,
 				569103DC254782410094D071 /* RoomCollectionViewCell.swift in Sources */,
 				569714CB254B416400419049 /* MonitorInterestDAO.swift in Sources */,
+				56BA67362550891A006F8BF8 /* Reservation.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,

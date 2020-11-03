@@ -31,12 +31,15 @@ extension UIViewController {
     }
     
     func presentSuccessAlert(title: String, message: String, onOKHandler: ((UIAlertAction) -> Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: onOKHandler)
-        alert.view.tintColor = .systemPurple
-        alert.addAction(okAction)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: onOKHandler)
+            alert.view.tintColor = .systemPurple
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
         
-        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func dismissKeyboard() {

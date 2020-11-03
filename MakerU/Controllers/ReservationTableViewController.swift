@@ -16,6 +16,16 @@ enum ReservationTableViewControllerPickerViews {
 
 class ReservationTableViewController: UITableViewController {
     
+    var selectedRoom: Room?
+    var selectedEquipment: Equipment?
+    
+    private var reservationKind: ReservationKind {
+        selectedRoom != nil ? .room : .equipment
+    }
+    private var reservedItemID: String {
+        selectedRoom != nil ? selectedRoom!.id! : selectedEquipment!.id!
+    }
+    
     var datetimeUpdates: [String: Date] = [:]
     
     var selectedCategory: Category? {
@@ -74,7 +84,8 @@ class ReservationTableViewController: UITableViewController {
     }
     
     let projectService = ProjectService()
-
+    let reservationService = ReservationService()
+    
     func setupNavigations() {
         navigationItem.title = "Agendamento"
         let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
@@ -121,24 +132,24 @@ class ReservationTableViewController: UITableViewController {
         }
         return 1
     }
-
+    
     var dateSelectorsRowCount: Int {
         isInlinePickerVisible && pickerKind == .time ? 4 : 3
     }
     
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         section == 1 ? dateSelectorsRowCount : projectSectionRowCount
     }
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         section == 0 ? "Associe uma atividade a sua reserva" : ""
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var resultCell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
@@ -218,7 +229,7 @@ class ReservationTableViewController: UITableViewController {
                 }
                 break
         }
-
+        
         return resultCell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -289,7 +300,30 @@ class ReservationTableViewController: UITableViewController {
     }
     
     @objc func okBarItemTapped() {
-        
+        if  let project = self.selectedProject,
+            let startDate = datetimeUpdates["date&time"],
+            let endDate = datetimeUpdates["time"] {
+            reservationService.checkAvailability(reservedItemID, from: startDate, to: endDate) { (isAvailable, error) in
+                if isAvailable == true {
+                    self.projectService.saveIfNeeded(project)
+                    { [self] project, error, _  in
+                        if let project = project{
+                            reservationService.reserve(reservedItemID, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
+                                if reservation != nil {
+                                    self.presentSuccessAlert(title: "Reservado!", message: "Em caso de necessidade, cancele sua reserva acessando o perfil.") { _ in
+                                        self.dismiss(animated: true, completion: nil)
+                                    }
+                                }else {
+                                    print(error?.localizedDescription)
+                                }
+                            }
+                        }
+                    }
+                }else {
+                    self.presentSuccessAlert(title: "Horário indisponível", message: "Escolha outro dia ou horário para confirmar sua reserva.")
+                }
+            }
+        }
     }
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {

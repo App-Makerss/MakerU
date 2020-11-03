@@ -179,6 +179,8 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         //opens reservation flow
         print("it will open reservation flow")
         let vc = ReservationTableViewController(style: .insetGrouped)
+        vc.selectedEquipment = selectedEquip
+        vc.selectedRoom = selectedRoom
         present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }
