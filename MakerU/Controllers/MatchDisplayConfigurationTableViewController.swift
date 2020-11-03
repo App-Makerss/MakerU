@@ -60,7 +60,8 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
-//        segmented.layer.cornerRadius = 8.91
+//        segmented.layer.cornerRadius = 8
+        segmented.backgroundColor = .clear
         segmented.selectedSegmentIndex = 0
         segmented.addTarget(self, action: #selector(Self.selectedSegmentChanged), for: .valueChanged)
 
@@ -203,9 +204,10 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         switch section {
         case 0:
             let cell = UITableViewCell()
-            cell.contentView.addSubview(configSegmentedControl)
+            self.configSegmentedControl.layer.cornerRadius = 8
+            cell.contentView.addSubview(self.configSegmentedControl)
             cell.contentView.clipsToBounds = false
-            
+            cell.backgroundColor = .clear
             configSegmentedControl.setupConstraints(to: cell.contentView)
             
             resultCell = cell
