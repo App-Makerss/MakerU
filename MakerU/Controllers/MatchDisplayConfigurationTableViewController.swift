@@ -90,7 +90,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "UserBioTableViewCell", bundle: nil), forCellReuseIdentifier: "UserBioTableViewCell")
         tableView.register(UINib(nibName: "ProjectDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "ProjectDescriptionTableViewCell")
-        tableView.register(UINib(nibName: "SkillsTableViewCell", bundle: nil), forCellReuseIdentifier: "SkillsTableViewCell")
+        tableView.register(UINib(nibName: "TextViewTableViewCell", bundle: nil), forCellReuseIdentifier: "TextViewTableViewCell")
         tableView.register(UINib(nibName: "ShowProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "ShowProfileTableViewCell")
 
         hideKeyboardWhenTappedAround()
@@ -234,10 +234,10 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             resultCell = cell
             break
         case 3:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SkillsTableViewCell")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewTableViewCell")!
             let skills = configSegmentedControl.selectedSegmentIndex == 0 ? selectedUser?.skills : selectedProject?.skillsInNeed
-            (cell as! SkillsTableViewCell).skillsTextView.text = skills
-            (cell as! SkillsTableViewCell).delegate = self
+            (cell as! TextViewTableViewCell).textView.text = skills
+            (cell as! TextViewTableViewCell).delegate = self
             cell.selectionStyle = .none
             resultCell = cell
             break
@@ -262,16 +262,9 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         if stringUpdates.isEmpty && boolUpdates.isEmpty {
             self.dismiss(animated: true, completion: nil)
         }else  {
-            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
-            let deleteAction = UIAlertAction(title: "Descartar Alterações", style: .destructive) { _ in
+            presentDiscardChangesActionSheet { _ in
                 self.dismiss(animated: true, completion: nil)
             }
-            
-            actionSheet.addAction(deleteAction)
-            actionSheet.addAction(cancelAction)
-            
-            self.present(actionSheet, animated: true, completion: nil)
         }
     }
     
@@ -314,12 +307,12 @@ extension MatchDisplayConfigurationTableViewController: PickerSelectorTableViewC
     }
 }
 
-extension MatchDisplayConfigurationTableViewController: SkillsTableViewCellDelegate {
-    func skillsDidChanged(skills: String) {
+extension MatchDisplayConfigurationTableViewController: TextViewTableViewCellDelegate {
+    func textDidChanged(_ text: String) {
         if configSegmentedControl.selectedSegmentIndex == 0 {
-            stringUpdates["userSkills"] = skills
+            stringUpdates["userSkills"] = text
         }else {
-            stringUpdates["projectSkills"] = skills
+            stringUpdates["projectSkills"] = text
             
         }
     }

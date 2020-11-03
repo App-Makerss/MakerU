@@ -28,6 +28,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         cell.imageView?.image = UIImage(systemName: "person.2.square.stack")
         cell.imageView?.tintColor = .systemPurple
         cell.textLabel?.text = "Configurações de exibição"
+        cell.textLabel?.setDynamicType(font: .systemFont(style: .body))
         cell.isUserInteractionEnabled = false
         
         control.addSubview(cell)
@@ -176,6 +177,15 @@ extension MatchViewController {
             let item = self.matchSuggestions[indexPath.row]
             cell.cardTitle.text = item.title
             cell.cardSubtitle.text = item.subtitle
+            
+            if item.type == .project {
+                cell.cardTitle.accessibilityValue = "título do projeto"
+                cell.cardSubtitle.accessibilityValue = "categoria"
+            }else {
+                cell.cardTitle.accessibilityValue = "Nome do usuário"
+                cell.cardSubtitle.accessibilityValue = ""
+            }
+            
             if let imageData = item.image {
                 cell.cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
             }
