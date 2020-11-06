@@ -27,6 +27,7 @@ class AboutItemViewController: UIViewController {
             navigationItem.title = selectedEquip?.title
         }
     }
+    var selectedDate: Date = Date()
     
     // MARK: View Life Cycle
     override func viewDidLoad() {
@@ -88,7 +89,7 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
             case 2:
                 return 1
             case 1:
-                return 1
+                return 2
             default:
                 return selectedRoom?.descriptionStrings.count ?? 1
         }
@@ -120,9 +121,13 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         44
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         switch indexPath.section{
             case 2:
                 cell.accessoryType = .disclosureIndicator
@@ -131,6 +136,7 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.textColor = .systemPurple
                 break
             case 1:
+                if row == 1{
                 cell.accessoryType = .none
                 cell.selectionStyle = .none
                 let button = UIButton(type: .system)
@@ -144,6 +150,11 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
                 button.titleLabel?.setDynamicType(font: .systemFont(style: .footnote, weight: .semibold), textStyle: .footnote)
                 button.setupConstraintsOnlyTo(to: cell.contentView,topConstant: 18, trailingConstant: -22, bottomConstant: -18)
                 button.addTarget(self, action: #selector(self.reservationButtonTap), for: .touchUpInside)
+                }else {
+                    let reservationCell = ReservationCalendarTableViewCell()
+                    reservationCell.delegate = self
+                    cell = reservationCell
+                }
                 break
             default:
                 if selectedRoom != nil {
@@ -181,6 +192,7 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = ReservationTableViewController(style: .insetGrouped)
         vc.selectedEquipment = selectedEquip
         vc.selectedRoom = selectedRoom
+        vc.selectedDate = selectedDate
         present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
 }
@@ -189,5 +201,11 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
 extension AboutItemViewController: ScrollableCover {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.adjustCoverScroll(scrollView)
+    }
+}
+
+extension AboutItemViewController: ReservationCalendarTableViewCellDelegate {
+    func didSelected(_ date: Date) {
+        self.selectedDate = date
     }
 }
