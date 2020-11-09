@@ -59,10 +59,10 @@ struct ReservationService {
         let itemRef = dao.generateRecordReference(for: item)
         let itemPredicate = NSPredicate(format: "reservedItemID  == %@", itemRef)
         let ofThisDate = NSPredicate(format: "(startDate >= %@ && startDate < %@)", startOfDay as NSDate, startOfNextDay as NSDate)
-        dao.listAll(by: NSCompoundPredicate(andPredicateWithSubpredicates: [itemPredicate,ofThisDate])) { (reservations, error) in
+        dao.listAll(by: NSCompoundPredicate(andPredicateWithSubpredicates: [itemPredicate,ofThisDate]), sortBy: ["startDate":true]) { (reservations, error) in
             print(error?.localizedDescription)
             if let reservations = reservations {
-                var projectIDS = dao.generateRecordReference(for:reservations.compactMap {$0.project})
+                let projectIDS = dao.generateRecordReference(for:reservations.compactMap {$0.project})
                 let predicate: NSPredicate = NSPredicate(format: "recordID IN %@", projectIDS)
                 projectDAO.listAll(by: predicate) { (projects, err) in
                     print(err?.localizedDescription)
