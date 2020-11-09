@@ -14,6 +14,8 @@ protocol ReservationCalendarTableViewCellDelegate: class {
 class ReservationCalendarTableViewCell: UITableViewCell {
     
     //MARK: - Outlets
+    var monthYearPicker: MonthYearPickerView!
+    private var topView: UIView!
     private var nextWeekButton: UIButton!
     private var previousWeekButton: UIButton!
     private var weekControlsView: UIStackView!
@@ -48,6 +50,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         daysView.translatesAutoresizingMaskIntoConstraints = false
         return daysView
     }()
+    var calendarContent: UIStackView!
     
     //MARK: - Attributes
     private var showingDays: [Date] = []{
@@ -56,11 +59,12 @@ class ReservationCalendarTableViewCell: UITableViewCell {
             monthAndYearLabel.text = showingDays.first!.asString(with: "")
         }
     }
-    var selectedDate: Date = Date() {
-        didSet {
-            showingDays = selectedDate.getDaysInThisWeek()
-        }
-    }
+    var selectedDate: Date = Date()
+//    {
+//        didSet {
+//            showingDays = selectedDate.getDaysInThisWeek()
+//        }
+//    }
     var showingReservations: [Reservation] = [] {
         didSet {
             let countDouble = Double(showingReservations.count)
@@ -79,6 +83,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         expandMonthAndYearButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         expandMonthAndYearButton.setImage(UIImage(systemName: "chevron.down"), for: .selected)
         expandMonthAndYearButton.tintColor = .systemPurple
+        expandMonthAndYearButton.addTarget(self, action: #selector(self.toggleContent(sender:)), for: .touchUpInside)
         
         let selectedMonthView = UIStackView(arrangedSubviews: [monthAndYearLabel, expandMonthAndYearButton])
         
@@ -111,6 +116,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         topView.addSubview(weekControlsView)
         weekControlsView.setupConstraintsOnlyTo(to: topView, trailingConstant: -16)
         weekControlsView.centerConstraints(centerYConstant:0)
+        topView.heightAnchor.constraint(lessThanOrEqualToConstant: 44.3333).isActive = true
         
         return topView
     }
@@ -129,7 +135,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         return weekdaysStaticView
     }
     private func genCalendarContentView() -> UIStackView {
-        let calendarContent = UIStackView(arrangedSubviews: [genWeekdaysStaticView(), daysView])
+        calendarContent = UIStackView(arrangedSubviews: [genWeekdaysStaticView(), daysView])
         calendarContent.axis = .vertical
         daysView.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
         
@@ -150,17 +156,11 @@ class ReservationCalendarTableViewCell: UITableViewCell {
     }
     
     //MARK: - inits
-    private func commonInit(){
-        selectionStyle = .none
-        pageControl.addTarget(self, action: #selector(self.pageChanged), for: .valueChanged)
-        let topView = genTopView()
-        let calendarContent = genCalendarContentView()
-        dividers = [genDivider(),genDivider()]
-
+    private func genItemsView() {
         let itemsStack = UIStackView(axis: .vertical, arrangedSubviews: [itemViews[0], dividers[0], itemViews[1], dividers[1], itemViews[2]])
         itemsStack.spacing = 8
         itemsStack.distribution = .fillProportionally
-
+        
         let itemsView = UIView()
         itemsView.addSubview(itemsStack)
         itemsView.addSubview(pageControl)
@@ -179,6 +179,16 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         swipeLeft.direction = .left
         itemsView.addGestureRecognizer(swipeRight)
         itemsView.addGestureRecognizer(swipeLeft)
+    }
+    
+    private func commonInit(){
+        selectionStyle = .none
+        pageControl.addTarget(self, action: #selector(self.pageChanged), for: .valueChanged)
+        topView = genTopView()
+        calendarContent = genCalendarContentView()
+        dividers = [genDivider(),genDivider()]
+
+        genItemsView()
         
         contentView.addSubview(topView)
         topView.setupConstraintsOnlyTo(to: contentView, leadingConstant: 0, topConstant: 0, trailingConstant: 0)
@@ -189,6 +199,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         calendarContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 16, trailingConstant: -16, bottomConstant: -10)
         
         self.selectedDate = Date()
+        showingDays = selectedDate.getDaysInThisWeek()
         setupDaySelection()
     }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -240,6 +251,35 @@ class ReservationCalendarTableViewCell: UITableViewCell {
                 pageControl.currentPage = -1
                 setupReservationsView()
             }
+        }
+    }
+    
+    @objc func monthYearPickerDateChanged(_ sender: MonthYearPickerView){
+        showingDays = sender.date.getDaysInThisWeek()
+        monthAndYearLabel.text = sender.date.asString(with: "")
+    }
+    @objc func toggleContent(sender: UIButton) {
+        sender.isSelected.toggle()
+        calendarContent.subviews.forEach { $0.removeFromSuperview()}
+        if sender.isSelected {
+            monthAndYearLabel.textColor = .systemPurple
+            weekControlsView.isHidden = true
+            monthYearPicker = MonthYearPickerView(frame: CGRect(origin: CGPoint(x: 0, y: (calendarContent.bounds.height - 216) / 2), size: CGSize(width: calendarContent.bounds.width, height: 216)))
+            monthYearPicker.minimumDate = Date()
+            monthYearPicker.maximumDate = Calendar.current.date(byAdding: .year, value: 10, to: Date())
+            monthYearPicker.locale = Locale.init(identifier: "pt-BR")
+            monthYearPicker.addTarget(self, action: #selector(self.monthYearPickerDateChanged(_:)), for: .valueChanged)
+            calendarContent.addArrangedSubview(monthYearPicker)
+        }else {
+            monthAndYearLabel.textColor = .label
+            weekControlsView.isHidden = false
+            let calendarContent = genCalendarContentView()
+            genItemsView()
+            
+            contentView.addSubview(calendarContent)
+            calendarContent.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 8).isActive = true
+            calendarContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 16, trailingConstant: -16, bottomConstant: -10)
+            
         }
     }
     
@@ -317,6 +357,8 @@ class ReservationCalendarTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    
 }
 
 
@@ -386,4 +428,5 @@ class ItemView: UIView {
         itemStart.text = start
         itemEnd.text = end
     }
+    
 }
