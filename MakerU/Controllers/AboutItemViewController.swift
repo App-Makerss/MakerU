@@ -15,19 +15,53 @@ class AboutItemViewController: UIViewController {
     
     // MARK: Outlet
     var tableView: UITableView!
+    var reservationCell: ReservationCalendarTableViewCell!
     
     // MARK: Attributes
     var selectedRoom: Room? {
         didSet {
             navigationItem.title = selectedRoom?.title
+            loadReserations()
         }
     }
     var selectedEquip: Equipment?{
         didSet {
             navigationItem.title = selectedEquip?.title
+            loadReserations()
         }
     }
-    var selectedDate: Date = Date()
+    
+    var selectedDate: Date = Date() {
+        didSet {
+            if oldValue != selectedDate {
+                loadReserations()
+            }
+        }
+    }
+    
+    var reservationService = ReservationService()
+    var reservations: [Reservation] = []
+    var projects: [Project] = []
+    
+    func loadReserations() {
+        let item = selectedRoom != nil ? selectedRoom!.id! : selectedEquip!.id!
+        reservationService.loadReservations(of: item, by: selectedDate) { (reservs, projs, error) in
+            print(error?.localizedDescription)
+            if let reservs = reservs {
+                self.reservations = reservs
+            }else {
+                print("could not load reservations")
+            }
+            if let projs = projs {
+                self.projects = projs
+            }else {
+                print("could not load projects")
+            }
+            DispatchQueue.main.async {
+                self.reservationCell.reloadReservations(reservations: self.reservations, projects: self.projects)
+            }
+        }
+    }
     
     // MARK: View Life Cycle
     override func viewDidLoad() {
@@ -127,7 +161,7 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell = UITableViewCell(style: .value1, reuseIdentifier: "")
         switch indexPath.section{
             case 2:
                 cell.accessoryType = .disclosureIndicator
@@ -137,22 +171,24 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
                 break
             case 1:
                 if row == 1{
-                cell.accessoryType = .none
-                cell.selectionStyle = .none
-                let button = UIButton(type: .system)
-                button.setTitle("AGENDAR", for: .normal)
-                button.accessibilityLabel = "agendar"
-                button.backgroundColor = .systemPurple
-                button.layer.cornerRadius = 13
-                button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 14, bottom: 4, right: 14)
-                button.setTitleColor(.white, for: .normal)
-                cell.contentView.addSubview(button)
-                button.titleLabel?.setDynamicType(font: .systemFont(style: .footnote, weight: .semibold), textStyle: .footnote)
-                button.setupConstraintsOnlyTo(to: cell.contentView,topConstant: 18, trailingConstant: -22, bottomConstant: -18)
-                button.addTarget(self, action: #selector(self.reservationButtonTap), for: .touchUpInside)
+                    cell.accessoryType = .none
+                    cell.selectionStyle = .none
+                    let button = UIButton(type: .system)
+                    button.setTitle("AGENDAR", for: .normal)
+                    button.accessibilityLabel = "agendar"
+                    button.backgroundColor = .systemPurple
+                    button.layer.cornerRadius = 13
+                    button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 14, bottom: 4, right: 14)
+                    button.setTitleColor(.white, for: .normal)
+                    cell.contentView.addSubview(button)
+                    button.titleLabel?.setDynamicType(font: .systemFont(style: .footnote, weight: .semibold), textStyle: .footnote)
+                    button.setupConstraintsOnlyTo(to: cell.contentView,topConstant: 18, trailingConstant: -22, bottomConstant: -18)
+                    button.addTarget(self, action: #selector(self.reservationButtonTap), for: .touchUpInside)
                 }else {
-                    let reservationCell = ReservationCalendarTableViewCell()
+                    reservationCell = ReservationCalendarTableViewCell()
                     reservationCell.delegate = self
+                    reservationCell.dayProjects = projects
+                    reservationCell.dayReservations = reservations
                     cell = reservationCell
                 }
                 break

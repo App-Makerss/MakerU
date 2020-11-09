@@ -78,6 +78,7 @@
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
 		56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328C252BA7B500FA03AA /* Assets.xcassets */; };
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
+		56CCCE662559C9DF0005C2DC /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */; };
 		56D8721C255572AB00BCB1D1 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56D8721B255572AB00BCB1D1 /* View.xib */; };
 		56D8721F25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */; };
 		56D872222555934D00BCB1D1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D872212555934D00BCB1D1 /* Date+Extensions.swift */; };
@@ -166,6 +167,7 @@
 		56C3328C252BA7B500FA03AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56C3328F252BA7B500FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56C33291252BA7B500FA03AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
 		56D8721B255572AB00BCB1D1 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		56D872212555934D00BCB1D1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				567C51712549B4250003BCCB /* UIViewController+Extensions.swift */,
 				56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */,
 				56D872212555934D00BCB1D1 /* Date+Extensions.swift */,
+				56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
 				E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */,
 				5626667A2541B5470091C10C /* MakerspaceViewController.swift in Sources */,
+				56CCCE662559C9DF0005C2DC /* UIStackView+Extensions.swift in Sources */,
 				56BA673C255096F0006F8BF8 /* ReservationService.swift in Sources */,
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
 				569C4436254319710099A44A /* UIView+Constraints.swift in Sources */,

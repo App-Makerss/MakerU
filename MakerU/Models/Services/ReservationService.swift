@@ -10,6 +10,7 @@ import Foundation
 
 struct ReservationService {
     let dao = ReservationDAO()
+    let projectDAO = ProjectDAO()
     
     func reserve(_ item: String, ofKind kind: ReservationKind, for project: Project, from startDate: Date, to endDate: Date, completion: @escaping (Reservation?, Error?) -> ()) {
         let reservation = Reservation(startDate: startDate,  endDate: endDate, reservationKind: kind, reservedItemID: item, byUser: project.owner, project: project.id!, makerspace: project.makerspace)
@@ -47,6 +48,32 @@ struct ReservationService {
                 }
             }else{
                 completion(nil,error)
+            }
+        }
+    }
+    
+    
+    func loadReservations(of item: String, by date: Date = Date(), completion: @escaping ([Reservation]?,[Project]?, Error?) -> ()) {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let startOfNextDay = date.addDays(days: 1)
+        let itemRef = dao.generateRecordReference(for: item)
+        let itemPredicate = NSPredicate(format: "reservedItemID  == %@", itemRef)
+        let ofThisDate = NSPredicate(format: "(startDate >= %@ && startDate < %@)", startOfDay as NSDate, startOfNextDay as NSDate)
+        dao.listAll(by: NSCompoundPredicate(andPredicateWithSubpredicates: [itemPredicate,ofThisDate])) { (reservations, error) in
+            print(error?.localizedDescription)
+            if let reservations = reservations {
+                var projectIDS = dao.generateRecordReference(for:reservations.compactMap {$0.project})
+                let predicate: NSPredicate = NSPredicate(format: "recordID IN %@", projectIDS)
+                projectDAO.listAll(by: predicate) { (projects, err) in
+                    print(err?.localizedDescription)
+                    if let projects = projects {
+                        completion(reservations, projects, nil)
+                    }else {
+                        completion(reservations, nil, err)
+                    }
+                }
+            }else {
+                completion(nil, nil, error)
             }
         }
     }

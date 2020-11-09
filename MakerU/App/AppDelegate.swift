@@ -15,6 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        CategoryDAO().listAll { (categoryList, error) in
+            print(error?.localizedDescription)
+            if let categoryList = categoryList {
+                categories = categoryList
+            }
+        }
         //simulation of a loggedUser
 //        UserDefaults.standard.setValue("2A7BB027-588D-4F94-B383-AAFB2A6D2D4D",forKey: "loggedUserId") //Adam
         UserDefaults.standard.setValue("276C6229-1F9E-4B91-8A50-D364A7A3C852", forKey: "loggedUserId") // Mary
@@ -35,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
+    
 }
-
+var categories: [Category] = []

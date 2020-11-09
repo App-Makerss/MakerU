@@ -9,11 +9,16 @@ import Foundation
 
 extension Date {
     
-    func advanceAWeek() -> Date {
-        Calendar.current.date(byAdding: DateComponents(day:7), to: self)!
+    func addDays(days: Int) -> Date {
+        Calendar.current.date(byAdding: DateComponents(day: days), to: self)!
     }
+    
+    func advanceAWeek() -> Date {
+        addDays(days: 7)
+    }
+    
     func backAWeek() -> Date {
-        Calendar.current.date(byAdding: DateComponents(day:-7), to: self)!
+        addDays(days: -7)
     }
     
     func isToday() -> Bool {
@@ -55,5 +60,14 @@ extension Date {
         formatter.locale = Locale.init(identifier: "pt-BR")
         
         return formatter.string(from: self).replacingOccurrences(of: " ", with: " de ")
+    }
+    
+    func timeAsString() -> String {
+        let formatter = DateFormatter()
+        
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        formatter.locale = Locale.init(identifier: "pt-BR")
+        return formatter.string(from: self)
     }
 }
