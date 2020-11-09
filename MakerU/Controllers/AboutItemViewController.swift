@@ -187,8 +187,8 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
                 }else {
                     reservationCell = ReservationCalendarTableViewCell()
                     reservationCell.delegate = self
-                    reservationCell.dayProjects = projects
-                    reservationCell.dayReservations = reservations
+                    reservationCell.showingProjects = projects
+                    reservationCell.showingReservations = reservations
                     cell = reservationCell
                 }
                 break

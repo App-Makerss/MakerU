@@ -13,76 +13,17 @@ protocol ReservationCalendarTableViewCellDelegate: class {
 
 class ReservationCalendarTableViewCell: UITableViewCell {
     
-    var nextWeekButton: UIButton!
-    var previousWeekButton: UIButton!
-    var weekControlsView: UIStackView!
-    var dividers: [UIView] = []
-    var itemViews: [ItemView] = [ItemView(),ItemView(),ItemView()]
-    
-    var dayReservations: [Reservation] = [] {
-        didSet {
-            let countDouble = Double(dayReservations.count)
-            pageControl.numberOfPages = Int(ceil(countDouble/3))
-            setupReservationsView()
-        }
-    }
-    var dayProjects: [Project] = []
-    
-    weak var delegate: ReservationCalendarTableViewCellDelegate?
-    
-    var selectedDate: Date = Date() {
-        didSet {
-            showingDays = selectedDate.getDaysInThisWeek()
-        }
-    }
-    
-    private func designDayLabel(_ lbl: UILabel?,_ index: Int) {
-        let isToday = showingDays[index].isToday()
-        let isSelected = showingDays[index].isSameDay(as: selectedDate)
-        let isSelectedDateToday = isSelected && isToday
-        if isSelected {
-            lbl?.setDynamicType(font: .systemFont(style: .title3, weight: .semibold), textStyle: .title3)
-            lbl?.layer.backgroundColor = UIColor.systemPurple.withAlphaComponent(0.15).cgColor
-            lbl?.textColor = .systemPurple
-            if isSelectedDateToday {
-                lbl?.layer.backgroundColor = UIColor.systemPurple.cgColor
-                lbl?.textColor = .white
-            }
-        }else {
-            lbl?.setDynamicType(font: .systemFont(style: .title3))
-            lbl?.layer.backgroundColor = UIColor.clear.cgColor
-            lbl?.textColor = .label
-            if isToday {
-                lbl?.textColor = .systemPurple
-            }
-        }
-    }
-    
-    fileprivate func designDays() {
-        for index in 0..<showingDays.count {
-            let day = showingDays[index].getDay()
-            DispatchQueue.main.async { [self] in
-                let lbl = daysView.subviews[index].subviews.first as? UILabel
-                lbl?.text = "\(day)"
-                
-                designDayLabel(lbl, index)
-            }
-        }
-    }
-    
-    var showingDays:[Date] = []{
-        didSet {
-            designDays()
-            monthAndYearLabel.text = showingDays.first!.asString(with: "")
-        }
-    }
-
+    //MARK: - Outlets
+    private var nextWeekButton: UIButton!
+    private var previousWeekButton: UIButton!
+    private var weekControlsView: UIStackView!
+    private var dividers: [UIView] = []
+    private var itemViews: [ItemView] = [ItemView(),ItemView(),ItemView()]
     private let monthAndYearLabel: UILabel = {
         let label = UILabel()
         label.setDynamicType(font: .systemFont(style: .title3, weight: .semibold), textStyle: .title3)
         return label
     }()
-
     private let pageControl: UIPageControl = {
         let pg = UIPageControl()
         pg.hidesForSinglePage = true
@@ -108,6 +49,31 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         return daysView
     }()
     
+    //MARK: - Attributes
+    private var showingDays: [Date] = []{
+        didSet {
+            designDays()
+            monthAndYearLabel.text = showingDays.first!.asString(with: "")
+        }
+    }
+    var selectedDate: Date = Date() {
+        didSet {
+            showingDays = selectedDate.getDaysInThisWeek()
+        }
+    }
+    var showingReservations: [Reservation] = [] {
+        didSet {
+            let countDouble = Double(showingReservations.count)
+            pageControl.numberOfPages = Int(ceil(countDouble/3))
+            setupReservationsView()
+        }
+    }
+    var showingProjects: [Project] = []
+    
+    //MARK: - delegates
+    weak var delegate: ReservationCalendarTableViewCellDelegate?
+    
+    //MARK: - layout generators
     private func genSelectedDateView() -> UIStackView {
         let expandMonthAndYearButton = UIButton(type: .custom)
         expandMonthAndYearButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
@@ -118,7 +84,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         
         return selectedMonthView
     }
-    
     private func genWeekControlsView()  {
         previousWeekButton = UIButton(type: .custom)
         previousWeekButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
@@ -134,7 +99,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         weekControlsView.spacing = 30.96
         
     }
-    
     private func genTopView() -> UIView {
         let topView = UIView()
         let selectedMonthView = genSelectedDateView()
@@ -150,7 +114,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         
         return topView
     }
-    
     private func genWeekdaysStaticView() -> UIStackView {
         let weekdaysStaticView = UIStackView()
         let daysArr = Calendar.current.shortWeekdaySymbols
@@ -165,7 +128,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         weekdaysStaticView.distribution = .fillEqually
         return weekdaysStaticView
     }
-    
     private func genCalendarContentView() -> UIStackView {
         let calendarContent = UIStackView(arrangedSubviews: [genWeekdaysStaticView(), daysView])
         calendarContent.axis = .vertical
@@ -179,14 +141,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         daysView.addGestureRecognizer(swipeLeft)
         return calendarContent
     }
-    
-    private func setupDaySelection() {
-        daysView.subviews.forEach { view  in
-            let control = view as? UIControl
-            control?.addTarget(self, action: #selector(self.selectDay(sender:)), for: .touchUpInside)
-        }
-    }
-    
     private func genDivider() -> UIView {
         let divider = UIView()
         divider.translatesAutoresizingMaskIntoConstraints = false
@@ -195,6 +149,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         return divider
     }
     
+    //MARK: - inits
     private func commonInit(){
         selectionStyle = .none
         pageControl.addTarget(self, action: #selector(self.pageChanged), for: .valueChanged)
@@ -215,7 +170,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         itemsStack.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: -8).isActive = true
         pageControl.centerConstraints(centerXConstant: 0)
         pageControl.heightAnchor.constraint(equalTo: itemsView.heightAnchor, multiplier: 0.12).isActive = true
-        
+        calendarContent.addArrangedSubview(genDivider())
         calendarContent.addArrangedSubview(itemsView)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swiped(_:)))
@@ -236,7 +191,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         self.selectedDate = Date()
         setupDaySelection()
     }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
@@ -246,6 +200,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         commonInit()
     }
     
+    //MARK: - objc funcs
     @objc func selectDay(sender: UIControl) {
         if let index = daysView.subviews.firstIndex(of: sender) {
             selectedDate = showingDays[index]
@@ -288,9 +243,10 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         }
     }
     
+    //MARK: - behaviour funcs
     func reloadReservations(reservations: [Reservation], projects: [Project]) {
-        dayReservations = reservations
-        dayProjects = projects
+        showingReservations = reservations
+        showingProjects = projects
         setupReservationsView()
     }
     
@@ -300,14 +256,14 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         let upperBound = 3*(pageIndex+1)
         for i in cursor..<upperBound{
             let viewIndex = i-cursor
-            if dayReservations.indices.contains(i) {
-                let project = dayProjects.first(where:{$0.id == dayReservations[i].project})
+            if showingReservations.indices.contains(i) {
+                let project = showingProjects.first(where:{$0.id == showingReservations[i].project})
                 let category = categories.first(where: {$0.id == project?.category})
                 itemViews[viewIndex].configView(
                     title: project?.title,
                     subtitle: category?.name,
-                    start: dayReservations[i].startDate.timeAsString(),
-                    end: dayReservations[i].endDate.timeAsString())
+                    start: showingReservations[i].startDate.timeAsString(),
+                    end: showingReservations[i].endDate.timeAsString())
                 
                 if viewIndex<2 {
                     dividers[viewIndex].backgroundColor = .systemGray3
@@ -317,6 +273,47 @@ class ReservationCalendarTableViewCell: UITableViewCell {
                     dividers[viewIndex].backgroundColor = .clear
                 }
                 itemViews[viewIndex].configView()
+            }
+        }
+    }
+    
+    private func setupDaySelection() {
+        daysView.subviews.forEach { view  in
+            let control = view as? UIControl
+            control?.addTarget(self, action: #selector(self.selectDay(sender:)), for: .touchUpInside)
+        }
+    }
+    
+    private func designDayLabel(_ lbl: UILabel?,_ index: Int) {
+        let isToday = showingDays[index].isToday()
+        let isSelected = showingDays[index].isSameDay(as: selectedDate)
+        let isSelectedDateToday = isSelected && isToday
+        if isSelected {
+            lbl?.setDynamicType(font: .systemFont(style: .title3, weight: .semibold), textStyle: .title3)
+            lbl?.layer.backgroundColor = UIColor.systemPurple.withAlphaComponent(0.15).cgColor
+            lbl?.textColor = .systemPurple
+            if isSelectedDateToday {
+                lbl?.layer.backgroundColor = UIColor.systemPurple.cgColor
+                lbl?.textColor = .white
+            }
+        }else {
+            lbl?.setDynamicType(font: .systemFont(style: .title3))
+            lbl?.layer.backgroundColor = UIColor.clear.cgColor
+            lbl?.textColor = .label
+            if isToday {
+                lbl?.textColor = .systemPurple
+            }
+        }
+    }
+    
+    private func designDays() {
+        for index in 0..<showingDays.count {
+            let day = showingDays[index].getDay()
+            DispatchQueue.main.async { [self] in
+                let lbl = daysView.subviews[index].subviews.first as? UILabel
+                lbl?.text = "\(day)"
+                
+                designDayLabel(lbl, index)
             }
         }
     }
@@ -376,13 +373,6 @@ class ItemView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func resetView() {
-        itemTitle.text = " "
-        itemSubtitle.text = " "
-        itemStart.text = " "
-        itemEnd.text = " "
     }
     
     func configView(title: String? = nil, subtitle: String? = nil, start: String? = nil, end: String? = nil){
