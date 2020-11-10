@@ -131,7 +131,12 @@ class ReservationCalendarTableViewCell: UITableViewCell {
     }
     private func genWeekdaysStaticView() -> UIStackView {
         let weekdaysStaticView = UIStackView()
-        let daysArr = Calendar.current.shortWeekdaySymbols
+        var calendar = Calendar.current
+        calendar.locale = Locale.init(identifier: "pt-BR")
+        
+        var daysArr = calendar.shortWeekdaySymbols
+        daysArr.append(daysArr.remove(at: 0))
+        
         daysArr.forEach({ day in
             let lbl = UILabel()
             lbl.text = day.uppercased()

@@ -10,7 +10,9 @@ import Foundation
 extension Date {
     
     func addDays(days: Int) -> Date {
-        Calendar.current.date(byAdding: DateComponents(day: days), to: self)!
+        var calendar = Calendar.current
+        calendar.locale = Locale.init(identifier: "pt-BR")
+        return calendar.date(byAdding: DateComponents(day: days), to: self)!
     }
     
     func advanceAWeek() -> Date {
@@ -29,11 +31,12 @@ extension Date {
     }
     
     func getDaysInThisWeek() -> [Date] {
-        let calendar = Calendar.current
+        var calendar = Calendar.current
+        calendar.locale = Locale.init(identifier: "pt-BR")
         let someDate = calendar.startOfDay(for: self)
         let dayOfWeek = calendar.component(.weekday, from: someDate)
         let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: someDate)!
-        let days = (weekdays.lowerBound ..< weekdays.upperBound)
+        let days = (weekdays.lowerBound+1 ..< weekdays.upperBound+1)
             .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: someDate) }
         
         return days
