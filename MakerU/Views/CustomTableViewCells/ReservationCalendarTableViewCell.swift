@@ -132,7 +132,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
     private func genWeekdaysStaticView() -> UIStackView {
         let weekdaysStaticView = UIStackView()
         var calendar = Calendar.current
-        calendar.locale = Locale.init(identifier: "pt-BR")
+        calendar.locale = Locale.init(identifier: "pt-BR")//TODO: remove it when apple fixes the locale localization
         
         var daysArr = calendar.shortWeekdaySymbols
         daysArr.append(daysArr.remove(at: 0))
@@ -307,6 +307,22 @@ class ReservationCalendarTableViewCell: UITableViewCell {
     }
     
     private func setupReservationsView() {
+        if showingReservations.isEmpty {
+            let lbl = UILabel()
+            lbl.text = "Nenhuma Reserva"
+            lbl.setDynamicType(font: .systemFont(style: .body))
+            lbl.textColor = .secondaryLabel
+            lbl.textAlignment = .center
+            lbl.translatesAutoresizingMaskIntoConstraints = false
+            lbl.heightAnchor.constraint(greaterThanOrEqualToConstant: 209.0).isActive = true
+            calendarContent.subviews[3].removeFromSuperview()
+            calendarContent.addArrangedSubview(lbl)
+            return
+        }else {
+            calendarContent.subviews[2].removeFromSuperview()
+            calendarContent.subviews[2].removeFromSuperview()
+            genItemsView()
+        }
         let pageIndex = pageControl.currentPage
         let cursor = pageIndex * 3
         let upperBound = 3*(pageIndex+1)

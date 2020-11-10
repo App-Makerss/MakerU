@@ -21,20 +21,20 @@ class AboutItemViewController: UIViewController {
     var selectedRoom: Room? {
         didSet {
             navigationItem.title = selectedRoom?.title
-            loadReserations()
+            loadReservations()
         }
     }
     var selectedEquip: Equipment?{
         didSet {
             navigationItem.title = selectedEquip?.title
-            loadReserations()
+            loadReservations()
         }
     }
     
     var selectedDate: Date = Date() {
         didSet {
             if oldValue != selectedDate {
-                loadReserations()
+                loadReservations()
             }
         }
     }
@@ -43,7 +43,7 @@ class AboutItemViewController: UIViewController {
     var reservations: [Reservation] = []
     var projects: [Project] = []
     
-    func loadReserations() {
+    func loadReservations() {
         let item = selectedRoom != nil ? selectedRoom!.id! : selectedEquip!.id!
         reservationService.loadReservations(of: item, by: selectedDate) { (reservs, projs, error) in
             print(error?.localizedDescription)

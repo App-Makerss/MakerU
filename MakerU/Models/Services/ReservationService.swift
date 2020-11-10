@@ -55,7 +55,7 @@ struct ReservationService {
     
     func loadReservations(of item: String, by date: Date = Date(), completion: @escaping ([Reservation]?,[Project]?, Error?) -> ()) {
         let startOfDay = Calendar.current.startOfDay(for: date)
-        let startOfNextDay = date.addDays(days: 1)
+        let startOfNextDay = startOfDay.addDays(days: 1)
         let itemRef = dao.generateRecordReference(for: item)
         let itemPredicate = NSPredicate(format: "reservedItemID  == %@", itemRef)
         let ofThisDate = NSPredicate(format: "(startDate >= %@ && startDate < %@)", startOfDay as NSDate, startOfNextDay as NSDate)
