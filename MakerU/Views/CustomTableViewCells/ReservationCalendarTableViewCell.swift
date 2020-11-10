@@ -429,6 +429,7 @@ class ItemView: UIView {
         heightAnchor.constraint(greaterThanOrEqualToConstant: 45).isActive = true
         let leftStack = UIStackView(axis: .vertical, arrangedSubviews: [itemTitle, itemSubtitle])
         let rightStack = UIStackView(axis: .vertical, arrangedSubviews: [itemStart, itemEnd])
+        rightStack.distribution = .fillEqually
         rightStack.alignment = .trailing
         let itemContentStack = UIStackView(arrangedSubviews: [leftStack,rightStack])
         itemContentStack.spacing = 4
