@@ -56,15 +56,14 @@ class ReservationCalendarTableViewCell: UITableViewCell {
     private var showingDays: [Date] = []{
         didSet {
             designDays()
-            monthAndYearLabel.text = showingDays.first!.asString(with: "")
+            monthAndYearLabel.text = showingDays.first!.monthAndYearString()
         }
     }
-    var selectedDate: Date = Date()
-//    {
-//        didSet {
-//            showingDays = selectedDate.getDaysInThisWeek()
-//        }
-//    }
+    var selectedDate: Date = Date(){
+        didSet {
+            monthAndYearLabel.text = selectedDate.monthAndYearString()
+        }
+    }
     var showingReservations: [Reservation] = [] {
         didSet {
             let countDouble = Double(showingReservations.count)
@@ -256,7 +255,7 @@ class ReservationCalendarTableViewCell: UITableViewCell {
     
     @objc func monthYearPickerDateChanged(_ sender: MonthYearPickerView){
         showingDays = sender.date.getDaysInThisWeek()
-        monthAndYearLabel.text = sender.date.asString(with: "")
+        monthAndYearLabel.text = sender.date.monthAndYearString()
     }
     @objc func toggleContent(sender: UIButton) {
         sender.isSelected.toggle()

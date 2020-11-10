@@ -80,7 +80,6 @@
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
 		56CCCE662559C9DF0005C2DC /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */; };
 		56CCCE692559F4E40005C2DC /* MonthYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CCCE682559F4E40005C2DC /* MonthYearPickerView.swift */; };
-		56D8721C255572AB00BCB1D1 /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56D8721B255572AB00BCB1D1 /* View.xib */; };
 		56D8721F25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */; };
 		56D872222555934D00BCB1D1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D872212555934D00BCB1D1 /* Date+Extensions.swift */; };
 		56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */; };
@@ -170,7 +169,6 @@
 		56C33291252BA7B500FA03AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
 		56CCCE682559F4E40005C2DC /* MonthYearPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPickerView.swift; sourceTree = "<group>"; };
-		56D8721B255572AB00BCB1D1 /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCalendarTableViewCell.swift; sourceTree = "<group>"; };
 		56D872212555934D00BCB1D1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
@@ -235,7 +233,6 @@
 				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
 				564954B7253F0C790052125A /* TimePickerTableViewCell.swift */,
 				56A6FC4F254E40B5006198BF /* PickerViewTableViewCell */,
-				56D8721B255572AB00BCB1D1 /* View.xib */,
 				56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */,
 			);
 			path = CustomTableViewCells;
@@ -479,7 +476,6 @@
 				564954C2253F56510052125A /* Futura_Bold_font.ttf in Resources */,
 				3EB6456E25392A79008D437D /* ProjectDescriptionTableViewCell.xib in Resources */,
 				3EB6456A253924F4008D437D /* UserBioTableViewCell.xib in Resources */,
-				56D8721C255572AB00BCB1D1 /* View.xib in Resources */,
 				3EB645722539388F008D437D /* TextViewTableViewCell.xib in Resources */,
 				3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */,
 				56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */,

@@ -51,7 +51,7 @@ extension Date {
         return selfComponents == dateComponents
     }
     
-    func asString(with format: String)-> String{
+    func monthAndYearString() -> String{
         let formatter = DateFormatter()
         
         formatter.timeStyle = .none
