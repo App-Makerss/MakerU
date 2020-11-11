@@ -19,7 +19,7 @@ class MatchCard: Codable, Hashable {
     
     var title: String
     var subtitle: String
-    var image: Data?
+    var image: Data
     var firstSessionTitle: String
     var firstSessionLabel: String
     var secondSessionTitle: String
@@ -51,7 +51,7 @@ class MatchCard: Codable, Hashable {
         
         title = user.name
         subtitle = user.ocupation
-        image = user.profileImage
+        image = user.profileImage ?? Data()
         firstSessionTitle = "Bio"
         firstSessionLabel = user.description
         secondSessionTitle = "Habilidades Pessoais"
