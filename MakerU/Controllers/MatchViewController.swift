@@ -11,7 +11,7 @@ import AuthenticationServices
 class MatchViewController: UIViewController, UICollectionViewDelegate {
     //MARK: Config attributes
     var dataSource: UICollectionViewDiffableDataSource<String,MatchCard>!
-
+    
     //MARK: Attributes
     let matchService = MatchService()
     var matchSuggestions: [MatchCard] = []
@@ -55,7 +55,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    
     //MARK: View life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +70,13 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         configureSnapshot()
         
         loadMatchSuggestions()
-
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
     }
 
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     //MARK: Setups
     func setupCollecitonView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
@@ -91,9 +87,9 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         collectionView.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: MatchCardCollectionViewCell.reuseIdentifier)
         view.addSubview(collectionView)
         collectionView.delegate = self
-
+        
     }
-
+    
     func setupNavigations() {
         navigationItem.title = "Encontrar pessoas"
         let item = UITabBarItem()
@@ -103,7 +99,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
-
+        
         let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(self.presentMatchOnboarding))
         infoButton.tintColor = .systemPurple
         self.navigationItem.rightBarButtonItem = infoButton
@@ -195,18 +191,18 @@ extension MatchViewController {
             cell.cardFirstSessionDescription.text = item.firstSessionLabel
             cell.cardSecondSessionTitle.text = item.secondSessionTitle
             cell.cardSecondSessionDescription.text = item.secondSessionLabel
-
+            
             return cell
         })
     }
-
-
+    
+    
     func showCardSwiped(_ cell: MatchCardCollectionViewCell) {
         collaborateButtonTapped(cell)
         print("subiuuu galera \(cell.cardTitle)")
     }
-
-
+    
+    
     func addSectionAndItens(_ currentSnapshot: inout NSDiffableDataSourceSnapshot<String, MatchCard>) {
         currentSnapshot.appendSections(["cards"])
         currentSnapshot.appendItems(self.matchSuggestions, toSection: "cards")
@@ -246,6 +242,12 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         present(navigation, animated: true, completion: nil)
     }
     
+    fileprivate func reloadCard(_ card: MatchCard) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems([card])
+        dataSource.apply(snapshot)
+    }
+    
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         let startY = cell.frame.origin.y
         let animator = UIViewPropertyAnimator(duration:0.6, curve: .linear) { //1
@@ -257,44 +259,31 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
             switch credentialState {
-            case .authorized:
-                break // The Apple ID credential is valid.
-            case .revoked, .notFound:
-                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-                DispatchQueue.main.async {
-                    //TODO: Segue to LogInViewController
-                    let login = LogInViewController()
-                    let navigation = UINavigationController(rootViewController: login)
-                    self.present(navigation, animated: true, completion: nil)
-                }
-            default:
-                break
+                case .authorized:
+                    break // The Apple ID credential is valid.
+                case .revoked, .notFound:
+                    // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                    DispatchQueue.main.async {
+                        //TODO: Segue to LogInViewController
+                        let login = LogInViewController()
+                        let navigation = UINavigationController(rootViewController: login)
+                        self.present(navigation, animated: true, completion: nil)
+                    }
+                default:
+                    break
             }
-        
+            
             let card = self.matchSuggestions[currentIndex.row]
             let match = Match(id: nil, part1: loggedUserID, part2: card.id)
             self.matchService.verifyMatch(match: match) { isMutual in
-            DispatchQueue.main.async {
-                animator.startAnimation() //2
-            
-                if isMutual {
-                    animator.addCompletion {  [self] _ in
-                        matchSuggestions[currentIndex.row].face = .back
-                        DispatchQueue.main.async {
-                            cell.frame.origin.y = startY
-                            var snapshot = dataSource.snapshot()
-                            snapshot.reloadItems([card])
-                            dataSource.apply(snapshot)
-                        }
-                    }
-                } else {
+                DispatchQueue.main.async {
+                    animator.startAnimation()
                     animator.addCompletion { [self] _ in
-                        matchSuggestions[currentIndex.row].face = .likeFeedback(card.type) // feedbackFace
+                        let cardFace:CardFace = isMutual ? .back : .likeFeedback(card.type)
+                        matchSuggestions[currentIndex.row].face = cardFace // feedbackFace
                         DispatchQueue.main.async {
                             cell.frame.origin.y = startY
-                            var snapshot = dataSource.snapshot()
-                            snapshot.reloadItems([card])
-                            dataSource.apply(snapshot, animatingDifferences: false)
+                            reloadCard(card)
                         }
                     }
                 }
