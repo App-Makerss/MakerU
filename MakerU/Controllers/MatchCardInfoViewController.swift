@@ -18,9 +18,8 @@ class MatchCardInfoViewController: UIViewController {
     func config(with matchCard: MatchCard) {
         cardTitle.text = matchCard.title
         cardSubtitle.text = matchCard.subtitle
-        if let imageData = matchCard.image {
-            cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
-        }
+        
+        cardImageView.image = UIImage(data: matchCard.image) ?? UIImage(systemName: "person.fill")
         
         cardFirstSessionTitle.text = matchCard.firstSessionTitle
         cardFirstSessionDescription.text = matchCard.firstSessionLabel
@@ -35,7 +34,6 @@ class MatchCardInfoViewController: UIViewController {
         img.translatesAutoresizingMaskIntoConstraints = false
         img.heightAnchor.constraint(equalToConstant: 75).isActive = true
         img.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        img.image = UIImage(systemName: "desktopcomputer")
         img.tintColor = .purple
         img.layer.cornerRadius = 10
         img.clipsToBounds = true

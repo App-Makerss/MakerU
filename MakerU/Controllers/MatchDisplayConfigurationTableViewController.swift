@@ -16,19 +16,27 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             }
         }
     }
+    var isPreviewEnabled: Bool {
+        if configSegmentedControl.selectedSegmentIndex == 1 && selectedProject?.id != nil {
+            return true
+        }else if configSegmentedControl.selectedSegmentIndex == 0 {
+            return true
+        }
+        return false
+    }
     
-    var selectedProject: Project? {
+    var selectedProject: Project? = nil {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
-                self.tableView.reloadSections([2,3,4], with: .automatic)
+                self.tableView.reloadSections([1,2,3], with: .automatic)
             }
         }
     }
     var selectedUser: User? {
         didSet{
             DispatchQueue.main.async {
-                self.tableView.reloadSections([1,2,3,4], with: .automatic)
+                self.tableView.reloadSections([1,2,3], with: .automatic)
             }
         }
     }
@@ -60,7 +68,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     let configSegmentedControl: UISegmentedControl = {
         let segmented = UISegmentedControl(items: ["Perfil", "Projeto"])
-//        segmented.layer.cornerRadius = 8
         segmented.backgroundColor = .clear
         segmented.selectedSegmentIndex = 0
         segmented.addTarget(self, action: #selector(Self.selectedSegmentChanged), for: .valueChanged)
@@ -90,8 +97,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         
         setupNavigations()
         tableView.tableFooterView = UIView()
-        tableView.register(UINib(nibName: "UserBioTableViewCell", bundle: nil), forCellReuseIdentifier: "UserBioTableViewCell")
-        
         tableView.register(UINib(nibName: "ProjectDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: "ProjectDescriptionTableViewCell")
         tableView.register(UINib(nibName: "TextViewTableViewCell", bundle: nil), forCellReuseIdentifier: "TextViewTableViewCell")
         tableView.register(UINib(nibName: "ShowProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "ShowProfileTableViewCell")
@@ -123,22 +128,44 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 1 ? secondSectionRowCount : 1
+        var rowCount = 0
+        if section == 1 {
+            rowCount = secondSectionRowCount
+        }else if section == 3 {
+            rowCount = isPreviewEnabled ? 2 : 1
+        }else {
+             rowCount = 1
+        }
+        return rowCount
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 && configSegmentedControl.selectedSegmentIndex == 1 {
+        if indexPath.section == 1 && indexPath.row == 0 && configSegmentedControl.selectedSegmentIndex == 1 && selectedProject?.id != nil{
             isPickerVisible.toggle()
+        }else if indexPath.section == 3 && indexPath.row == 0 {
+            
+            var previewCard: MatchCard? = nil
+            if configSegmentedControl.selectedSegmentIndex == 0 {
+                previewCard = MatchCard(from: selectedUser!)
+            }else if selectedProject?.id != nil{
+                previewCard = MatchCard(from: selectedProject!, with: categories.first(where:{$0.id == selectedProject!.category})!)
+            }
+            if previewCard != nil {
+                let displayInfoVC = MatchCardInfoViewController()
+                displayInfoVC.config(with: previewCard!)
+                let navigation = UINavigationController(rootViewController: displayInfoVC)
+                    present(navigation, animated: true, completion: nil)
+            }
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 3 {
+        if section == 2 {
             return configSegmentedControl.selectedSegmentIndex == 0 ? "Habilidades pessoais" : "Habilidades procuradas"
         }
         return nil
@@ -148,17 +175,11 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         switch section {
             case 2:
                 if configSegmentedControl.selectedSegmentIndex == 0 {
-                    return "Acesse seu perfil para alterar suas informações."
-                }else {
-                    return "Edite a descrição acessando seu projeto em perfil."
-                }
-            case 3:
-                if configSegmentedControl.selectedSegmentIndex == 0 {
                     return "Descreva brevemente suas habilidades que podem ser úteis para colaboração em projetos."
                 }else {
                     return "Descreva brevemente as habilidades desejáveis no perfil de um possível colaborador para o projeto."
                 }
-            case 4:
+            case 3:
                 return "Ao habilitar a exibição, as informações acima estarão visíveis para os demais usuários do espaço."
             default:
                return nil
@@ -167,14 +188,14 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section != 3 {
+        if section != 2 {
             return 16
         }
         return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section != 3{
+        if section != 2{
             return nil
         }
         return UITableViewHeaderFooterView()
@@ -221,7 +242,8 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                     cell.selectionStyle = .none
                 }else {
                     cell.textLabel?.text = "Projeto"
-                    cell.detailTextLabel?.text = selectedProject?.title
+                    cell.detailTextLabel?.text = selectedProject?.id != nil ? selectedProject?.title : "Nenhum projeto"
+                    cell.selectionStyle = selectedProject?.id != nil ? .default : .none
                 }
                 cell.detailTextLabel?.textColor = isPickerVisible ? .systemPurple : .secondaryLabel
                 resultCell = cell
@@ -238,35 +260,29 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 break
             }
         case 2:
-            let identifier = configSegmentedControl.selectedSegmentIndex == 0 ? "UserBioTableViewCell" : "ProjectDescriptionTableViewCell"
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifier)!
-            cell.selectionStyle = .none
-            if configSegmentedControl.selectedSegmentIndex == 0 {
-                (cell as! UserBioTableViewCell).descriptionText.text = selectedUser?.description
-            }else {
-                (cell as! ProjectDescriptionTableViewCell).descriptionLabel.text = selectedProject?.description
-            }
-            resultCell = cell
-            break
-        case 3:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewTableViewCell")!
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewTableViewCell") as! TextViewTableViewCell
             let skills = configSegmentedControl.selectedSegmentIndex == 0 ? selectedUser?.skills : selectedProject?.skillsInNeed
-            (cell as! TextViewTableViewCell).textView.text = skills
-            (cell as! TextViewTableViewCell).delegate = self
+            cell.textView.text = skills
+            cell.delegate = self
             cell.selectionStyle = .none
             resultCell = cell
-            break
         default:
-            //Exibir projeto e exibir perfil no segmented
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShowProfileTableViewCell")!
-            let show = configSegmentedControl.selectedSegmentIndex == 0 ? "Exibir perfil" : "Exibir projeto"
-            (cell as! ShowProfileTableViewCell).showProjectOrProfile.text = show
-            let isOn = configSegmentedControl.selectedSegmentIndex == 0 ? (selectedUser?.canAppearOnMatch == true) : (selectedProject?.canAppearOnMatch == true)
-            
-            (cell as! ShowProfileTableViewCell).showSwitchControll.setOn(isOn, animated: true)
-            (cell as! ShowProfileTableViewCell).showSwitchControll.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
-            resultCell = cell
-            break
+            if row == 0 && isPreviewEnabled {
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.text = "Pré-visualizar exibição"
+                cell.textLabel?.setDynamicType(font: .systemFont(style: .body))
+                resultCell = cell
+            }else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ShowProfileTableViewCell") as! ShowProfileTableViewCell
+                let show = configSegmentedControl.selectedSegmentIndex == 0 ? "Exibir perfil" : "Exibir projeto"
+                cell.showProjectOrProfile.text = show
+                let isOn = configSegmentedControl.selectedSegmentIndex == 0 ? (selectedUser?.canAppearOnMatch == true) : (selectedProject?.canAppearOnMatch == true)
+                
+                cell.showSwitchControll.setOn(isOn, animated: true)
+                cell.showSwitchControll.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
+                resultCell = cell
+            }
         }
         return resultCell
     }
@@ -274,11 +290,8 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     @objc func selectedSegmentChanged(sender: UISegmentedControl) {
         DispatchQueue.main.async {
-            if sender.selectedSegmentIndex == 1 {
-                self.tableView.reloadSections([1,2,3,4], with: .automatic)
-            }else {
-                self.tableView.reloadSections([2,3,4], with: .automatic)
-            }
+            self.tableView.reloadSections([1,2,3], with: .automatic)
+            self.isPickerVisible = false
         }
     }
     
@@ -294,11 +307,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     }
     
     @objc func okBarItemTapped() {
-        if !stringUpdates.isEmpty || !boolUpdates.isEmpty,
-            var selectedProject = selectedProject {
+        if !stringUpdates.isEmpty || !boolUpdates.isEmpty {
             
+            if var selectedProject = selectedProject{
             selectedProject.skillsInNeed = stringUpdates["projectSkills"] ?? selectedProject.skillsInNeed
             selectedProject.canAppearOnMatch = boolUpdates["projectCanAppearOnMatch"] ?? selectedProject.canAppearOnMatch
+                ProjectDAO().update(entity: selectedProject)
+            }
             
             if var selectedUser = selectedUser {
                 selectedUser.skills = stringUpdates["userSkills"] ?? selectedUser.skills
@@ -306,7 +321,6 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                 UserDAO().update(entity: selectedUser)
             }
             
-            ProjectDAO().update(entity: selectedProject)
             
             self.dismiss(animated: true, completion: nil)
             

@@ -186,9 +186,7 @@ extension MatchViewController {
                 cell.cardSubtitle.accessibilityValue = ""
             }
             
-            if let imageData = item.image {
-                cell.cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
-            }
+            cell.cardImageView.image = UIImage(data: item.image) ?? UIImage(systemName: "person.fill")
             cell.cardFirstSessionTitle.text = item.firstSessionTitle
             cell.cardFirstSessionDescription.text = item.firstSessionLabel
             cell.cardSecondSessionTitle.text = item.secondSessionTitle
