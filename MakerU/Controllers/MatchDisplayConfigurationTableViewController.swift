@@ -151,11 +151,14 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
             var previewCard: MatchCard? = nil
             if configSegmentedControl.selectedSegmentIndex == 0 {
                 previewCard = MatchCard(from: selectedUser!)
+                previewCard?.secondSessionLabel = stringUpdates["userSkills"] ?? selectedUser?.skills ?? ""
             }else if selectedProject?.id != nil{
                 previewCard = MatchCard(from: selectedProject!, with: categories.first(where:{$0.id == selectedProject!.category})!)
+                previewCard?.secondSessionLabel = stringUpdates["projectSkills"] ?? selectedProject?.skillsInNeed ?? ""
             }
             if previewCard != nil {
                 let displayInfoVC = MatchCardInfoViewController()
+                
                 displayInfoVC.config(with: previewCard!)
                 let navigation = UINavigationController(rootViewController: displayInfoVC)
                     present(navigation, animated: true, completion: nil)
@@ -173,6 +176,15 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         
         switch section {
+            case 1:
+                if configSegmentedControl.selectedSegmentIndex == 0 {
+                    return "Acesse seu perfil caso deseje alterar informações."
+                }else {
+                    if selectedProject?.id != nil {
+                        return "Selecione um de seus projetos para ser exibido."
+                    }
+                    return "Adicione um projeto a sua conta para poder exibi-lo."
+                }
             case 2:
                 if configSegmentedControl.selectedSegmentIndex == 0 {
                     return "Descreva brevemente suas habilidades que podem ser úteis para colaboração em projetos."
@@ -203,14 +215,14 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section > 1 {
+        if section > 0 {
             return UITableViewHeaderFooterView()
         }else {
             return nil
         }
     }
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section > 1 {
+        if section > 0 {
             return UITableView.automaticDimension
         }else {
             return 0
@@ -240,12 +252,13 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                     cell.textLabel?.text = "Perfil"
                     cell.detailTextLabel?.text = selectedUser?.name
                     cell.selectionStyle = .none
+                    
                 }else {
                     cell.textLabel?.text = "Projeto"
                     cell.detailTextLabel?.text = selectedProject?.id != nil ? selectedProject?.title : "Nenhum projeto"
                     cell.selectionStyle = selectedProject?.id != nil ? .default : .none
+                    cell.detailTextLabel?.textColor = isPickerVisible ? .systemPurple : (selectedProject?.id != nil ? .label :  .secondaryLabel)
                 }
-                cell.detailTextLabel?.textColor = isPickerVisible ? .systemPurple : .secondaryLabel
                 resultCell = cell
                 break
             } else {
