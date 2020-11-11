@@ -15,25 +15,24 @@ protocol MatchCardCollectionViewCellDelegate: class {
 
 class MatchCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: self)
-
+    
     var delegate: MatchCardCollectionViewCellDelegate?
-
+    
+    let layoutFactory = CardLayoutFactory()
+    
     var cardFace: CardFace = .front {
         didSet{
-            switch cardFace {
-                case .back:
-                    setupCardBackFace()
-                case .likeFeedback:
-                    setupCardLikeFeedback()
-                case .nothingFeedback:
-                    setupCardNothingFeedback()
-                default:
-                    setupCardFrontalFace()
-                    addOrRemoveButton()
+            if cardFace != .front{
+                layoutFactory.makeCardLayout(inView: contentView, cardFace: cardFace) {
+                    self.seeMoreButtonTap()
+                }
+            }else {
+                setupCardFrontalFace()
+                setupAppearance()
             }
         }
     }
-
+    
     public func showSwipeUp(){
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp))
         gesture.direction = .up
@@ -41,7 +40,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         containerview.isUserInteractionEnabled = true
         containerview.addGestureRecognizer(gesture)
     }
-
+    
     @objc func swipeUp(){
         delegate?.showCardSwiped(self)
     }
@@ -57,9 +56,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         img.clipsToBounds = true
         return img
     }()
-    var cardLikeFeedbackContent: UIStackView! = nil
-    var cardNoOneToShowFeedbackContent: UIStackView! = nil
-    
     let cardTitle: UILabel = {
         let title = UILabel()
         title.setDynamicType(font: .systemFont(style: .title3, weight: .medium), textStyle: .title3)
@@ -103,17 +99,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         let btn = genSeeMoreButton()
         return btn
     }()
-    private static func genSeeMoreButton() -> UIButton {
-        let btn = UIButton(type: .custom)
-        btn.titleLabel?.setDynamicType(font: .systemFont(style: .subheadline))
-        btn.setTitle("mais", for: .normal)
-        btn.setTitleColor(.systemPurple, for: .normal)
-        btn.contentHorizontalAlignment = .right
-        btn.isEnabled = true
-        btn.setBackgroundImage(UIImage(named: "seeMoreButtonBackgroundGradient"), for: .normal)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }
+    
     let seeMoreButton1: UIButton = {
         let btn = genSeeMoreButton()
         return btn
@@ -224,6 +210,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return divider
     }
     
+    private static func genSeeMoreButton() -> UIButton {
+        let btn = UIButton(type: .custom)
+        btn.titleLabel?.setDynamicType(font: .systemFont(style: .subheadline))
+        btn.setTitle("mais", for: .normal)
+        btn.setTitleColor(.systemPurple, for: .normal)
+        btn.contentHorizontalAlignment = .right
+        btn.isEnabled = true
+        btn.setBackgroundImage(UIImage(named: "seeMoreButtonBackgroundGradient"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }
+    
     private func secondSessionStack() -> UIControl {
         let contentStack = UIStackView(arrangedSubviews: [cardSecondSessionTitle, cardSecondSessionDescription])
         contentStack.spacing = 8
@@ -280,7 +278,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     fileprivate func addAndConfigButton(_ button: UIButton, _ uiview: UIControl, _ contentStack: UIView, tag: Int) {
         contentStack.isUserInteractionEnabled = false
-
+        
         uiview.addSubview(button)
         uiview.isUserInteractionEnabled = true
         uiview.addTarget(self, action: #selector(self.seeMoreButtonTap), for: .touchUpInside)
@@ -311,7 +309,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         cardFrontContent.trailingAnchor.constraint(equalTo: containerview.trailingAnchor, constant: -24).isActive = true
         cardFrontContent.leadingAnchor.constraint(equalTo: containerview.leadingAnchor, constant: 24).isActive = true
         
-       collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 20).isActive = true
+        collaborateButton.topAnchor.constraint(greaterThanOrEqualTo: cardFrontContent.bottomAnchor, constant: 20).isActive = true
         collaborateButton.centerXAnchor.constraint(equalTo: containerview.centerXAnchor).isActive = true
         collaborateButton.bottomAnchor.constraint(equalTo: containerview.bottomAnchor, constant: -16).isActive = true
     }
@@ -350,129 +348,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return root
     }()
     
-    private let cardBackContent: UIStackView = {
-        
-        let label1 = UILabel()
-        label1.text = "Match!"
-        label1.font = UIFont(name: "Futura-Bold", size: 50)
-        label1.adjustsFontForContentSizeCategory = true
-        label1.textColor = .systemPurple
-        label1.textAlignment = .center
-        
-        let label2 = UILabel()
-        label2.text = "O contato para colaboração está disponível na área de notificações do seu perfil."
-        label2.setDynamicType(font: .systemFont(style: .callout))
-        label2.numberOfLines = 0
-        label2.textAlignment = .center
-        
-        
-        let root = UIStackView(arrangedSubviews: [label1,label2])
-        root.axis = .vertical
-        root.distribution = .fillProportionally
-        root.alignment = .center
-        root.spacing = 29
-        
-        return root
-    }()
-    
-    func genLikeFeedbackContent() -> UIStackView {
-        var label2Text: String = ""
-        var btnTitle: String = ""
-        
-        if case .likeFeedback(let value) = cardFace {
-            if value == .project {
-                label2Text = "Você topou colaborar com este projeto. Espere por uma resposta para receber o contato do responsável."
-                btnTitle = "Rever projeto"
-            }else {
-                label2Text = "Você topou colaborar com este perfil. Espere por uma resposta para receber o contato."
-                btnTitle = "Rever perfil"
-            }
-        }
-        let label1 = UILabel()
-        label1.text = "Aguardando"
-        label1.setDynamicType(font: .systemFont(style: .headline))
-        label1.textAlignment = .center
-        
-        let label2 = UILabel()
-        label2.text = label2Text
-        label2.setDynamicType(font: .systemFont(style: .callout))
-        label2.textColor = .secondaryLabel
-        label2.numberOfLines = 0
-        label2.textAlignment = .center
-        
-        let btn = UIButton(type: .custom, primaryAction: UIAction(handler: { _ in
-            self.seeMoreButtonTap()
-        }))
-        
-        btn.setTitle(btnTitle, for: .normal)
-        btn.setTitleColor(.systemPurple, for: .normal)
-        
-        
-        let root = UIStackView(arrangedSubviews: [label1,label2,btn])
-        root.axis = .vertical
-        root.alignment = .center
-        root.spacing = 8
-        root.setCustomSpacing(16, after: label2)
-        
-        return root
-    }
-    
-    func genNoOneToShowFeedbackContent() -> UIStackView {
-        let label1 = UILabel()
-        label1.text = "Ninguém para colaborar :("
-        label1.setDynamicType(font: .systemFont(style: .headline))
-        label1.textAlignment = .center
-        
-        let label2 = UILabel()
-        label2.text = "Seu espaço ainda não possui pessoas ou projetos interessados em colaboração. Seja o primeiro a exibir publicamente seu perfil ou projeto!"
-        label2.setDynamicType(font: .systemFont(style: .callout))
-        label2.textColor = .secondaryLabel
-        label2.numberOfLines = 0
-        label2.textAlignment = .center
-        
-        let root = UIStackView(arrangedSubviews: [label1,label2])
-        root.axis = .vertical
-        root.alignment = .center
-        root.spacing = 8
-        root.setCustomSpacing(16, after: label2)
-        
-        return root
-    }
-    private func setupCardBackFace() {
-        contentView.subviews.forEach {$0.removeFromSuperview()}
-        
-        contentView.addSubview(cardBackContent)
-        
-        cardBackContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 32, trailingConstant: -32)
-        cardBackContent.centerConstraints(centerYConstant: 0)
-        
-        setupAppearance()
-    }
-    
-    private func setupCardLikeFeedback() {
-        contentView.subviews.forEach {$0.removeFromSuperview()}
-        cardLikeFeedbackContent = genLikeFeedbackContent()
-        
-        contentView.addSubview(cardLikeFeedbackContent)
-        
-        cardLikeFeedbackContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 32, trailingConstant: -32)
-        cardLikeFeedbackContent.centerConstraints(centerYConstant: 0)
-        
-        setupAppearance()
-    }
-
-    private func setupCardNothingFeedback() {
-        contentView.subviews.forEach {$0.removeFromSuperview()}
-        cardNoOneToShowFeedbackContent = genNoOneToShowFeedbackContent()
-        
-        contentView.addSubview(cardNoOneToShowFeedbackContent)
-        
-        cardNoOneToShowFeedbackContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 32, trailingConstant: -32)
-        cardNoOneToShowFeedbackContent.centerConstraints(centerYConstant: 0)
-        
-        setupAppearance()
-    }
-    
     private func setupCardFrontalFace(){
         cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
         contentView.subviews.forEach {$0.removeFromSuperview()}
@@ -485,7 +360,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         containerview.layer.masksToBounds = true
         containerview.backgroundColor = .secondarySystemGroupedBackground
         containerview.translatesAutoresizingMaskIntoConstraints = false
-
+        
         containerview.addSubview(cardFrontContent)
         containerview.addSubview(collaborateButton)
         

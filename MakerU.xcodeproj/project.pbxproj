@@ -290,6 +290,16 @@
 			path = DAO;
 			sourceTree = "<group>";
 		};
+		56630B3B255C986800E10026 /* MatchCard */ = {
+			isa = PBXGroup;
+			children = (
+				E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */,
+				56BCD8A9255C345E0056DD49 /* CardFaceEnum.swift */,
+				56630B38255C86BD00E10026 /* CardLayoutFactory.swift */,
+			);
+			path = MatchCard;
+			sourceTree = "<group>";
+		};
 		566EB3CC2535E56B0092F096 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,11 +451,9 @@
 			isa = PBXGroup;
 			children = (
 				569103D6254780D40094D071 /* SupplementaryViews */,
-				E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */,
+				56630B3B255C986800E10026 /* MatchCard */,
 				569103CF254763900094D071 /* EquipmentCollectionViewCell.swift */,
 				569103DB254782410094D071 /* RoomCollectionViewCell.swift */,
-				56BCD8A9255C345E0056DD49 /* CardFaceEnum.swift */,
-				56630B38255C86BD00E10026 /* CardLayoutFactory.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";

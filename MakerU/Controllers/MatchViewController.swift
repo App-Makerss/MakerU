@@ -47,7 +47,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
             if let categories = categories{
                 self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
                     if var matchCards = matchCards{
-                        matchCards.removeAll()
                         if matchCards.isEmpty{
                             matchCards.append(MatchCard())
                         }
