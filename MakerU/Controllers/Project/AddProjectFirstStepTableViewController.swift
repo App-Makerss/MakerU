@@ -1,5 +1,5 @@
 //
-//  AddProjectFirstStepViewController.swift
+//  AddProjectFirstStepTableViewController.swift
 //  MakerU
 //
 //  Created by Victoria Faria on 09/11/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddProjectFirstStepViewController: UIViewController {
+class AddProjectFirstStepTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

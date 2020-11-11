@@ -86,7 +86,7 @@
 		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E247C090254260B00093833C /* MatchOnboardingViewController.swift */; };
 		E273CC9B255B617600A61078 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273CC9A255B617600A61078 /* ProfileViewController.swift */; };
-		E2B7A93A255A371E00FA978A /* AddProjectFirstStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7A939255A371E00FA978A /* AddProjectFirstStepViewController.swift */; };
+		E2B7A93A255A371E00FA978A /* AddProjectFirstStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -173,7 +173,7 @@
 		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E247C090254260B00093833C /* MatchOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchOnboardingViewController.swift; sourceTree = "<group>"; };
 		E273CC9A255B617600A61078 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		E2B7A939255A371E00FA978A /* AddProjectFirstStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFirstStepViewController.swift; sourceTree = "<group>"; };
+		E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFirstStepTableViewController.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -389,7 +389,7 @@
 		E2B7A938255A36B500FA978A /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				E2B7A939255A371E00FA978A /* AddProjectFirstStepViewController.swift */,
+				E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -545,7 +545,7 @@
 				E273CC9B255B617600A61078 /* ProfileViewController.swift in Sources */,
 				569714C5254B277F00419049 /* OccurrenceService.swift in Sources */,
 				569103CB254754040094D071 /* Equipment.swift in Sources */,
-				E2B7A93A255A371E00FA978A /* AddProjectFirstStepViewController.swift in Sources */,
+				E2B7A93A255A371E00FA978A /* AddProjectFirstStepTableViewController.swift in Sources */,
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
