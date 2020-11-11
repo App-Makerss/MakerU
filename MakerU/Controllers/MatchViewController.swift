@@ -270,6 +270,9 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                 // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
                 DispatchQueue.main.async {
                     //TODO: Segue to LogInViewController
+                    let login = LogInViewController()
+                    let navigation = UINavigationController(rootViewController: login)
+                    self.present(navigation, animated: true, completion: nil)
                 }
             default:
                 break

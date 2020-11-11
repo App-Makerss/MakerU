@@ -13,16 +13,102 @@ class LogInViewController: UIViewController{
     
     //MARK: View Code Set up
     
+    
+    
     private let loginProviderStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillProportionally
         
+        stack.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        stack.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        stack.clipsToBounds = true
+        
         return stack
     }()
     
+    private let textContent: UIStackView = {
+        let content = UIStackView()
+        content.axis = .vertical
+        content.spacing = 16
+        content.distribution = .fillProportionally
+        
+        return content
+    }()
+    
+    let viewTitle: UILabel = {
+        let title = UILabel()
+        title.setDynamicType(font: .systemFont(style: .title1), textStyle: .title1 )
+        title.text = "MakerU"
+        title.textColor = .black
+        title.numberOfLines = 0
+        title.textAlignment = .center
+        title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
+        return title
+    }()
+    
+    let cardSubtitle: UILabel = {
+        let subtitle = UILabel()
+        subtitle.textColor = .black
+        subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+        subtitle.setDynamicType(font: .preferredFont(forTextStyle: .callout))
+        subtitle.text = "Inicie uma sessão para poder utilizar os serviços de criação de projetos e reservas."
+        subtitle.textAlignment = .center
+        subtitle.numberOfLines = 0
+        return subtitle
+    }()
+    
+    let footnoteText: UILabel = {
+        let footnote = UILabel()
+        footnote.textColor = .black
+        footnote.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
+        footnote.setDynamicType(font: .preferredFont(forTextStyle: .footnote))
+        footnote.text = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade."
+        footnote.textAlignment = .center
+        footnote.numberOfLines = 0
+        return footnote
+    }()
+    
+    private func stackSetUp() -> UIStackView {
+        let upStack = UIStackView(arrangedSubviews: [viewTitle,cardSubtitle])
+        upStack.spacing = 16
+        upStack.axis = .vertical
+        upStack.distribution = .fillProportionally
+        
+        let content = UIStackView(arrangedSubviews: [upStack, loginProviderStackView])
+        content.spacing = 44
+        content.axis = .vertical
+        
+        let firstSessionStack = UIStackView(arrangedSubviews: [content, footnoteText])
+        firstSessionStack.axis = .vertical
+        firstSessionStack.spacing = 427
+        
+        return firstSessionStack
+    }
+    
+    func setupNavigations() {
+        let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
+        cancelBarItem.tintColor = UIColor.systemPurple
+        
+        self.navigationItem.leftBarButtonItem = cancelBarItem
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .white
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.modalPresentationStyle = .popover
+        self.setupNavigations()
+        
+        let stacks = stackSetUp()
+        stacks.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(stacks)
+        setupContraints(stack: stacks)
+        
+        view.backgroundColor = .white
+        
         setupProviderLoginView()
     }
         
@@ -52,6 +138,12 @@ class LogInViewController: UIViewController{
         authorizationController.performRequests()
     }
     
+    func setupContraints(stack: UIView) {
+        stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stack.topAnchor.constraint(equalTo: view.topAnchor, constant: 51).isActive = true
+        stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+    }
+    
     /// - Tag: perform_appleid_request
     @objc
     func handleAuthorizationAppleIDButtonPress() {
@@ -63,6 +155,11 @@ class LogInViewController: UIViewController{
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+    
+    @objc func cancelBarItemTapped() {
+        //Todo: passar as informaçoes pra volta
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
