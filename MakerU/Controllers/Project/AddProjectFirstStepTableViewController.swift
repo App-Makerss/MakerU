@@ -12,10 +12,11 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
     var categories: [Category] = [] {
         didSet {
             if !categories.isEmpty {
-                selectedProject?.category = categories.first!.id!
+                createProject.category = categories.first!.id!
             }
         }
     }
+
     let projectService = ProjectService()
 
     var selectedCategory: Category? {
@@ -26,21 +27,29 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         }
     }
 
-    var selectedProject: Project? = Project() {
+    var createProject: Project = Project() {
         didSet {
-            if selectedProject?.id == nil && !categories.isEmpty {
-                selectedCategory = categories.first(where: {$0.id == selectedProject?.category}) ?? categories.first
+            if createProject.id == nil && !categories.isEmpty {
+                selectedCategory = categories.first(where: {$0.id == createProject.category}) ?? categories.first
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
+                if createProject.title != "" && createProject.category != "" {
+                    navigationItem.rightBarButtonItem?.isEnabled = true
+                } else {
+                    navigationItem.rightBarButtonItem?.isEnabled = false
+                }
                 self.tableView.reloadSections([0], with: .automatic)
             }
         }
     }
 
+    //MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigations()
         hideKeyboardWhenTappedAround()
+
+        tableView.contentInset = UIEdgeInsets(top: -16, left: 0, bottom: 0, right: 0)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         CategoryDAO().listAll { (categories, error) in
@@ -71,11 +80,11 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
         cancelBarItem.tintColor = UIColor.systemPurple
 
-//        let okButtonItem = UIBarButtonItem(title: "Confirmar", style: .done, target: self, action: #selector(self.okBarItemTapped))
-//        okButtonItem.tintColor = UIColor.systemPurple
+        let nextButtonItem = UIBarButtonItem(title: "Próximo", style: .done, target: self, action: #selector(self.nextButtonItemTapped))
+        nextButtonItem.tintColor = UIColor.systemPurple
+        nextButtonItem.isEnabled = false
 
-
-//        self.navigationItem.rightBarButtonItem = okButtonItem
+        self.navigationItem.rightBarButtonItem = nextButtonItem
         self.navigationItem.leftBarButtonItem = cancelBarItem
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -87,6 +96,10 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         1
+    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        UITableViewHeaderFooterView()
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -122,7 +135,7 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         default:
             let cell = FormFieldTableViewCell()
             cell.label.text = "Título"
-            cell.value.text = selectedProject?.title
+            cell.value.text = createProject.title
             cell.value.addTarget(self, action: #selector(Self.newProjectTitleValueChanged(sender:)), for: .editingDidEnd)
             resultCell = cell
         }
@@ -145,30 +158,39 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         return UITableView.automaticDimension
     }
 
+    //MARK: - PickerView
     func pickerTableViewDidSelected(_ viewController: UIViewController, item: Any) {
         navigationController?.popViewController(animated: true)
         if let row = item as? GenericRow<Project> {
-            selectedProject = row.type
+            createProject = row.type
         }
     }
 
     func pickerCellDidSelected(item: Any) {
         if let row = item as? GenericRow<Category> {
-            selectedProject?.category = row.type.id ?? ""
+            createProject.category = row.type.id ?? ""
         }
     }
 
+    //MARK: - objc funcs
     @objc func newProjectTitleValueChanged(sender: UITextField) {
-        selectedProject?.title = sender.text ?? ""
+        createProject.title = sender.text ?? ""
     }
 
     @objc func cancelBarItemTapped() {
-        if  selectedProject?.title != "" {
+        if  createProject.title != "" {
             presentDiscardChangesActionSheet { _ in
                 self.dismiss(animated: true, completion: nil)
             }
         } else {
             self.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    @objc func nextButtonItemTapped() {
+        if createProject.title != "" && createProject.category != "" {
+            let vc = AddProjectSecondStepTableViewController(style: .insetGrouped)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

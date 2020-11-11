@@ -86,6 +86,7 @@
 		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E247C090254260B00093833C /* MatchOnboardingViewController.swift */; };
 		E273CC9B255B617600A61078 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273CC9A255B617600A61078 /* ProfileViewController.swift */; };
+		E2B3426E255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */; };
 		E2B7A93A255A371E00FA978A /* AddProjectFirstStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -173,6 +174,7 @@
 		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E247C090254260B00093833C /* MatchOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchOnboardingViewController.swift; sourceTree = "<group>"; };
 		E273CC9A255B617600A61078 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectSecondStepTableViewController.swift; sourceTree = "<group>"; };
 		E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFirstStepTableViewController.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -390,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */,
+				E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,
 				5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */,
 				567C514A25499BB30003BCCB /* AboutItemViewController.swift in Sources */,
+				E2B3426E255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
