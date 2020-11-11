@@ -46,7 +46,11 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         CategoryDAO().listAll { (categories, error) in
             if let categories = categories{
                 self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
-                    if let matchCards = matchCards{
+                    if var matchCards = matchCards{
+                        matchCards.removeAll()
+                        if matchCards.isEmpty{
+                            matchCards.append(MatchCard())
+                        }
                         self.matchSuggestions = matchCards
                         self.updateSnapshot()
                     }
@@ -249,12 +253,15 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     }
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
+        guard let currentIndex = collectionView.indexPath(for: cell),
+              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+        if matchSuggestions[currentIndex.row].type == .none {
+            return
+        }
         let startY = cell.frame.origin.y
         let animator = UIViewPropertyAnimator(duration:0.6, curve: .linear) { //1
             cell.frame.origin.y = -self.view.bounds.height*3
         }
-        guard let currentIndex = collectionView.indexPath(for: cell),
-              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in

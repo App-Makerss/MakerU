@@ -25,6 +25,8 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
                     setupCardBackFace()
                 case .likeFeedback:
                     setupCardLikeFeedback()
+                case .nothingFeedback:
+                    setupCardNothingFeedback()
                 default:
                     setupCardFrontalFace()
                     addOrRemoveButton()
@@ -56,6 +58,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return img
     }()
     var cardLikeFeedbackContent: UIStackView! = nil
+    var cardNoOneToShowFeedbackContent: UIStackView! = nil
     
     let cardTitle: UILabel = {
         let title = UILabel()
@@ -414,6 +417,27 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return root
     }
     
+    func genNoOneToShowFeedbackContent() -> UIStackView {
+        let label1 = UILabel()
+        label1.text = "Ninguém para colaborar :("
+        label1.setDynamicType(font: .systemFont(style: .headline))
+        label1.textAlignment = .center
+        
+        let label2 = UILabel()
+        label2.text = "Seu espaço ainda não possui pessoas ou projetos interessados em colaboração. Seja o primeiro a exibir publicamente seu perfil ou projeto!"
+        label2.setDynamicType(font: .systemFont(style: .callout))
+        label2.textColor = .secondaryLabel
+        label2.numberOfLines = 0
+        label2.textAlignment = .center
+        
+        let root = UIStackView(arrangedSubviews: [label1,label2])
+        root.axis = .vertical
+        root.alignment = .center
+        root.spacing = 8
+        root.setCustomSpacing(16, after: label2)
+        
+        return root
+    }
     private func setupCardBackFace() {
         contentView.subviews.forEach {$0.removeFromSuperview()}
         
@@ -437,6 +461,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         setupAppearance()
     }
 
+    private func setupCardNothingFeedback() {
+        contentView.subviews.forEach {$0.removeFromSuperview()}
+        cardNoOneToShowFeedbackContent = genNoOneToShowFeedbackContent()
+        
+        contentView.addSubview(cardNoOneToShowFeedbackContent)
+        
+        cardNoOneToShowFeedbackContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 32, trailingConstant: -32)
+        cardNoOneToShowFeedbackContent.centerConstraints(centerYConstant: 0)
+        
+        setupAppearance()
+    }
+    
     private func setupCardFrontalFace(){
         cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
         contentView.subviews.forEach {$0.removeFromSuperview()}

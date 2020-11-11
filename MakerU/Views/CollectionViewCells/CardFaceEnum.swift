@@ -10,6 +10,7 @@ import Foundation
 enum CardFace: Codable, Equatable, Hashable{
     case front
     case back
+    case nothingFeedback
     case likeFeedback(MatchCardType)
     
     init(from decoder: Decoder) throws {
@@ -17,6 +18,7 @@ enum CardFace: Codable, Equatable, Hashable{
         switch value {
             case 0: self = .front
             case 1: self = .back
+            case 2: self = .nothingFeedback
             case 3: self = .likeFeedback(MatchCardType.init(rawValue: value)!)
             default: self = .likeFeedback(MatchCardType.init(rawValue: value)!)
         }
@@ -30,6 +32,8 @@ enum CardFace: Codable, Equatable, Hashable{
                 try container.encode(0)
             case .back:
                 try container.encode(1)
+            case .nothingFeedback:
+                try container.encode(2)
         }
     }
 }

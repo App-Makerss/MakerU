@@ -10,6 +10,7 @@ import UIKit
 enum MatchCardType: Int16, Codable {
     case project = 3
     case user = 4
+    case none = 1000
 }
 class MatchCard: Codable, Hashable {
     var id: String
@@ -58,4 +59,16 @@ class MatchCard: Codable, Hashable {
         secondSessionLabel = user.skills
     }
     
+    init() {
+        id = ""
+        type = .none
+        face = .nothingFeedback
+        title = ""
+        subtitle = ""
+        image = Data()
+        firstSessionTitle = ""
+        firstSessionLabel = ""
+        secondSessionTitle = ""
+        secondSessionLabel = ""
+    }
 }
