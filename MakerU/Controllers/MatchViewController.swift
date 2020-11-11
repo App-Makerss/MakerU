@@ -244,14 +244,6 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         present(navigation, animated: true, completion: nil)
     }
     
-    fileprivate func removeCard(for card: MatchCard) {
-        var currentSnapshot = dataSource.snapshot()
-        currentSnapshot.deleteItems([card])
-        matchSuggestions.removeAll {$0.id == card.id}
-        dataSource.apply(currentSnapshot, animatingDifferences: true)
-        
-    }
-    
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         let startY = cell.frame.origin.y
         let animator = UIViewPropertyAnimator(duration:0.6, curve: .linear) { //1
@@ -264,18 +256,17 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         matchService.verifyMatch(match: match) { isMutual in
             DispatchQueue.main.async {
                 animator.startAnimation() //2
-            }
-            if isMutual {
-                animator.addCompletion { _ in
-                    cell.cardFace = .back
-                    cell.frame.origin.y = startY
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
-                        self.removeCard(for: card)
+            
+                if isMutual {
+                    animator.addCompletion { _ in
+                        cell.cardFace = .back
+                        cell.frame.origin.y = startY
                     }
-                }
-            } else {
-                animator.addCompletion { _ in
-                    self.removeCard(for: card)
+                } else {
+                    animator.addCompletion { _ in
+                        cell.cardFace = .likeFeedback(card.type) // feedbackFace
+                        cell.frame.origin.y = startY
+                    }
                 }
             }
         }

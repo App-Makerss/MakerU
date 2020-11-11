@@ -13,9 +13,10 @@ protocol MatchCardCollectionViewCellDelegate: class {
     func showCardSwiped(_ cell: MatchCardCollectionViewCell)
 }
 
-enum CardFace {
+enum CardFace: Equatable {
     case front
     case back
+    case likeFeedback(MatchCardType)
 }
 
 class MatchCardCollectionViewCell: UICollectionViewCell {
@@ -25,11 +26,14 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
 
     var cardFace: CardFace = .front {
         didSet{
-            if cardFace == .front {
-                setupCardFrontalFace()
-                addOrRemoveButton()
-            }else {
-                setupCardBackFace()
+            switch cardFace {
+                case .back:
+                    setupCardBackFace()
+                case .likeFeedback:
+                    setupCardLikeFeedback()
+                default:
+                    setupCardFrontalFace()
+                    addOrRemoveButton()
             }
         }
     }
@@ -45,7 +49,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     @objc func swipeUp(){
         delegate?.showCardSwiped(self)
     }
-
+    let containerview = UIView()
     let cardImageView: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +61,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         img.clipsToBounds = true
         return img
     }()
+    var cardLikeFeedbackContent: UIStackView! = nil
     
     let cardTitle: UILabel = {
         let title = UILabel()
@@ -373,18 +378,76 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         return root
     }()
     
+    func genLikeFeedbackContent() -> UIStackView {
+        var label2Text: String = ""
+        var btnTitle: String
+        
+        if case .likeFeedback(let value) = cardFace {
+            
+        }
+        switch cardFace{
+            case .likeFeedback(let type):
+                if type == .project {
+                    label2Text = "Você topou colaborar com este projeto. Espere por uma resposta para receber o contato do responsável."
+                    btnTitle = "Rever projeto"
+                }else {
+                    label2Text = "Você topou colaborar com este perfil. Espere por uma resposta para receber o contato."
+                    btnTitle = "Rever perfil"
+                }
+            default:
+                btnTitle = "Deu Ruim"
+        }
+        let label1 = UILabel()
+        label1.text = "Aguardando"
+        label1.setDynamicType(font: .systemFont(style: .headline))
+        label1.textAlignment = .center
+        
+        let label2 = UILabel()
+        label2.text = label2Text
+        label2.setDynamicType(font: .systemFont(style: .callout))
+        label2.textColor = .secondaryLabel
+        label2.numberOfLines = 0
+        label2.textAlignment = .center
+        
+        let btn = UIButton(type: .custom, primaryAction: UIAction(handler: { _ in
+            self.cardFace = .front
+        }))
+        
+        btn.setTitle(btnTitle, for: .normal)
+        btn.setTitleColor(.systemPurple, for: .normal)
+        
+        
+        let root = UIStackView(arrangedSubviews: [label1,label2,btn])
+        root.axis = .vertical
+        root.alignment = .center
+        root.spacing = 8
+        root.setCustomSpacing(16, after: label2)
+        
+        return root
+    }
+    
     private func setupCardBackFace() {
         contentView.subviews.forEach {$0.removeFromSuperview()}
         
         contentView.addSubview(cardBackContent)
         
-        cardBackContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32).isActive = true
-        cardBackContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32).isActive = true
-        cardBackContent.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        cardBackContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 32, trailingConstant: -32)
+        cardBackContent.centerConstraints(centerYConstant: 0)
         
         setupAppearance()
     }
-    let containerview = UIView()
+    
+    private func setupCardLikeFeedback() {
+        contentView.subviews.forEach {$0.removeFromSuperview()}
+        cardLikeFeedbackContent = genLikeFeedbackContent()
+        
+        contentView.addSubview(cardLikeFeedbackContent)
+        
+        cardLikeFeedbackContent.setupConstraintsOnlyTo(to: contentView, leadingConstant: 32, trailingConstant: -32)
+        cardLikeFeedbackContent.centerConstraints(centerYConstant: 0)
+        
+        setupAppearance()
+    }
 
     private func setupCardFrontalFace(){
         cardFrontContent.subviews.forEach {$0.removeFromSuperview()}
@@ -415,7 +478,6 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         
         collaborateButton.addTarget(self, action: #selector(self.collaborateButtonTap), for: .touchUpInside)
     }
-    
     
     @objc func collaborateButtonTap() {
         delegate?.collaborateButtonTapped(self)
