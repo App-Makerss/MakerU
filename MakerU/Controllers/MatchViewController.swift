@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 class MatchViewController: UIViewController, UICollectionViewDelegate {
     //MARK: Config attributes
@@ -186,9 +187,7 @@ extension MatchViewController {
                 cell.cardSubtitle.accessibilityValue = ""
             }
             
-            if let imageData = item.image {
-                cell.cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
-            }
+            cell.cardImageView.image = UIImage(data: item.image) ?? UIImage(systemName: "person.fill")
             cell.cardFirstSessionTitle.text = item.firstSessionTitle
             cell.cardFirstSessionDescription.text = item.firstSessionLabel
             cell.cardSecondSessionTitle.text = item.secondSessionTitle
@@ -259,23 +258,42 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         }
         guard let currentIndex = collectionView.indexPath(for: cell),
               let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
-        let card = matchSuggestions[currentIndex.row]
-        let match = Match(id: nil, part1: loggedUserID, part2: card.id)
-        matchService.verifyMatch(match: match) { isMutual in
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                break // The Apple ID credential is valid.
+            case .revoked, .notFound:
+                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                DispatchQueue.main.async {
+                    //TODO: Segue to LogInViewController
+                    let login = LogInViewController()
+                    let navigation = UINavigationController(rootViewController: login)
+                    self.present(navigation, animated: true, completion: nil)
+                }
+            default:
+                break
+            }
+        
+            let card = self.matchSuggestions[currentIndex.row]
+            let match = Match(id: nil, part1: loggedUserID, part2: card.id)
+            self.matchService.verifyMatch(match: match) { isMutual in
             DispatchQueue.main.async {
                 animator.startAnimation() //2
             }
-            if isMutual {
-                animator.addCompletion { _ in
-                    cell.cardFace = .back
-                    cell.frame.origin.y = startY
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
+                if isMutual {
+                    animator.addCompletion { _ in
+                        cell.cardFace = .back
+                        cell.frame.origin.y = startY
+                        DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
+                            self.removeCard(for: card)
+                        }
+                    }
+                } else {
+                    animator.addCompletion { _ in
                         self.removeCard(for: card)
                     }
-                }
-            } else {
-                animator.addCompletion { _ in
-                    self.removeCard(for: card)
                 }
             }
         }

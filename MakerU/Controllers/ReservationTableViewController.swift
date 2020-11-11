@@ -53,9 +53,11 @@ class ReservationTableViewController: UITableViewController {
         }
     }
     
-    var selectedDate: Date? = Date() {
+    var selectedDate: Date? = nil {
         didSet {
-            datetimeUpdates["date&time"] = selectedDate
+            if oldValue != nil {
+                datetimeUpdates["date&time"] = selectedDate
+            }
         }
     }
     let datePicker: UIDatePicker = {
@@ -117,6 +119,7 @@ class ReservationTableViewController: UITableViewController {
         super.viewDidLoad()
         setupNavigations()
         hideKeyboardWhenTappedAround()
+        datePicker.date = selectedDate ?? Date()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         datePicker.addTarget(self, action: #selector(self.datePickerValueChanged(sender:)), for: .valueChanged)
         projectService.listLoggedUserProjectsSortedByCreationDate(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77") { (projects, error) in
