@@ -39,7 +39,7 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupNavigations()
+        setupNavigations()
         hideKeyboardWhenTappedAround()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
@@ -49,9 +49,6 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
                 self.categories = categories
             }
         }
-
-        navigationController?.navigationBar.backgroundColor = .systemGray6
-        tableView.backgroundColor = .systemGray6
     }
 
     var projectSectionRowCount: Int {
@@ -67,6 +64,23 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
                 self.tableView.reloadSections([0], with: .automatic)
             }
         }
+    }
+
+    func setupNavigations() {
+        navigationItem.title = "Novo Projeto"
+        let cancelBarItem = UIBarButtonItem(title: "Cancelar", style: .plain, target: self, action: #selector(self.cancelBarItemTapped))
+        cancelBarItem.tintColor = UIColor.systemPurple
+
+//        let okButtonItem = UIBarButtonItem(title: "Confirmar", style: .done, target: self, action: #selector(self.okBarItemTapped))
+//        okButtonItem.tintColor = UIColor.systemPurple
+
+
+//        self.navigationItem.rightBarButtonItem = okButtonItem
+        self.navigationItem.leftBarButtonItem = cancelBarItem
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundColor = .systemGray6
+        tableView.backgroundColor = .systemGray6
     }
 
     // MARK: - Table view data source
@@ -94,7 +108,6 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
             cell.textLabel?.text = "Categoria"
             cell.detailTextLabel?.text = selectedCategory?.name
-            print(selectedCategory?.name)
             cell.accessibilityHint = "toque duas vezes para editar"
             cell.detailTextLabel?.textColor = (isInlinePickerVisible) ? .systemPurple : .secondaryLabel
             resultCell = cell
@@ -149,4 +162,13 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         selectedProject?.title = sender.text ?? ""
     }
 
+    @objc func cancelBarItemTapped() {
+        if  selectedProject?.title != "" {
+            presentDiscardChangesActionSheet { _ in
+                self.dismiss(animated: true, completion: nil)
+            }
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }
