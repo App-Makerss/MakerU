@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let placeNavigation = ImageCoverNavigationController(rootViewController: placeViewController)
         let matchViewController = MatchViewController()
         let matchNavigation = UINavigationController(rootViewController: matchViewController)
-        let profileViewController = UIViewController() //TODO: Colocar view Controller certo
+        let profileViewController = ProfileViewController() 
         let profileNavigation = UINavigationController(rootViewController: profileViewController)
         
         let tabs = UITabBarController()
