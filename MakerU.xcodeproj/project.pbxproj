@@ -80,6 +80,10 @@
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
 		56C3328D252BA7B500FA03AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328C252BA7B500FA03AA /* Assets.xcassets */; };
 		56C33290252BA7B500FA03AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56C3328E252BA7B500FA03AA /* LaunchScreen.storyboard */; };
+		56CCCE662559C9DF0005C2DC /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */; };
+		56CCCE692559F4E40005C2DC /* MonthYearPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CCCE682559F4E40005C2DC /* MonthYearPickerView.swift */; };
+		56D8721F25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */; };
+		56D872222555934D00BCB1D1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D872212555934D00BCB1D1 /* Date+Extensions.swift */; };
 		56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */; };
 		56DE940B254E29630054CF6E /* GenericRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940A254E29630054CF6E /* GenericRow.swift */; };
 		56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */; };
@@ -167,6 +171,10 @@
 		56C3328C252BA7B500FA03AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56C3328F252BA7B500FA03AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56C33291252BA7B500FA03AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		56CCCE682559F4E40005C2DC /* MonthYearPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPickerView.swift; sourceTree = "<group>"; };
+		56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCalendarTableViewCell.swift; sourceTree = "<group>"; };
+		56D872212555934D00BCB1D1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		56DE940A254E29630054CF6E /* GenericRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRow.swift; sourceTree = "<group>"; };
 		56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -230,6 +238,7 @@
 				3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */,
 				564954B7253F0C790052125A /* TimePickerTableViewCell.swift */,
 				56A6FC4F254E40B5006198BF /* PickerViewTableViewCell */,
+				56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */,
 			);
 			path = CustomTableViewCells;
 			sourceTree = "<group>";
@@ -302,6 +311,8 @@
 				569C4435254319710099A44A /* UIView+Constraints.swift */,
 				567C51712549B4250003BCCB /* UIViewController+Extensions.swift */,
 				56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */,
+				56D872212555934D00BCB1D1 /* Date+Extensions.swift */,
+				56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -327,6 +338,7 @@
 			children = (
 				56DE940A254E29630054CF6E /* GenericRow.swift */,
 				56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */,
+				56CCCE682559F4E40005C2DC /* MonthYearPickerView.swift */,
 			);
 			path = PickerViewTableViewCell;
 			sourceTree = "<group>";
@@ -492,6 +504,7 @@
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
 				E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */,
 				5626667A2541B5470091C10C /* MakerspaceViewController.swift in Sources */,
+				56CCCE662559C9DF0005C2DC /* UIStackView+Extensions.swift in Sources */,
 				56BA673C255096F0006F8BF8 /* ReservationService.swift in Sources */,
 				566EC894252E74B000346846 /* UserDAO.swift in Sources */,
 				569C4436254319710099A44A /* UIView+Constraints.swift in Sources */,
@@ -530,6 +543,7 @@
 				569714B6254ADD5B00419049 /* OccurrencesTableViewController.swift in Sources */,
 				569714C5254B277F00419049 /* OccurrenceService.swift in Sources */,
 				569103CB254754040094D071 /* Equipment.swift in Sources */,
+				56D872222555934D00BCB1D1 /* Date+Extensions.swift in Sources */,
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
@@ -543,6 +557,7 @@
 				569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */,
 				56BE769E25389C5100F3E07F /* MatchService.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,
+				56CCCE692559F4E40005C2DC /* MonthYearPickerView.swift in Sources */,
 				56A6FC52254E5285006198BF /* PickerViewTableViewController.swift in Sources */,
 				566EB3D52535EF6D0092F096 /* Project.swift in Sources */,
 				566D5106253A2B18002B0CE1 /* MatchCard.swift in Sources */,
@@ -551,6 +566,7 @@
 				56E9C835254C590F000441C4 /* UIDevice+Extensions.swift in Sources */,
 				56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */,
 				566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */,
+				56D8721F25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift in Sources */,
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,
 				5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */,
 				567C514A25499BB30003BCCB /* AboutItemViewController.swift in Sources */,

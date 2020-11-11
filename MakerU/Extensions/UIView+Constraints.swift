@@ -87,4 +87,30 @@ extension UIView {
             }
         }
     }
+    
+    func centerConstraints(centerYConstant: CGFloat? = nil,
+                           centerXConstant: CGFloat? = nil) {
+        if superview == nil {
+            return
+        }
+        if centerYConstant != nil {
+            centerYAnchor.constraint(equalTo: superview!.centerYAnchor, constant: centerYConstant!).isActive = true
+        }
+        if centerXConstant != nil {
+            centerXAnchor.constraint(equalTo: superview!.centerXAnchor, constant: centerXConstant!).isActive = true
+        }
+    }
+    
+    func equalSize(to receivedView: UIView? = nil,
+                   heightMultiplier: CGFloat = 1,
+                   widthMultiplier: CGFloat = 1 ) {
+        if superview == nil && receivedView == nil {
+            return
+        }
+        self.translatesAutoresizingMaskIntoConstraints = false
+        let view = receivedView != nil ? receivedView : superview
+        
+        heightAnchor.constraint(equalTo: view!.heightAnchor, multiplier: heightMultiplier).isActive = true
+        widthAnchor.constraint(equalTo: view!.widthAnchor, multiplier: widthMultiplier).isActive = true
+    }
 }
