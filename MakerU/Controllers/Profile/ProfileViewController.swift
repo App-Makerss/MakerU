@@ -106,6 +106,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             let btn = UIButton()
             btn.setTitle("Adicionar Projeto", for: .normal)
             btn.setTitleColor( .systemPurple, for: .normal)
+            btn.titleLabel?.setDynamicType(font: .systemFont(style: .callout, weight: .medium), textStyle: .callout)
             btn.tintColor = .systemPurple
             btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
             btn.backgroundColor = UIColor.systemPurple.withAlphaComponent(0.15)
