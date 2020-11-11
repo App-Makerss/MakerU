@@ -68,12 +68,15 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         configureDataSource()
         configureSnapshot()
+        
+        loadMatchSuggestions()
 
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadMatchSuggestions()
+        
     }
 
 
@@ -173,8 +176,8 @@ extension MatchViewController {
                 fatalError("Cannot create MatchCardCollectionViewCell")
             }
             cell.delegate = self
-            cell.cardFace = .front
             let item = self.matchSuggestions[indexPath.row]
+            cell.cardFace = item.face
             cell.cardTitle.text = item.title
             cell.cardSubtitle.text = item.subtitle
             
@@ -213,7 +216,7 @@ extension MatchViewController {
     func configureSnapshot() {
         var currentSnapshot = NSDiffableDataSourceSnapshot<String, MatchCard>()
         addSectionAndItens(&currentSnapshot)
-        dataSource.apply(currentSnapshot,animatingDifferences: false)
+        dataSource.apply(currentSnapshot,animatingDifferences: true)
     }
     
     func updateSnapshot() {
@@ -258,14 +261,24 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                 animator.startAnimation() //2
             
                 if isMutual {
-                    animator.addCompletion { _ in
-                        cell.cardFace = .back
-                        cell.frame.origin.y = startY
+                    animator.addCompletion {  [self] _ in
+                        matchSuggestions[currentIndex.row].face = .back
+                        DispatchQueue.main.async {
+                            cell.frame.origin.y = startY
+                            var snapshot = dataSource.snapshot()
+                            snapshot.reloadItems([card])
+                            dataSource.apply(snapshot)
+                        }
                     }
                 } else {
-                    animator.addCompletion { _ in
-                        cell.cardFace = .likeFeedback(card.type) // feedbackFace
-                        cell.frame.origin.y = startY
+                    animator.addCompletion { [self] _ in
+                        matchSuggestions[currentIndex.row].face = .likeFeedback(card.type) // feedbackFace
+                        DispatchQueue.main.async {
+                            cell.frame.origin.y = startY
+                            var snapshot = dataSource.snapshot()
+                            snapshot.reloadItems([card])
+                            dataSource.apply(snapshot, animatingDifferences: false)
+                        }
                     }
                 }
             }

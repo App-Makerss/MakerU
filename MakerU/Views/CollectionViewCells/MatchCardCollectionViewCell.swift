@@ -13,12 +13,6 @@ protocol MatchCardCollectionViewCellDelegate: class {
     func showCardSwiped(_ cell: MatchCardCollectionViewCell)
 }
 
-enum CardFace: Equatable {
-    case front
-    case back
-    case likeFeedback(MatchCardType)
-}
-
 class MatchCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: self)
 
@@ -380,22 +374,16 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     
     func genLikeFeedbackContent() -> UIStackView {
         var label2Text: String = ""
-        var btnTitle: String
+        var btnTitle: String = ""
         
         if case .likeFeedback(let value) = cardFace {
-            
-        }
-        switch cardFace{
-            case .likeFeedback(let type):
-                if type == .project {
-                    label2Text = "Você topou colaborar com este projeto. Espere por uma resposta para receber o contato do responsável."
-                    btnTitle = "Rever projeto"
-                }else {
-                    label2Text = "Você topou colaborar com este perfil. Espere por uma resposta para receber o contato."
-                    btnTitle = "Rever perfil"
-                }
-            default:
-                btnTitle = "Deu Ruim"
+            if value == .project {
+                label2Text = "Você topou colaborar com este projeto. Espere por uma resposta para receber o contato do responsável."
+                btnTitle = "Rever projeto"
+            }else {
+                label2Text = "Você topou colaborar com este perfil. Espere por uma resposta para receber o contato."
+                btnTitle = "Rever perfil"
+            }
         }
         let label1 = UILabel()
         label1.text = "Aguardando"
@@ -410,7 +398,7 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         label2.textAlignment = .center
         
         let btn = UIButton(type: .custom, primaryAction: UIAction(handler: { _ in
-            self.cardFace = .front
+            self.seeMoreButtonTap()
         }))
         
         btn.setTitle(btnTitle, for: .normal)
@@ -538,5 +526,4 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
             
         }
     }
-    
 }

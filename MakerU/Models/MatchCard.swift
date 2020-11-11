@@ -8,12 +8,14 @@
 import UIKit
 
 enum MatchCardType: Int16, Codable {
-    case project
-    case user
+    case project = 3
+    case user = 4
 }
-struct MatchCard: Codable, Hashable {
+class MatchCard: Codable, Hashable {
     var id: String
     var type: MatchCardType
+    
+    var face: CardFace = .front
     
     var title: String
     var subtitle: String
@@ -23,10 +25,12 @@ struct MatchCard: Codable, Hashable {
     var secondSessionTitle: String
     var secondSessionLabel: String
     
-    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     static func == (lhs: MatchCard, rhs: MatchCard) -> Bool {
         return
-            lhs.id == rhs.id
+            lhs.id == rhs.id && lhs.face == rhs.face
     }
     init(from project: Project, with category: Category) {
         id = project.id!

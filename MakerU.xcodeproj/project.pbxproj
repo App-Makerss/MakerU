@@ -73,6 +73,7 @@
 		56BA67362550891A006F8BF8 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA67352550891A006F8BF8 /* Reservation.swift */; };
 		56BA673925508A2F006F8BF8 /* ReservationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA673825508A2F006F8BF8 /* ReservationDAO.swift */; };
 		56BA673C255096F0006F8BF8 /* ReservationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA673B255096EF006F8BF8 /* ReservationService.swift */; };
+		56BCD8AA255C345E0056DD49 /* CardFaceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BCD8A9255C345E0056DD49 /* CardFaceEnum.swift */; };
 		56BE769E25389C5100F3E07F /* MatchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BE769D25389C5100F3E07F /* MatchService.swift */; };
 		56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33283252BA7B300FA03AA /* AppDelegate.swift */; };
 		56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C33285252BA7B300FA03AA /* SceneDelegate.swift */; };
@@ -160,6 +161,7 @@
 		56BA67352550891A006F8BF8 /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		56BA673825508A2F006F8BF8 /* ReservationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDAO.swift; sourceTree = "<group>"; };
 		56BA673B255096EF006F8BF8 /* ReservationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationService.swift; sourceTree = "<group>"; };
+		56BCD8A9255C345E0056DD49 /* CardFaceEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFaceEnum.swift; sourceTree = "<group>"; };
 		56BE769D25389C5100F3E07F /* MatchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchService.swift; sourceTree = "<group>"; };
 		56C33280252BA7B300FA03AA /* MakerU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C33283252BA7B300FA03AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */,
 				569103CF254763900094D071 /* EquipmentCollectionViewCell.swift */,
 				569103DB254782410094D071 /* RoomCollectionViewCell.swift */,
+				56BCD8A9255C345E0056DD49 /* CardFaceEnum.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				56D872222555934D00BCB1D1 /* Date+Extensions.swift in Sources */,
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
+				56BCD8AA255C345E0056DD49 /* CardFaceEnum.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
 				56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,
