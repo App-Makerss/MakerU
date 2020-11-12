@@ -90,6 +90,9 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
         tableView.backgroundColor = .systemGray6
+
+        // button back at secondStep
+        navigationItem.backButtonTitle = "Voltar"
     }
 
     // MARK: - Table view data source
