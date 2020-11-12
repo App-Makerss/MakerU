@@ -22,16 +22,15 @@ struct CardLayoutFactory{
     
     private func setupAppearance(ofView view: UIView, face: CardFace){
         if face == .front {
-            view.superview?.backgroundColor = .clear
             view.superview?.layer.shadowColor = UIColor.black.cgColor
             view.superview?.layer.masksToBounds = false
             view.superview?.layer.shadowRadius = 30 / 2.0
             view.superview?.layer.shadowOpacity = 0.10
             view.superview?.layer.shadowOffset = CGSize(width: 0, height: 3)
         }else{
-            view.superview?.backgroundColor = .systemGray6
             view.superview?.layer.shadowOpacity = 0
         }
+        view.superview?.backgroundColor = .clear
     }
     
     private func makeStandardLayout() -> (title: UILabel, subtitle: UILabel, layout: UIStackView) {
@@ -49,6 +48,7 @@ struct CardLayoutFactory{
         layout.axis = .vertical
         layout.alignment = .center
         layout.spacing = 8
+        layout.backgroundColor = .clear
         
         return (title,subtitle,layout)
     }

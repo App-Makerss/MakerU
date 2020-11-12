@@ -16,10 +16,8 @@ protocol MatchCardCollectionViewCellDelegate: class {
 class MatchCardCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = String(describing: self)
     
-    var delegate: MatchCardCollectionViewCellDelegate?
-    
+    // MARK: - Attributes
     let layoutFactory = CardLayoutFactory()
-    
     var cardFace: CardFace = .front {
         didSet{
             layoutFactory.makeCardLayout(inView: contentView, cardFace: cardFace, seeMoreAction: {
@@ -29,23 +27,18 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
             })
             cardView = viewWithTag(200) as? CardView
             containerview = cardView?.superview
+            setupSwipeUp()
         }
     }
     
-    public func showSwipeUp(){
-        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp))
-        gesture.direction = .up
-        gesture.numberOfTouchesRequired = 1
-        containerview?.isUserInteractionEnabled = true
-        containerview?.addGestureRecognizer(gesture)
-    }
+    // MARK: - delegates
+    var delegate: MatchCardCollectionViewCellDelegate?
     
-    @objc func swipeUp(){
-        delegate?.showCardSwiped(self)
-    }
+    // MARK: - Outlets
     var containerview: UIView? = nil
-    var cardView: CardView? = nil
+    private var cardView: CardView? = nil
 
+    // MARK: - Inner outlet outlets
     var cardImageView: UIImageView?{cardView?.imageView}
     var cardTitle: UILabel?{cardView?.title}
     var cardSubtitle: UILabel?{cardView?.subtitle}
@@ -54,21 +47,17 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
     var cardSecondSessionTitle: UILabel?{cardView?.secondSectionTitle}
     var cardSecondSessionDescription: UILabel?{cardView?.secondSectionDescription}
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
-//        TODO: botoes ver mais podem ser gerenciados por um terceiro obj (falta fazer os botões funcionar)
-        showSwipeUp()
+    
+    // MARK: - setups
+    private func setupSwipeUp(){
+        let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp))
+        gesture.direction = .up
+        gesture.numberOfTouchesRequired = 1
+        containerview?.isUserInteractionEnabled = true
+        containerview?.addGestureRecognizer(gesture)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
+    // MARK: - objc funcs
     @objc func collaborateButtonTap() {
         delegate?.collaborateButtonTapped(self)
     }
@@ -77,6 +66,11 @@ class MatchCardCollectionViewCell: UICollectionViewCell {
         delegate?.seeMoreButtonButtonTapped(self)
     }
     
+    @objc func swipeUp(){
+        delegate?.showCardSwiped(self)
+    }
+    
+    // MARK: - trait change
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         cardView?.layoutSubviews()
 
