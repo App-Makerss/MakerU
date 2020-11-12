@@ -12,4 +12,9 @@ extension UIStackView {
         self.init(arrangedSubviews: arrangedSubviews)
         self.axis = axis
     }
+    
+    convenience init(axis: NSLayoutConstraint.Axis ) {
+        self.init()
+        self.axis = axis
+    }
 }

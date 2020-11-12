@@ -31,5 +31,10 @@ extension UILabel {
         }
         self.font = UIFontMetrics(forTextStyle: style).scaledFont(for: font,maximumPointSize: UIFont.maximumSize(for: style))
     }
-
+    
+    func setDynamicType(textStyle: UIFont.TextStyle, weight: UIFont.Weight? = nil){
+        self.adjustsFontForContentSizeCategory = true
+        let font: UIFont = .systemFont(style: textStyle, weight: weight)
+        self.font = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: font,maximumPointSize: UIFont.maximumSize(for: textStyle))
+    }
 }

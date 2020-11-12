@@ -73,6 +73,8 @@
 		569C4436254319710099A44A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C4435254319710099A44A /* UIView+Constraints.swift */; };
 		56A6FC52254E5285006198BF /* PickerViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */; };
 		56A6FC55254E7185006198BF /* FormFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6FC54254E7185006198BF /* FormFieldTableViewCell.swift */; };
+		56B81960255CDD8800308AB9 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B8195F255CDD8800308AB9 /* CardView.swift */; };
+		56B81963255D617F00308AB9 /* SeeMoreButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B81962255D617F00308AB9 /* SeeMoreButtonManager.swift */; };
 		56BA67362550891A006F8BF8 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA67352550891A006F8BF8 /* Reservation.swift */; };
 		56BA673925508A2F006F8BF8 /* ReservationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA673825508A2F006F8BF8 /* ReservationDAO.swift */; };
 		56BA673C255096F0006F8BF8 /* ReservationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BA673B255096EF006F8BF8 /* ReservationService.swift */; };
@@ -167,6 +169,8 @@
 		569C4435254319710099A44A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewController.swift; sourceTree = "<group>"; };
 		56A6FC54254E7185006198BF /* FormFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormFieldTableViewCell.swift; sourceTree = "<group>"; };
+		56B8195F255CDD8800308AB9 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		56B81962255D617F00308AB9 /* SeeMoreButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreButtonManager.swift; sourceTree = "<group>"; };
 		56BA67352550891A006F8BF8 /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		56BA673825508A2F006F8BF8 /* ReservationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDAO.swift; sourceTree = "<group>"; };
 		56BA673B255096EF006F8BF8 /* ReservationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationService.swift; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 				E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */,
 				56BCD8A9255C345E0056DD49 /* CardFaceEnum.swift */,
 				56630B38255C86BD00E10026 /* CardLayoutFactory.swift */,
+				56B8195F255CDD8800308AB9 /* CardView.swift */,
+				56B81962255D617F00308AB9 /* SeeMoreButtonManager.swift */,
 			);
 			path = MatchCard;
 			sourceTree = "<group>";
@@ -534,7 +540,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56B81963255D617F00308AB9 /* SeeMoreButtonManager.swift in Sources */,
 				56DE940B254E29630054CF6E /* GenericRow.swift in Sources */,
+				56B81960255CDD8800308AB9 /* CardView.swift in Sources */,
 				569103D0254763900094D071 /* EquipmentCollectionViewCell.swift in Sources */,
 				569103D8254780F10094D071 /* TitleSupplementaryView.swift in Sources */,
 				566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */,

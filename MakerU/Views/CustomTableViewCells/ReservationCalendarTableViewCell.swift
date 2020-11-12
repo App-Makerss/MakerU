@@ -161,13 +161,6 @@ class ReservationCalendarTableViewCell: UITableViewCell {
         daysView.addGestureRecognizer(swipeLeft)
         return calendarContent
     }
-    private func genDivider() -> UIView {
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        divider.backgroundColor = .systemGray3
-        return divider
-    }
     
     //MARK: - inits
     private func genItemsView() {

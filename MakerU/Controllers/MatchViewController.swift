@@ -178,22 +178,22 @@ extension MatchViewController {
             cell.delegate = self
             let item = self.matchSuggestions[indexPath.row]
             cell.cardFace = item.face
-            cell.cardTitle.text = item.title
-            cell.cardSubtitle.text = item.subtitle
+            cell.cardTitle?.text = item.title
+            cell.cardSubtitle?.text = item.subtitle
             
             if item.type == .project {
-                cell.cardTitle.accessibilityValue = "título do projeto"
-                cell.cardSubtitle.accessibilityValue = "categoria"
+                cell.cardTitle?.accessibilityValue = "título do projeto"
+                cell.cardSubtitle?.accessibilityValue = "categoria"
             }else {
-                cell.cardTitle.accessibilityValue = "Nome do usuário"
-                cell.cardSubtitle.accessibilityValue = ""
+                cell.cardTitle?.accessibilityValue = "Nome do usuário"
+                cell.cardSubtitle?.accessibilityValue = ""
             }
             
-            cell.cardImageView.image = UIImage(data: item.image) ?? UIImage(systemName: "person.fill")
-            cell.cardFirstSessionTitle.text = item.firstSessionTitle
-            cell.cardFirstSessionDescription.text = item.firstSessionLabel
-            cell.cardSecondSessionTitle.text = item.secondSessionTitle
-            cell.cardSecondSessionDescription.text = item.secondSessionLabel
+            cell.cardImageView?.image = UIImage(data: item.image) ?? UIImage(systemName: "person.fill")
+            cell.cardFirstSessionTitle?.text = item.firstSessionTitle
+            cell.cardFirstSessionDescription?.text = item.firstSessionLabel
+            cell.cardSecondSessionTitle?.text = item.secondSessionTitle
+            cell.cardSecondSessionDescription?.text = item.secondSessionLabel
             
             return cell
         })
