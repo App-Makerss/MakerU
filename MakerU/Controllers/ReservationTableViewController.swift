@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 enum ReservationTableViewControllerPickerViews {
     case category
@@ -18,6 +19,7 @@ class ReservationTableViewController: UITableViewController {
     
     var selectedRoom: Room?
     var selectedEquipment: Equipment?
+    var user: User?
     
     private var reservationKind: ReservationKind {
         selectedRoom != nil ? .room : .equipment
@@ -117,6 +119,7 @@ class ReservationTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        isUserLogged()
         setupNavigations()
         hideKeyboardWhenTappedAround()
         datePicker.date = selectedDate ?? Date()
@@ -148,6 +151,31 @@ class ReservationTableViewController: UITableViewController {
     
     var dateSelectorsRowCount: Int {
         isInlinePickerVisible && pickerKind == .time ? 4 : 3
+    }
+    
+    func isUserLogged(){
+        if let id = UserDefaults.standard.string(forKey: "loggedUserId"){
+        let appUserID = self.user?.id
+            if appUserID != id {
+                //TODO: Create the user object
+                let appleIDProvider = ASAuthorizationAppleIDProvider()
+                appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+                    switch credentialState {
+                    case .authorized:
+                        break // The Apple ID credential is valid.
+                    case .revoked, .notFound:
+                        // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                        DispatchQueue.main.async {
+                            let login = LogInViewController()
+                            let navigation = UINavigationController(rootViewController: login)
+                            self.present(navigation, animated: true, completion: nil)
+                        }
+                    default:
+                        break
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Table view data source

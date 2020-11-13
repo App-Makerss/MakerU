@@ -15,6 +15,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     //MARK: Attributes
     let matchService = MatchService()
     var matchSuggestions: [MatchCard] = []
+    var user: User?
     
     //MARK: Outlets
     var collectionView: UICollectionView!
@@ -229,6 +230,31 @@ extension MatchViewController {
             self.dataSource.apply(currentSnapshot,animatingDifferences: true)
         }
     }
+    
+    func isUserLogged(){
+        if let id = UserDefaults.standard.string(forKey: "loggedUserId"){
+        let appUserID = self.user?.id
+            if appUserID != id {
+                //TODO: Create the user object
+                let appleIDProvider = ASAuthorizationAppleIDProvider()
+                appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+                    switch credentialState {
+                    case .authorized:
+                        break // The Apple ID credential is valid.
+                    case .revoked, .notFound:
+                        // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                        DispatchQueue.main.async {
+                            let login = LogInViewController()
+                            let navigation = UINavigationController(rootViewController: login)
+                            self.present(navigation, animated: true, completion: nil)
+                        }
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }
 }
 
 //MARK: MatchCardCollectionViewCellDelegate
@@ -254,6 +280,9 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     }
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
+        
+        self.isUserLogged()
+        
         let startY = cell.frame.origin.y
         let animator = UIViewPropertyAnimator(duration:0.6, curve: .linear) { //1
             cell.frame.origin.y = -self.view.bounds.height*3
@@ -261,26 +290,11 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         guard let currentIndex = collectionView.indexPath(for: cell),
               let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
         
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
-            switch credentialState {
-            case .authorized:
-                break // The Apple ID credential is valid.
-            case .revoked, .notFound:
-                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-                DispatchQueue.main.async {
-                    //TODO: Segue to LogInViewController
-                    let login = LogInViewController()
-                    let navigation = UINavigationController(rootViewController: login)
-                    self.present(navigation, animated: true, completion: nil)
-                }
-            default:
-                break
-            }
         
-            let card = self.matchSuggestions[currentIndex.row]
-            let match = Match(id: nil, part1: loggedUserID, part2: card.id)
-            self.matchService.verifyMatch(match: match) { isMutual in
+        
+        let card = self.matchSuggestions[currentIndex.row]
+        let match = Match(id: nil, part1: loggedUserID, part2: card.id)
+        self.matchService.verifyMatch(match: match) { isMutual in
             DispatchQueue.main.async {
                 animator.startAnimation() //2
             }
@@ -297,7 +311,6 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                         self.removeCard(for: card)
                     }
                 }
-            }
         }
     }
 }
