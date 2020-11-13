@@ -71,6 +71,7 @@
 		569714C8254B412C00419049 /* MonitorInterest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714C7254B412C00419049 /* MonitorInterest.swift */; };
 		569714CB254B416400419049 /* MonitorInterestDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714CA254B416400419049 /* MonitorInterestDAO.swift */; };
 		569714CE254B49BD00419049 /* MonitorInterestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569714CD254B49BD00419049 /* MonitorInterestService.swift */; };
+		5697BFDA255ED49F001441DE /* AddProjectFifthStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5697BFD9255ED49E001441DE /* AddProjectFifthStepTableViewController.swift */; };
 		569C44292542FA400099A44A /* ScrollableCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C44282542FA3F0099A44A /* ScrollableCover.swift */; };
 		569C4436254319710099A44A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C4435254319710099A44A /* UIView+Constraints.swift */; };
 		56A6FC52254E5285006198BF /* PickerViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */; };
@@ -173,6 +174,7 @@
 		569714C7254B412C00419049 /* MonitorInterest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorInterest.swift; sourceTree = "<group>"; };
 		569714CA254B416400419049 /* MonitorInterestDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorInterestDAO.swift; sourceTree = "<group>"; };
 		569714CD254B49BD00419049 /* MonitorInterestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorInterestService.swift; sourceTree = "<group>"; };
+		5697BFD9255ED49E001441DE /* AddProjectFifthStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFifthStepTableViewController.swift; sourceTree = "<group>"; };
 		569C44282542FA3F0099A44A /* ScrollableCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableCover.swift; sourceTree = "<group>"; };
 		569C4435254319710099A44A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewController.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */,
 				E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */,
 				E2EAAC37255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift */,
+				5697BFD9255ED49E001441DE /* AddProjectFifthStepTableViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				569C4436254319710099A44A /* UIView+Constraints.swift in Sources */,
 				3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */,
 				56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */,
+				5697BFDA255ED49F001441DE /* AddProjectFifthStepTableViewController.swift in Sources */,
 				3EB645712539388F008D437D /* TextViewTableViewCell.swift in Sources */,
 				564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */,
 				56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */,
