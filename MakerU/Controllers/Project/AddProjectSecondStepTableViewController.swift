@@ -19,7 +19,7 @@ class AddProjectSecondStepTableViewController: SingleTextTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        placeholderValue = "Ex: O QUE COLOCAMO AQUI??"
+        placeholderValue = "Ex: O QUE COLOCAMO AQUI??"
     }
 
     override func setupNavigations() {

@@ -4,12 +4,10 @@
 //
 //  Created by Victoria Faria on 12/11/20.
 //
-//  Copyright (c) 2017 Tijme Gommers <tijme@finnwea.com>
 
 import UIKit
 
-/// Extend UITextView and implemented UITextViewDelegate to listen for changes
-extension UITextView: UITextViewDelegate {
+extension UITextView{
 
     /// Resize the placeholder when the UITextView bounds change
     override open var bounds: CGRect {
@@ -42,9 +40,10 @@ extension UITextView: UITextViewDelegate {
     /// When the UITextView did change, show or hide the label based on if the UITextView is empty or not
     ///
     /// - Parameter textView: The UITextView that got updated
-    public func textViewDidChange(_ textView: UITextView) {
+    @objc private func managePlaceholderVisibility(){
         if let placeholderLabel = self.viewWithTag(100) as? UILabel {
             placeholderLabel.isHidden = !self.text.isEmpty
+            self.accessibilityValue = self.text.isEmpty ? placeholder : self.text
         }
     }
 
@@ -52,10 +51,10 @@ extension UITextView: UITextViewDelegate {
     private func resizePlaceholder() {
         if let placeholderLabel = self.viewWithTag(100) as! UILabel? {
             let labelX = self.textContainer.lineFragmentPadding
-            let labelY = self.textContainerInset.top - 2
+            let labelY = self.textContainerInset.top - 6
             let labelWidth = self.frame.width - (labelX * 2)
             let labelHeight = self.frame.height * 0.2
-
+            
             placeholderLabel.frame = CGRect(x: labelX, y: labelY, width: labelWidth, height: labelHeight)
         }
     }
@@ -67,16 +66,16 @@ extension UITextView: UITextViewDelegate {
         placeholderLabel.text = placeholderText
         placeholderLabel.sizeToFit()
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.setDynamicType(textStyle: .callout, weight: .bold)
 
         placeholderLabel.font = self.font
         placeholderLabel.textColor = UIColor.lightGray
         placeholderLabel.tag = 100
-
+        placeholderLabel.isAccessibilityElement = false
         placeholderLabel.isHidden = !self.text.isEmpty
 
         self.addSubview(placeholderLabel)
         self.resizePlaceholder()
-        self.delegate = self
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.managePlaceholderVisibility), name: NSNotification.Name(rawValue: "managePlaceholderVisibility"), object: nil)
     }
 }
