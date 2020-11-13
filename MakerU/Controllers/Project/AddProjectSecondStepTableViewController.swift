@@ -48,6 +48,10 @@ class AddProjectSecondStepTableViewController: SingleTextTableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         "Adicione uma breve descrição para que seja possível conhecer seu projeto em maiores detalhes."
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        300
+    }
 
 
     override func okBarItemTapped() {
