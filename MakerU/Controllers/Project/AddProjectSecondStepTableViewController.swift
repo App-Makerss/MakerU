@@ -9,14 +9,24 @@ import UIKit
 
 class AddProjectSecondStepTableViewController: SingleTextTableViewController {
 
+    var createProject: Project!
+
+    override var stringUpdate: String {
+        didSet {
+            navigationItem.rightBarButtonItem?.isEnabled = stringUpdate != ""
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+//        placeholderValue = "Ex: O QUE COLOCAMO AQUI??"
     }
 
     override func setupNavigations() {
         super.setupNavigations()
         navigationItem.title = "Novo Projeto"
         navigationItem.rightBarButtonItem?.title = "Próximo"
+        navigationItem.rightBarButtonItem?.isEnabled = false
 
         navigationItem.leftBarButtonItems?.removeAll()
         navigationController?.navigationBar.tintColor = .systemPurple
@@ -36,11 +46,13 @@ class AddProjectSecondStepTableViewController: SingleTextTableViewController {
         "Adicione uma breve descrição para que seja possível conhecer seu projeto em maiores detalhes."
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! TextViewTableViewCell
-        cell.textView.placeholder = "Ex: Sou apaixonado por fotografia e trabalho com projetos de cenografia."
 
-        return cell
+    override func okBarItemTapped() {
+        if stringUpdate != "" {
+            createProject.description = stringUpdate
+            let vc = AddProjectThirdStepTableViewController(style: .insetGrouped)
+            vc.createProject = createProject
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
-
 }

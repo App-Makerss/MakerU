@@ -100,6 +100,7 @@
 		E2B7A93A255A371E00FA978A /* AddProjectFirstStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 		E2EAAC32255E01B900961EF1 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */; };
+		E2EAAC35255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -199,6 +200,7 @@
 		E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFirstStepTableViewController.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
+		E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectThirdStepTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,6 +436,7 @@
 			children = (
 				E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */,
 				E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */,
+				E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				56BCD8AA255C345E0056DD49 /* CardFaceEnum.swift in Sources */,
+				E2EAAC35255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
 				56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */,
 				566620B7252F59A2009821E9 /* UserRole.swift in Sources */,

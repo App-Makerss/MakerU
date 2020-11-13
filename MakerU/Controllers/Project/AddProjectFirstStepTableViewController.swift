@@ -9,16 +9,6 @@ import UIKit
 
 class AddProjectFirstStepTableViewController: UITableViewController, PickerViewTableViewCellDelegate {
 
-    var categories: [Category] = [] {
-        didSet {
-            if !categories.isEmpty {
-                createProject.category = categories.first!.id!
-            }
-        }
-    }
-
-    let projectService = ProjectService()
-
     var selectedCategory: Category? {
         didSet {
             DispatchQueue.main.async {
@@ -51,13 +41,6 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
 
         tableView.contentInset = UIEdgeInsets(top: -16, left: 0, bottom: 0, right: 0)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-
-        CategoryDAO().listAll { (categories, error) in
-            print(error?.localizedDescription)
-            if let categories = categories {
-                self.categories = categories
-            }
-        }
     }
 
     var projectSectionRowCount: Int {
@@ -189,6 +172,7 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
     @objc func nextButtonItemTapped() {
         if createProject.title != "" && createProject.category != "" {
             let vc = AddProjectSecondStepTableViewController(style: .insetGrouped)
+            vc.createProject = createProject
             navigationController?.pushViewController(vc, animated: true)
         }
     }
