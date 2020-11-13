@@ -99,6 +99,7 @@
 		E2B3426E255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */; };
 		E2B7A93A255A371E00FA978A /* AddProjectFirstStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */; };
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
+		E2EAAC32255E01B900961EF1 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +198,7 @@
 		E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectSecondStepTableViewController.swift; sourceTree = "<group>"; };
 		E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFirstStepTableViewController.swift; sourceTree = "<group>"; };
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +343,7 @@
 				56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */,
 				56D872212555934D00BCB1D1 /* Date+Extensions.swift */,
 				56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */,
+				E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				566EB3D22535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift in Sources */,
 				56D8721F25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift in Sources */,
 				566D5109253A2DFE002B0CE1 /* Category.swift in Sources */,
+				E2EAAC32255E01B900961EF1 /* UITextView+Extensions.swift in Sources */,
 				5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */,
 				567C514A25499BB30003BCCB /* AboutItemViewController.swift in Sources */,
 				E2B3426E255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift in Sources */,

@@ -101,10 +101,6 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         1
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        UITableViewHeaderFooterView()
-    }
-
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         section == 0 ? "IDENTIFICAÇÃO" : ""
     }
