@@ -28,8 +28,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     var selectedProject: Project? = nil {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
-                self.tableView.reloadSections([1,2,3], with: .automatic)
+                self.tableView.reloadSections([1,2,3], with: .none)
             }
         }
     }
@@ -43,7 +42,9 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     var projects: [Project] = [] {
         didSet {
-            reloadRowOrSection(at: IndexPath(row: 1, section: 1), numberOfRowsValidation: 2)
+            DispatchQueue.main.async {
+                self.tableView.reloadSections([1], with: .automatic)
+            }
         }
     }
     
@@ -115,8 +116,8 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         }
         projectService.listAllProjectsOfLoggedUser(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77") { (projects, error) in
             if let projects = projects, let firstProject =  projects.first {
-                self.projects = projects
                 self.selectedProject = firstProject
+                self.projects = projects
             }
         }
     }

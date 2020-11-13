@@ -142,16 +142,9 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
     }
     
     //MARK: - PickerView
-    func pickerTableViewDidSelected(_ viewController: UIViewController, item: Any) {
-        navigationController?.popViewController(animated: true)
-        if let row = item as? GenericRow<Project> {
-            createProject = row.type
-        }
-    }
-    
     func pickerCellDidSelected(item: Any) {
         if let row = item as? GenericRow<Category> {
-            createProject.category = row.type.id ?? ""
+            createProject.category = row.type.id!
         }
     }
     
