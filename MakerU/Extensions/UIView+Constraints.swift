@@ -93,6 +93,7 @@ extension UIView {
         if superview == nil {
             return
         }
+        translatesAutoresizingMaskIntoConstraints = false
         if centerYConstant != nil {
             centerYAnchor.constraint(equalTo: superview!.centerYAnchor, constant: centerYConstant!).isActive = true
         }
@@ -112,5 +113,30 @@ extension UIView {
         
         heightAnchor.constraint(equalTo: view!.heightAnchor, multiplier: heightMultiplier).isActive = true
         widthAnchor.constraint(equalTo: view!.widthAnchor, multiplier: widthMultiplier).isActive = true
+    }
+    
+    func sizeConstraints(heightConstant: CGFloat? = nil, widthConstant: CGFloat? = nil, equalSidesConstant: CGFloat? = nil) {
+        translatesAutoresizingMaskIntoConstraints = false
+        if let equalSidesConstant = equalSidesConstant{
+            heightAnchor.constraint(equalToConstant: equalSidesConstant).isActive = true
+            widthAnchor.constraint(equalToConstant: equalSidesConstant).isActive = true
+            return
+        }
+        if let heightConstant = heightConstant {
+            heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
+        }
+        if let widthConstant = widthConstant {
+            widthAnchor.constraint(equalToConstant: widthConstant).isActive = true
+        }
+        
+    }
+    
+    
+    func genDivider() -> UIView {
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        divider.backgroundColor = .systemGray3
+        return divider
     }
 }

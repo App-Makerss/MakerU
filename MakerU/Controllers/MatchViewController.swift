@@ -11,7 +11,7 @@ import AuthenticationServices
 class MatchViewController: UIViewController, UICollectionViewDelegate {
     //MARK: Config attributes
     var dataSource: UICollectionViewDiffableDataSource<String,MatchCard>!
-
+    
     //MARK: Attributes
     let matchService = MatchService()
     var matchSuggestions: [MatchCard] = []
@@ -47,7 +47,10 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         CategoryDAO().listAll { (categories, error) in
             if let categories = categories{
                 self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
-                    if let matchCards = matchCards{
+                    if var matchCards = matchCards{
+                        if matchCards.isEmpty{
+                            matchCards.append(MatchCard())
+                        }
                         self.matchSuggestions = matchCards
                         self.updateSnapshot()
                     }
@@ -55,7 +58,6 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
             }
         }
     }
-    
     
     //MARK: View life cycles
     override func viewDidLoad() {
@@ -70,15 +72,15 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         
         configureDataSource()
         configureSnapshot()
-
+        
+        loadMatchSuggestions()
+        
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadMatchSuggestions()
     }
-
-
+    
     //MARK: Setups
     func setupCollecitonView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
@@ -89,9 +91,9 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         collectionView.register(MatchCardCollectionViewCell.self, forCellWithReuseIdentifier: MatchCardCollectionViewCell.reuseIdentifier)
         view.addSubview(collectionView)
         collectionView.delegate = self
-
+        
     }
-
+    
     func setupNavigations() {
         navigationItem.title = "Encontrar pessoas"
         let item = UITabBarItem()
@@ -101,7 +103,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear
-
+        
         let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(self.presentMatchOnboarding))
         infoButton.tintColor = .systemPurple
         self.navigationItem.rightBarButtonItem = infoButton
@@ -175,38 +177,36 @@ extension MatchViewController {
                 fatalError("Cannot create MatchCardCollectionViewCell")
             }
             cell.delegate = self
-            cell.cardFace = .front
             let item = self.matchSuggestions[indexPath.row]
-            cell.cardTitle.text = item.title
-            cell.cardSubtitle.text = item.subtitle
+            cell.cardFace = item.face
+            cell.cardTitle?.text = item.title
+            cell.cardSubtitle?.text = item.subtitle
             
             if item.type == .project {
-                cell.cardTitle.accessibilityValue = "título do projeto"
-                cell.cardSubtitle.accessibilityValue = "categoria"
+                cell.cardTitle?.accessibilityValue = "título do projeto"
+                cell.cardSubtitle?.accessibilityValue = "categoria"
             }else {
-                cell.cardTitle.accessibilityValue = "Nome do usuário"
-                cell.cardSubtitle.accessibilityValue = ""
+                cell.cardTitle?.accessibilityValue = "Nome do usuário"
+                cell.cardSubtitle?.accessibilityValue = ""
             }
             
-            if let imageData = item.image {
-                cell.cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
-            }
-            cell.cardFirstSessionTitle.text = item.firstSessionTitle
-            cell.cardFirstSessionDescription.text = item.firstSessionLabel
-            cell.cardSecondSessionTitle.text = item.secondSessionTitle
-            cell.cardSecondSessionDescription.text = item.secondSessionLabel
-
+            cell.cardImageView?.image = UIImage(data: item.image) ?? UIImage(systemName: "person.fill")
+            cell.cardFirstSessionTitle?.text = item.firstSessionTitle
+            cell.cardFirstSessionDescription?.text = item.firstSessionLabel
+            cell.cardSecondSessionTitle?.text = item.secondSessionTitle
+            cell.cardSecondSessionDescription?.text = item.secondSessionLabel
+            
             return cell
         })
     }
-
-
+    
+    
     func showCardSwiped(_ cell: MatchCardCollectionViewCell) {
         collaborateButtonTapped(cell)
         print("subiuuu galera \(cell.cardTitle)")
     }
-
-
+    
+    
     func addSectionAndItens(_ currentSnapshot: inout NSDiffableDataSourceSnapshot<String, MatchCard>) {
         currentSnapshot.appendSections(["cards"])
         currentSnapshot.appendItems(self.matchSuggestions, toSection: "cards")
@@ -215,7 +215,7 @@ extension MatchViewController {
     func configureSnapshot() {
         var currentSnapshot = NSDiffableDataSourceSnapshot<String, MatchCard>()
         addSectionAndItens(&currentSnapshot)
-        dataSource.apply(currentSnapshot,animatingDifferences: false)
+        dataSource.apply(currentSnapshot,animatingDifferences: true)
     }
     
     func updateSnapshot() {
@@ -271,46 +271,41 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         present(navigation, animated: true, completion: nil)
     }
     
-    fileprivate func removeCard(for card: MatchCard) {
-        var currentSnapshot = dataSource.snapshot()
-        currentSnapshot.deleteItems([card])
-        matchSuggestions.removeAll {$0.id == card.id}
-        dataSource.apply(currentSnapshot, animatingDifferences: true)
-        
+    fileprivate func reloadCard(_ card: MatchCard) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems([card])
+        dataSource.apply(snapshot)
     }
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         
         self.isUserLogged()
         
+        guard let currentIndex = collectionView.indexPath(for: cell),
+              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+        if matchSuggestions[currentIndex.row].type == .none {
+            return
+        }
+        
         let startY = cell.frame.origin.y
         let animator = UIViewPropertyAnimator(duration:0.6, curve: .linear) { //1
             cell.frame.origin.y = -self.view.bounds.height*3
         }
-        guard let currentIndex = collectionView.indexPath(for: cell),
-              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
-        
-        
         
         let card = self.matchSuggestions[currentIndex.row]
         let match = Match(id: nil, part1: loggedUserID, part2: card.id)
         self.matchService.verifyMatch(match: match) { isMutual in
             DispatchQueue.main.async {
-                animator.startAnimation() //2
-            }
-                if isMutual {
-                    animator.addCompletion { _ in
-                        cell.cardFace = .back
+                animator.startAnimation()
+                animator.addCompletion { [self] _ in
+                    let cardFace:CardFace = isMutual ? .back : .likeFeedback(card.type)
+                    matchSuggestions[currentIndex.row].face = cardFace // feedbackFace
+                    DispatchQueue.main.async {
                         cell.frame.origin.y = startY
-                        DispatchQueue.global().asyncAfter(deadline: .now() + 4) {
-                            self.removeCard(for: card)
-                        }
-                    }
-                } else {
-                    animator.addCompletion { _ in
-                        self.removeCard(for: card)
+                        reloadCard(card)
                     }
                 }
+            }
         }
     }
 }
