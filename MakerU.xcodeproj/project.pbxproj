@@ -101,6 +101,8 @@
 		E2C7D04D2537E70C00A1F975 /* MatchCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */; };
 		E2EAAC32255E01B900961EF1 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */; };
 		E2EAAC35255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */; };
+		E2EAAC38255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC37255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift */; };
+		E2EAAC3B255E1EED00961EF1 /* PickPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAAC3A255E1EED00961EF1 /* PickPhotoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -201,6 +203,8 @@
 		E2C7D04C2537E70C00A1F975 /* MatchCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectThirdStepTableViewController.swift; sourceTree = "<group>"; };
+		E2EAAC37255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFourthStepTableViewController.swift; sourceTree = "<group>"; };
+		E2EAAC3A255E1EED00961EF1 /* PickPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickPhotoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,6 +323,7 @@
 				566EB3CD2535E58B0092F096 /* MatchViewController.swift */,
 				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
 				562666792541B5470091C10C /* MakerspaceViewController.swift */,
+				E2EAAC3A255E1EED00961EF1 /* PickPhotoViewController.swift */,
 				5626667F254203B20091C10C /* ImageCoverNavigationController.swift */,
 				569C44282542FA3F0099A44A /* ScrollableCover.swift */,
 				3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */,
@@ -437,6 +442,7 @@
 				E2B7A939255A371E00FA978A /* AddProjectFirstStepTableViewController.swift */,
 				E2B3426D255C3B3800B51657 /* AddProjectSecondStepTableViewController.swift */,
 				E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */,
+				E2EAAC37255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -548,6 +554,7 @@
 			files = (
 				56B81963255D617F00308AB9 /* SeeMoreButtonManager.swift in Sources */,
 				56DE940B254E29630054CF6E /* GenericRow.swift in Sources */,
+				E2EAAC3B255E1EED00961EF1 /* PickPhotoViewController.swift in Sources */,
 				56B81960255CDD8800308AB9 /* CardView.swift in Sources */,
 				569103D0254763900094D071 /* EquipmentCollectionViewCell.swift in Sources */,
 				569103D8254780F10094D071 /* TitleSupplementaryView.swift in Sources */,
@@ -576,6 +583,7 @@
 				56BA67362550891A006F8BF8 /* Reservation.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
+				E2EAAC38255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,
 				567C51722549B4250003BCCB /* UIViewController+Extensions.swift in Sources */,
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,

@@ -32,6 +32,9 @@ class AddProjectSecondStepTableViewController: SingleTextTableViewController {
         navigationController?.navigationBar.tintColor = .systemPurple
 
         tableView.contentInset = UIEdgeInsets(top: -16, left: 0, bottom: 0, right: 0)
+
+        // button back at secondStep
+        navigationItem.backButtonTitle = "Voltar"
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
