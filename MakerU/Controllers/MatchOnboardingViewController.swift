@@ -16,9 +16,6 @@ final class MatchOnboardingViewController: UIViewController {
 
         let scroll = UIScrollView()
         scroll.showsVerticalScrollIndicator = false
-        scroll.showsHorizontalScrollIndicator = true
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.isScrollEnabled = true
         scroll.isDirectionalLockEnabled = true
         scroll.alwaysBounceVertical = true
         view.addSubview(scroll)
@@ -34,13 +31,13 @@ final class MatchOnboardingViewController: UIViewController {
 
     private func genBlock(title: String, description: String, imageName: String ) -> UIStackView {
         let label = UILabel()
-        label.font = UIFont.systemFont(style: .subheadline, weight: .semibold)
+        label.setDynamicType(font: .systemFont(style: .subheadline, weight: .semibold), textStyle: .subheadline)
         label.text = title
         label.numberOfLines = 0
         label.tintColor = .label
 
         let label2 = UILabel()
-        label2.font = UIFont.systemFont(style: .subheadline)
+        label2.setDynamicType(font: .systemFont(style: .subheadline, weight: .regular), textStyle: .subheadline)
         label2.text = description
         label2.numberOfLines = 0
         label2.textColor = .secondaryLabel
@@ -68,19 +65,19 @@ final class MatchOnboardingViewController: UIViewController {
 
     private func genContent() -> UIStackView {
         let title = UILabel()
-        title.font = .systemFont(style: .title1, weight: .bold)
-        title.text = "Funcionalidades \n do Match"
+        title.setDynamicType(font: .systemFont(style: .title1, weight: .bold), textStyle: .title1)
+        title.text = "Funcionalidades do Match"
         title.textAlignment = .center
         title.numberOfLines = 0
         title.tintColor = .label
 
         let subtitle = UILabel()
-        subtitle.font = .systemFont(style: .body)
+        subtitle.setDynamicType(font: .systemFont(style: .body))
         subtitle.text = "Encontre projetos para colaborar ou colaboradores para seu projeto!"
         subtitle.textAlignment = .center
         subtitle.numberOfLines = 0
         subtitle.tintColor = .label
-
+        
         let block1 = genBlock(title: "Explore projetos e perfis", description: "Para visualizar o card seguinte, deslize o dedo para o lado.", imageName: "square.stack")
         let block2 = genBlock(title: "Deslize para cima", description: "Para manifestar interesse em colaborar, deslize o dedo para cima sobre o card.", imageName: "chevron.up.circle")
         let block3 = genBlock(title: "Habilite sua exibição", description: "Para ser visto por outros usuários habilite sua exibição em configurações de exibição.", imageName: "eye")
@@ -98,7 +95,6 @@ final class MatchOnboardingViewController: UIViewController {
         VStack.axis = .vertical
         VStack.spacing = 46
         VStack.alignment = .center
-        VStack.translatesAutoresizingMaskIntoConstraints = false
 
         return VStack
     }
@@ -106,17 +102,10 @@ final class MatchOnboardingViewController: UIViewController {
     // MARK: SetupConstraint
 
     private func setupConstraint(_ scroll: UIScrollView, _ content: UIStackView) {
-        let safeAnchors = view.safeAreaLayoutGuide
-        scroll.topAnchor.constraint(equalTo: safeAnchors.topAnchor, constant: 34).isActive = true
-        scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
-        scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        scroll.setupConstraints(to: view, leadingConstant: 30,topConstant: 34, trailingConstant: -30, topSafeArea: true)
         scroll.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-        content.topAnchor.constraint(equalTo: scroll.topAnchor).isActive = true
-        content.bottomAnchor.constraint(equalTo: scroll.bottomAnchor).isActive = true
-        content.trailingAnchor.constraint(equalTo: scroll.trailingAnchor).isActive = true
-        content.leadingAnchor.constraint(equalTo: scroll.leadingAnchor).isActive = true
+        content.setupConstraints(to: scroll)
         content.centerXAnchor.constraint(equalTo: scroll.centerXAnchor).isActive = true
     }
 

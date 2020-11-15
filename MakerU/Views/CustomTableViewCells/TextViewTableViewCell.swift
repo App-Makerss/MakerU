@@ -1,5 +1,5 @@
 //
-//  SkillsTableViewCell.swift
+//  TextViewTableViewCell.swift
 //  MakerU
 //
 //  Created by Patricia Amado Ferreira de Mello on 15/10/20.
@@ -7,21 +7,23 @@
 
 import UIKit
 
-protocol SkillsTableViewCellDelegate: class{
-    func skillsDidChanged(skills: String)
+protocol TextViewTableViewCellDelegate: class{
+    func textDidChanged(_ text: String)
 }
 
-class SkillsTableViewCell: UITableViewCell {
+class TextViewTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var skillsTextView: UITextView!
+    @IBOutlet weak var textView: UITextView!
     
-    weak var delegate: SkillsTableViewCellDelegate?
+    weak var delegate: TextViewTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        skillsTextView.delegate = self
+        textView.delegate = self
+        textView.alwaysBounceHorizontal = false
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -32,8 +34,8 @@ class SkillsTableViewCell: UITableViewCell {
     
 }
 
-extension SkillsTableViewCell: UITextViewDelegate {
+extension TextViewTableViewCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        delegate?.skillsDidChanged(skills: textView.text)
+        delegate?.textDidChanged(textView.text)
     }
 }

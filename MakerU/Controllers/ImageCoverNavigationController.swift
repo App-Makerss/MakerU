@@ -14,6 +14,7 @@ class ImageCoverNavigationController: UINavigationController {
         appearance.backgroundImage = image
         appearance.backgroundImageContentMode = .scaleAspectFill
         appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        appearance.shadowImage = UIImage()
         
         let backAppearance = UIBarButtonItemAppearance()
         backAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]

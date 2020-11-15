@@ -18,9 +18,8 @@ class MatchCardInfoViewController: UIViewController {
     func config(with matchCard: MatchCard) {
         cardTitle.text = matchCard.title
         cardSubtitle.text = matchCard.subtitle
-        if let imageData = matchCard.image {
-            cardImageView.image = UIImage(data: imageData) ?? UIImage(systemName: "person.fill")
-        }
+        
+        cardImageView.image = UIImage(data: matchCard.image) ?? UIImage(systemName: "person.fill")
         
         cardFirstSessionTitle.text = matchCard.firstSessionTitle
         cardFirstSessionDescription.text = matchCard.firstSessionLabel
@@ -35,7 +34,6 @@ class MatchCardInfoViewController: UIViewController {
         img.translatesAutoresizingMaskIntoConstraints = false
         img.heightAnchor.constraint(equalToConstant: 75).isActive = true
         img.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        img.image = UIImage(systemName: "desktopcomputer")
         img.tintColor = .purple
         img.layer.cornerRadius = 10
         img.clipsToBounds = true
@@ -44,7 +42,7 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.systemFont(style: .title3, weight: .medium)
+        title.setDynamicType(font: .systemFont(style: .title3, weight: .medium), textStyle: .title3 )
         title.text = "Realidade aumentada para inclusão"
         title.numberOfLines = 0
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -55,7 +53,7 @@ class MatchCardInfoViewController: UIViewController {
         let subtitle = UILabel()
         subtitle.textColor = .secondaryLabel
         subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        subtitle.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        subtitle.setDynamicType(font: .preferredFont(forTextStyle: .subheadline))
         subtitle.text = "Tecnologia"
         subtitle.numberOfLines = 0
         return subtitle
@@ -65,7 +63,7 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardFirstSessionTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.setDynamicType(font: .preferredFont(forTextStyle: .headline))
         title.text = "Descrição"
         title.tintColor = .label
         return title
@@ -74,7 +72,7 @@ class MatchCardInfoViewController: UIViewController {
     let cardFirstSessionDescription: UILabel = {
         let description = UILabel()
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.setDynamicType(font: .preferredFont(forTextStyle: .callout))
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 0
         return description
@@ -82,7 +80,7 @@ class MatchCardInfoViewController: UIViewController {
     
     let cardSecondSessionTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont.preferredFont(forTextStyle: .headline)
+        title.setDynamicType(font: .preferredFont(forTextStyle: .headline))
         title.text = "Habilidades Procuradas"
         title.tintColor = .label
         return title
@@ -91,7 +89,7 @@ class MatchCardInfoViewController: UIViewController {
     let cardSecondSessionDescription: UILabel = {
         let description = UILabel()
         description.setContentCompressionResistancePriority(.init(1000), for: .vertical)
-        description.font = UIFont.preferredFont(forTextStyle: .callout)
+        description.setDynamicType(font: .preferredFont(forTextStyle: .callout))
         description.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod a, eget massa tristique. Interdum in eget tellus ut suspendisse viverra lectus placerat. Nibh id pulvinar orci, luctus sit turpis. Iorene"
         description.numberOfLines = 0
         return description
@@ -102,7 +100,6 @@ class MatchCardInfoViewController: UIViewController {
         root.axis = .vertical
         root.spacing = 16
         root.distribution = .fillProportionally
-        root.translatesAutoresizingMaskIntoConstraints = false
         
         return root
     }()
@@ -172,8 +169,6 @@ class MatchCardInfoViewController: UIViewController {
     
     
     private func setupScroll(){
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        modalContent.translatesAutoresizingMaskIntoConstraints = false
         modalContent.addArrangedSubview(firstSessionStack())
         modalContent.addArrangedSubview(secondSessionStack())
         view.addSubview(scrollView)
@@ -208,21 +203,14 @@ class MatchCardInfoViewController: UIViewController {
     func setupContraints(header: UIView) {
         
         header.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        header.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-        header.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        header.topAnchor.constraint(equalTo: view.topAnchor, constant: 29).isActive = true
+        header.setupConstraintsOnlyTo(to: view, leadingConstant: 24, topConstant: 29, trailingConstant: -24)
         header.bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: -16).isActive = true
         
         scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.setupConstraintsOnlyTo(to: view, leadingConstant: 24, trailingConstant: -24,bottomConstant: 0)
         
         modalContent.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        modalContent.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        modalContent.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        modalContent.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        modalContent.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        modalContent.setupConstraints(to: scrollView)
         
     }
 

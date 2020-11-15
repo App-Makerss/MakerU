@@ -31,7 +31,7 @@ struct MatchService {
                 }
             }else {
                 // new match interest
-                let _ = matchDAO.save(entity: match)
+                let _ = matchDAO.save(entity: match, completion: nil)
             }
             completion(false)
         }
@@ -75,9 +75,9 @@ struct MatchService {
         
         let predicate = NSPredicate(format: "makerspace == %@ AND canAppearOnMatch == %@ AND owner != %@", makerspaceReference, NSNumber(1), userReference)
         
-        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
+//        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
         
-        dao.listAll(by: NSCompoundPredicate(andPredicateWithSubpredicates: [predicate,predicate2]), completion: completion)
+        dao.listAll(by: predicate, completion: completion)
         
     }
     
