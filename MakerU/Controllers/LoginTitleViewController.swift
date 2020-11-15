@@ -7,7 +7,9 @@
 
 import Foundation
 import UIKit
+import AuthenticationServices
 
 class LoginTitleViewController: UIViewController {
+    var user: User?
     
 }
