@@ -12,6 +12,7 @@ class SingleTextTableViewController: UITableViewController {
     var destructiveTitle: String? = nil
     
     var stringUpdate: String = ""
+    var placeholderValue: String?
 
     func setupNavigations() {
         navigationItem.title = "Monitoria?"
@@ -51,6 +52,7 @@ class SingleTextTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TextViewTableViewCell
         cell.textView.text = stringUpdate
+        cell.textView.placeholder = placeholderValue
         cell.selectionStyle = .none
         cell.delegate = self
         return cell
@@ -80,16 +82,15 @@ class SingleTextTableViewController: UITableViewController {
     }
     
     @objc func okBarItemTapped() {
-        
+
     }
 }
 
 
 extension SingleTextTableViewController: TextViewTableViewCellDelegate {
-    func textDidChanged(_ text: String) {
+    @objc func textDidChanged(_ text: String) {
         //TODO: Do something with the text
         stringUpdate = text
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "managePlaceholderVisibility"), object: nil)
     }
-    
-    
 }

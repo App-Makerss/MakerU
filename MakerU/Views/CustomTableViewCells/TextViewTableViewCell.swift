@@ -22,6 +22,8 @@ class TextViewTableViewCell: UITableViewCell {
         // Initialization code
         
         textView.delegate = self
+        textView.alwaysBounceHorizontal = false
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

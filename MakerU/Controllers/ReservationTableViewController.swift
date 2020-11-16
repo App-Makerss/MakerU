@@ -16,7 +16,7 @@ enum ReservationTableViewControllerPickerViews {
 }
 
 class ReservationTableViewController: UITableViewController {
-    
+    let activityIndicatorManager = ActivityIndicatorManager()
     var selectedRoom: Room?
     var selectedEquipment: Equipment?
     var user: User?
@@ -37,8 +37,6 @@ class ReservationTableViewController: UITableViewController {
             }
         }
     }
-    var categories: [Category] = []
-    
     var selectedProject: Project? {
         didSet {
             if selectedProject?.id == nil && !categories.isEmpty {
@@ -115,6 +113,8 @@ class ReservationTableViewController: UITableViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
         tableView.backgroundColor = .systemGray6
+        
+        activityIndicatorManager.rightBarButtons = self.navigationItem.rightBarButtonItems!
     }
     
     override func viewDidLoad() {
@@ -131,12 +131,6 @@ class ReservationTableViewController: UITableViewController {
             }
         }
         
-        CategoryDAO().listAll { (categories, error) in
-            print(error?.localizedDescription)
-            if let categories = categories {
-                self.categories = categories
-            }
-        }
     }
     
     var projectSectionRowCount: Int {
@@ -253,7 +247,7 @@ class ReservationTableViewController: UITableViewController {
                             GenericRow<Category>(type: $0, showText: $0.name)
                         })
                         let cell = PickerViewTableViewCell<Category>(withItems:items)
-                        cell.selectedItem = items.first
+                        cell.selectedItem = items.first(where:{ selectedCategory?.id == $0.type.id}) ?? items.first
                         cell.pickerDelegate = self
                         resultCell = cell
                     default:
@@ -344,19 +338,24 @@ class ReservationTableViewController: UITableViewController {
     
     @objc func okBarItemTapped() {
         if  var project = self.selectedProject,
-            let category = selectedCategory?.id,
             let endDate = datetimeUpdates["time"] {
-            if project.category == ""{
-                project.category = category
+            if project.category == "" && selectedCategory?.id == nil{
+                return
             }
+            let itemTitle: String = selectedRoom != nil ? selectedRoom!.title : selectedEquipment!.title
+            project.category = project.category != "" ? project.category : selectedCategory!.id!
+            activityIndicatorManager.startLoading(on: navigationItem)
             let startDate = datetimeUpdates["date&time"] ?? Date()
             reservationService.checkAvailability(reservedItemID, from: startDate, to: endDate) { (isAvailable, error) in
                 if isAvailable == true {
                     self.projectService.saveIfNeeded(project)
                     { [self] project, error, _  in
                         if let project = project{
-                            reservationService.reserve(reservedItemID, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
+                            reservationService.reserve(reservedItemID, itemTitle: itemTitle, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
                                 if reservation != nil {
+                                    DispatchQueue.main.async {
+                                        self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                                    }
                                     self.presentSuccessAlert(title: "Reservado!", message: "Em caso de necessidade, cancele sua reserva acessando o perfil.") { _ in
                                         self.dismiss(animated: true, completion: nil)
                                     }
@@ -367,6 +366,9 @@ class ReservationTableViewController: UITableViewController {
                         }
                     }
                 }else {
+                    DispatchQueue.main.async {
+                        self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                    }
                     self.presentSuccessAlert(title: "Horário indisponível", message: "Escolha outro dia ou horário para confirmar sua reserva.")
                 }
             }

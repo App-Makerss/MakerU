@@ -15,6 +15,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     //MARK: Attributes
     let matchService = MatchService()
     var matchSuggestions: [MatchCard] = []
+    let notificationService = GlobalNotificationService()
     var user: User?
     
     //MARK: Outlets
@@ -76,7 +77,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
         loadMatchSuggestions()
         
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -233,22 +234,22 @@ extension MatchViewController {
     
     func isUserLogged(){
         if let id = UserDefaults.standard.string(forKey: "loggedUserId"){
-        let appUserID = self.user?.id
+            let appUserID = self.user?.id
             if appUserID != id {
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
                 appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
                     switch credentialState {
-                    case .authorized:
-                        break // The Apple ID credential is valid.
-                    case .revoked, .notFound:
-                        // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-                        DispatchQueue.main.async {
-                            let login = LogInViewController()
-                            let navigation = UINavigationController(rootViewController: login)
-                            self.present(navigation, animated: true, completion: nil)
-                        }
-                    default:
-                        break
+                        case .authorized:
+                            break // The Apple ID credential is valid.
+                        case .revoked, .notFound:
+                            // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                            DispatchQueue.main.async {
+                                let login = LogInViewController()
+                                let navigation = UINavigationController(rootViewController: login)
+                                self.present(navigation, animated: true, completion: nil)
+                            }
+                        default:
+                            break
                     }
                 }
                 //TODO: Create the user object
@@ -293,8 +294,9 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         }
         
         let card = self.matchSuggestions[currentIndex.row]
-        let match = Match(id: nil, part1: loggedUserID, part2: card.id)
-        self.matchService.verifyMatch(match: match) { isMutual in
+        let part2 = card.type == .project ? card.project!.owner : card.id
+        let match = Match(id: nil, part1: loggedUserID, part2: part2)
+        self.matchService.verifyMatch(match: match) { [self] isMutual in
             DispatchQueue.main.async {
                 animator.startAnimation()
                 animator.addCompletion { [self] _ in
@@ -306,6 +308,20 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                     }
                 }
             }
+            if isMutual {
+                let matchBase = "Entre em contato com "
+                let match1 = matchBase.appending("\(card.user!.name) pelo e-mail \(card.user!.email).")
+                print(match1)
+                notificationService.firesNotification(for: match.part1, kind: .match, title: "Match!", message: match1)
+                UserDAO().find(byId: match.part1) { (foundUser, error) in
+                    if let foundUser = foundUser {
+                        let match2 = matchBase.appending("\(foundUser.name) pelo e-mail \(foundUser.email).")
+                        notificationService.firesNotification(for: part2, kind: .match, title: "Match!", message: match2)
+                        
+                    }
+                }
+            }
+            
         }
     }
 }

@@ -6,14 +6,24 @@
 //
 
 import UIKit
+import CoreData
+import CloudKit
+import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //simulation of a loggedUser
+//        UserDefaults.standard.setValue("276C6229-1F9E-4B91-8A50-D364A7A3C852",forKey: "loggedUserId") //Mary
+//        UserDefaults.standard.setValue("5BAE4F49-BA12-4F45-9877-2DA2D0982207", forKey: "loggedUserId")
+        
+            UserDefaults.standard.setValue("35AE4BA3-BBC1-43B6-B3F4-23940DA13A51", forKey: "loggedUserId")
+        
         
         CategoryDAO().listAll { (categoryList, error) in
             print(error?.localizedDescription)
@@ -42,6 +52,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-    
 }
 var categories: [Category] = []

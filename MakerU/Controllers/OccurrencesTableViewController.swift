@@ -10,6 +10,7 @@ import UIKit
 
 class OccurrencesTableViewController: SingleTextTableViewController {
     
+    let activityIndicatorManager = ActivityIndicatorManager()
     var selectedEquipment: Equipment?
     
     let occurrenceService = OccurrenceService()
@@ -19,15 +20,18 @@ class OccurrencesTableViewController: SingleTextTableViewController {
         navigationItem.title = "Ocorrência"
         navigationItem.rightBarButtonItem?.title = "Reportar"
         destructiveTitle = "Descartar Ocorrência"
+        activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
     }
         
     override func okBarItemTapped() {
         super.okBarItemTapped()
         if !stringUpdate.isEmpty {
+            activityIndicatorManager.startLoading(on: navigationItem)
             occurrenceService.report(problem: stringUpdate, onEquipment: selectedEquipment?.id) { (saved, error) in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     if saved?.id != nil {
-                        self.presentSuccessAlert(title: "Ocorrência Reportada!", message: "Agradecemos a sua contribuição.") { _ in
+                        activityIndicatorManager.stopLoading(on: navigationItem)
+                        presentSuccessAlert(title: "Ocorrência Reportada!", message: "Agradecemos a sua contribuição.") { _ in
                             self.dismiss(animated: true, completion: nil)
                         }
                     }else {

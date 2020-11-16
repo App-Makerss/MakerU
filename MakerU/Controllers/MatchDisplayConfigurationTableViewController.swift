@@ -9,6 +9,8 @@ import UIKit
 
 class MatchDisplayConfigurationTableViewController: UITableViewController {
 
+    let activityIndicatorManager = ActivityIndicatorManager()
+    
     var isPickerVisible = false {
         didSet {
             DispatchQueue.main.async {
@@ -28,8 +30,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     var selectedProject: Project? = nil {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
-                self.tableView.reloadSections([1,2,3], with: .automatic)
+                self.tableView.reloadSections([1,2,3], with: .none)
             }
         }
     }
@@ -43,7 +44,9 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
 
     var projects: [Project] = [] {
         didSet {
-            reloadRowOrSection(at: IndexPath(row: 1, section: 1), numberOfRowsValidation: 2)
+            DispatchQueue.main.async {
+                self.tableView.reloadSections([1], with: .automatic)
+            }
         }
     }
     
@@ -90,6 +93,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
         tableView.backgroundColor = .systemGray6
+        activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
     }
 
     override func viewDidLoad() {
@@ -115,8 +119,8 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         }
         projectService.listAllProjectsOfLoggedUser(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77") { (projects, error) in
             if let projects = projects, let firstProject =  projects.first {
-                self.projects = projects
                 self.selectedProject = firstProject
+                self.projects = projects
             }
         }
     }
@@ -321,24 +325,43 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     @objc func okBarItemTapped() {
         if !stringUpdates.isEmpty || !boolUpdates.isEmpty {
-            
-            if var selectedProject = selectedProject{
-            selectedProject.skillsInNeed = stringUpdates["projectSkills"] ?? selectedProject.skillsInNeed
-            selectedProject.canAppearOnMatch = boolUpdates["projectCanAppearOnMatch"] ?? selectedProject.canAppearOnMatch
-                ProjectDAO().update(entity: selectedProject)
-            }
-            
+            activityIndicatorManager.startLoading(on: navigationItem)
             if var selectedUser = selectedUser {
                 selectedUser.skills = stringUpdates["userSkills"] ?? selectedUser.skills
                 selectedUser.canAppearOnMatch = boolUpdates["userCanAppearOnMatch"] ?? selectedUser.canAppearOnMatch
-                UserDAO().update(entity: selectedUser)
+                UserDAO().update(entity: selectedUser){ [self]
+                    updatedUser, error in
+                    self.selectedUser = updatedUser
+                    if var selectedProject = selectedProject{
+                        selectedProject.skillsInNeed = stringUpdates["projectSkills"] ?? selectedProject.skillsInNeed
+                        selectedProject.canAppearOnMatch = boolUpdates["projectCanAppearOnMatch"] ?? selectedProject.canAppearOnMatch
+                        ProjectDAO().update(entity: selectedProject) {
+                            updatedProject, error in
+                            self.selectedProject = updatedProject
+                            print(error?.localizedDescription)
+                            DispatchQueue.main.async {
+                                self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                                presentSuccessAlert(title: "Exibição atualizada!", message: "Seus dados foram alterados com sucesso.") { _ in
+                                    self.dismiss(animated: true, completion: nil)
+                                }
+                            }
+                        }
+                    }else {
+                        DispatchQueue.main.async {
+                            self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                            presentSuccessAlert(title: "Exibição atualizada!", message: "Seus dados foram alterados com sucesso.") { _ in
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
             }
             
             
-            self.dismiss(animated: true, completion: nil)
-            
         }else {
-            self.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         
     }

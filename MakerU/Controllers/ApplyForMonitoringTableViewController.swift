@@ -9,21 +9,24 @@ import Foundation
 import UIKit
 
 class ApplyForMonitoringTableViewController: SingleTextTableViewController {
-    
+    let activityIndicatorManager = ActivityIndicatorManager()
     let monitorInterestService = MonitorInterestService()
     
     override func setupNavigations() {
         super.setupNavigations()
         navigationItem.title = "Monitoria"
         navigationItem.rightBarButtonItem?.title = "Aplicar"
+        activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
     }
     
     override func okBarItemTapped() {
         super.okBarItemTapped()
         if !stringUpdate.isEmpty {
+            activityIndicatorManager.startLoading(on: navigationItem)
             monitorInterestService.submitInterest(message: stringUpdate) { (saved, error) in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     if saved?.id != nil {
+                        activityIndicatorManager.stopLoading(on: navigationItem)
                         self.presentSuccessAlert(title: "Mensagem enviada!", message: "Agradecemos seu contato.") { _ in
                             self.dismiss(animated: true, completion: nil)
                         }

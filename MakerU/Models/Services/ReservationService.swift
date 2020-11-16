@@ -11,10 +11,26 @@ import Foundation
 struct ReservationService {
     let dao = ReservationDAO()
     let projectDAO = ProjectDAO()
+    let notificationService = GlobalNotificationService()
     
-    func reserve(_ item: String, ofKind kind: ReservationKind, for project: Project, from startDate: Date, to endDate: Date, completion: @escaping (Reservation?, Error?) -> ()) {
+    func reserve(_ item: String, itemTitle: String, ofKind kind: ReservationKind, for project: Project, from startDate: Date, to endDate: Date, completion: @escaping (Reservation?, Error?) -> ()) {
         let reservation = Reservation(startDate: startDate,  endDate: endDate, reservationKind: kind, reservedItemID: item, byUser: project.owner, project: project.id!, makerspace: project.makerspace)
-        dao.save(entity: reservation, completion: completion)
+        dao.save(entity: reservation) { (reservationSaved, error) in
+            if reservationSaved != nil {
+                
+                var message = "Você reservou "
+                if kind == .equipment {
+                    message.append("o equipamento ")
+                }else {
+                    message.append("a sala ")
+                }
+                message.append("\(itemTitle) para uso em \(startDate.asString()).")
+                
+                
+                notificationService.firesNotification(for: reservationSaved!.byUser, kind: .reservation, title: "Reserva confirmada", message: message)
+                completion(reservationSaved,error)
+            }
+        }
     }
     
     func checkAvailability(_ item: String, from startDate: Date, to endDate: Date, completion: @escaping (Bool?, Error?) -> ()) {
