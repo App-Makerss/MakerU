@@ -9,6 +9,8 @@ import UIKit
 
 class MatchDisplayConfigurationTableViewController: UITableViewController {
 
+    let activityIndicatorManager = ActivityIndicatorManager()
+    
     var isPickerVisible = false {
         didSet {
             DispatchQueue.main.async {
@@ -91,6 +93,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
         tableView.backgroundColor = .systemGray6
+        activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
     }
 
     override func viewDidLoad() {
@@ -322,6 +325,7 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     @objc func okBarItemTapped() {
         if !stringUpdates.isEmpty || !boolUpdates.isEmpty {
+            activityIndicatorManager.startLoading(on: navigationItem)
             if var selectedUser = selectedUser {
                 selectedUser.skills = stringUpdates["userSkills"] ?? selectedUser.skills
                 selectedUser.canAppearOnMatch = boolUpdates["userCanAppearOnMatch"] ?? selectedUser.canAppearOnMatch
@@ -336,12 +340,18 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
                             self.selectedProject = updatedProject
                             print(error?.localizedDescription)
                             DispatchQueue.main.async {
-                                self.dismiss(animated: true, completion: nil)
+                                self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                                presentSuccessAlert(title: "Exibição atualizada!", message: "Seus dados foram alterados com sucesso.") { _ in
+                                    self.dismiss(animated: true, completion: nil)
+                                }
                             }
                         }
                     }else {
                         DispatchQueue.main.async {
-                            self.dismiss(animated: true, completion: nil)
+                            self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                            presentSuccessAlert(title: "Exibição atualizada!", message: "Seus dados foram alterados com sucesso.") { _ in
+                                self.dismiss(animated: true, completion: nil)
+                            }
                         }
                     }
                 }

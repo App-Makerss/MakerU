@@ -341,6 +341,7 @@ class ReservationTableViewController: UITableViewController {
             let endDate = datetimeUpdates["time"] {
             if project.category == "" && selectedCategory?.id == nil{
                 return
+            }
             let itemTitle: String = selectedRoom != nil ? selectedRoom!.title : selectedEquipment!.title
             project.category = project.category != "" ? project.category : selectedCategory!.id!
             activityIndicatorManager.startLoading(on: navigationItem)
