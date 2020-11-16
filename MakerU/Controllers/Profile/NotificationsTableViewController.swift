@@ -10,12 +10,13 @@ import UIKit
 class NotificationsTableViewController: UITableViewController{
     
     var recentNotifications: [GlobalNotification] = []
-    let elderNotifications: [GlobalNotification] = []
+    var elderNotifications: [GlobalNotification] = []
     let globalNotificationService = GlobalNotificationService()
     
-    fileprivate func setupTableView() {
+    private func setupTableView() {
         tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.reuseIdentifier)
-        tableView.estimatedRowHeight = 150
+        tableView.estimatedRowHeight = 100
+        tableView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
     }
     
     override func viewDidLoad() {
@@ -32,9 +33,20 @@ class NotificationsTableViewController: UITableViewController{
                 }
             }
         }
+        globalNotificationService.listElder {
+            elders, error in
+            if error != nil {
+                print(error!.localizedDescription)
+            }else {
+                self.elderNotifications = elders!
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
         
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         recentNotifications.count + elderNotifications.count
     }
@@ -56,6 +68,8 @@ class NotificationsTableViewController: UITableViewController{
         cell.messageLabel.text = item.message
         cell.wasAtLabel.text = item.creationDate.howMuchTimeAsString()
         
+        cell.messageLabel.sizeToFit()
+        
         return cell
     }
     
@@ -71,7 +85,6 @@ class NotificationsTableViewController: UITableViewController{
         view.addSubview(label)
         label.accessibilityTraits = .header
         label.setupConstraints(to: view, leadingConstant: 4, bottomConstant: -8)
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         switch section {
             case recentNotifications.count:
@@ -102,50 +115,5 @@ class NotificationsTableViewController: UITableViewController{
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         nil
-    }
-}
-
-class NotificationTableViewCell: UITableViewCell {
-    static let reuseIdentifier = String(describing: self)
-    
-    var titleLabel: UILabel!
-    var messageLabel: UILabel!
-    var wasAtLabel: UILabel!
-    
-    func commonInit() {
-        selectionStyle = .none
-        titleLabel = UILabel()
-        titleLabel.setDynamicType(textStyle: .headline)
-        
-        messageLabel = UILabel()
-        messageLabel.setDynamicType(textStyle: .callout)
-        messageLabel.numberOfLines = 0
-        messageLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        
-        wasAtLabel = UILabel()
-        wasAtLabel.setDynamicType(textStyle: .subheadline)
-        wasAtLabel.textColor = .secondaryLabel
-        wasAtLabel.textAlignment = .right
-        
-        
-        let header = UIStackView(arrangedSubviews: [titleLabel, wasAtLabel])
-        header.distribution = .fillProportionally
-        let rootGroup = UIStackView(axis: .vertical, arrangedSubviews: [header, messageLabel])
-        rootGroup.distribution = .fillProportionally
-        rootGroup.spacing = 9
-        
-        contentView.addSubview(rootGroup)
-        
-        rootGroup.setupConstraints(to: contentView, leadingConstant: 16, topConstant: 14, trailingConstant: -16, bottomConstant: -14)
-        
-    }
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
     }
 }

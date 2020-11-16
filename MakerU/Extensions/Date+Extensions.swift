@@ -84,13 +84,22 @@ extension Date {
         
         return selfComponents == dateComponents
     }
+    func asString() -> String{
+        let formatter = DateFormatter()
+        
+        formatter.dateStyle = .long
+        formatter.timeStyle = .medium
+        formatter.locale = Locale.init(identifier: "pt-BR")
+        
+        return formatter.string(from: self)
+    }
     
-    func monthAndYearString(withFormat format: String = "MMMM YYYY") -> String{
+    func monthAndYearString() -> String{
         let formatter = DateFormatter()
         
         formatter.timeStyle = .none
         formatter.dateStyle = .short
-        formatter.dateFormat = format
+        formatter.dateFormat = "MMMM YYYY"
         formatter.locale = Locale.init(identifier: "pt-BR")
         
         return formatter.string(from: self).replacingOccurrences(of: " ", with: " de ")

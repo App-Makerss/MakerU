@@ -37,4 +37,5 @@ extension UILabel {
         let font: UIFont = .systemFont(style: textStyle, weight: weight)
         self.font = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: font,maximumPointSize: UIFont.maximumSize(for: textStyle))
     }
+    
 }

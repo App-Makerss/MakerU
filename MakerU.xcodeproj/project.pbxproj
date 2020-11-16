@@ -36,6 +36,7 @@
 		56271A6A25619B3500D6B02A /* GlobalNotificationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A6925619B3500D6B02A /* GlobalNotificationDAO.swift */; };
 		56271A6D25619B8300D6B02A /* GlobalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A6C25619B8300D6B02A /* GlobalNotification.swift */; };
 		56271A722561AB2900D6B02A /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A712561AB2900D6B02A /* NotificationsTableViewController.swift */; };
+		56271A792562C4C400D6B02A /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A782562C4C400D6B02A /* NotificationTableViewCell.swift */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564954B7253F0C790052125A /* TimePickerTableViewCell.swift */; };
@@ -144,6 +145,7 @@
 		56271A6925619B3500D6B02A /* GlobalNotificationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotificationDAO.swift; sourceTree = "<group>"; };
 		56271A6C25619B8300D6B02A /* GlobalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotification.swift; sourceTree = "<group>"; };
 		56271A712561AB2900D6B02A /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		56271A782562C4C400D6B02A /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
 		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -281,6 +283,7 @@
 				564954B7253F0C790052125A /* TimePickerTableViewCell.swift */,
 				56A6FC4F254E40B5006198BF /* PickerViewTableViewCell */,
 				56D8721E25557C9500BCB1D1 /* ReservationCalendarTableViewCell.swift */,
+				56271A782562C4C400D6B02A /* NotificationTableViewCell.swift */,
 			);
 			path = CustomTableViewCells;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				3E773649254B105500D3D290 /* GlobalNotificationService.swift in Sources */,
 				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
 				E2EAAC38255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift in Sources */,
+				56271A792562C4C400D6B02A /* NotificationTableViewCell.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,
 				567C51722549B4250003BCCB /* UIViewController+Extensions.swift in Sources */,
 				566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */,

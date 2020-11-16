@@ -37,8 +37,6 @@ class ReservationTableViewController: UITableViewController {
             }
         }
     }
-    var categories: [Category] = []
-    
     var selectedProject: Project? {
         didSet {
             if selectedProject?.id == nil && !categories.isEmpty {
@@ -131,12 +129,6 @@ class ReservationTableViewController: UITableViewController {
             }
         }
         
-        CategoryDAO().listAll { (categories, error) in
-            print(error?.localizedDescription)
-            if let categories = categories {
-                self.categories = categories
-            }
-        }
     }
     
     var projectSectionRowCount: Int {
@@ -253,7 +245,7 @@ class ReservationTableViewController: UITableViewController {
                             GenericRow<Category>(type: $0, showText: $0.name)
                         })
                         let cell = PickerViewTableViewCell<Category>(withItems:items)
-                        cell.selectedItem = items.first
+                        cell.selectedItem = items.first(where:{ selectedCategory?.id == $0.type.id}) ?? items.first
                         cell.pickerDelegate = self
                         resultCell = cell
                     default:
@@ -346,7 +338,7 @@ class ReservationTableViewController: UITableViewController {
         if  var project = self.selectedProject,
             let category = selectedCategory?.id,
             let endDate = datetimeUpdates["time"] {
-            var itemTitle: String = selectedRoom != nil ? selectedRoom!.title : selectedEquipment!.title
+            let itemTitle: String = selectedRoom != nil ? selectedRoom!.title : selectedEquipment!.title
             if project.category == ""{
                 project.category = category
             }

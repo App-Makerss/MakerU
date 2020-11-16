@@ -63,7 +63,7 @@ struct GlobalNotificationService {
         let today = Date()
         let recentLimit = today.addDays(days: -2)
         let elderLimit = today.addDays(days: -65)
-        let recentPredicate = NSPredicate(format: "user == %@ and creationDate >= %@ and creationdate < %@ ", userRef, elderLimit as NSDate, recentLimit as NSDate)
+        let recentPredicate = NSPredicate(format: "user == %@ and creationDate >= %@ and creationDate < %@ ", userRef, elderLimit as NSDate, recentLimit as NSDate)
         dao.listAll(by: recentPredicate, sortBy: ["creationDate": false]) { (recents, error) in
             completion(recents, error)
         }

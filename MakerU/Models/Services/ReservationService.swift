@@ -24,10 +24,11 @@ struct ReservationService {
                 }else {
                     message.append("a sala: ")
                 }
-                message.append("\(itemTitle) para uso em \(startDate).")
+                message.append("\(itemTitle) para uso em \(startDate.asString()).")
                 
                 
                 notificationService.firesNotification(for: reservationSaved!.byUser, kind: .reservation, title: "Reserva confirmada", message: message)
+                completion(reservationSaved,error)
             }
         }
     }
