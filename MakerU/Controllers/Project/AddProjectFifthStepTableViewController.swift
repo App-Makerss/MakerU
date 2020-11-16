@@ -10,6 +10,7 @@ import UIKit
 class AddProjectFifthStepTableViewController: UITableViewController {
     
     let projectService = ProjectService()
+    let activityIndicatorManager = ActivityIndicatorManager()
     
     var createProject: Project!{
         didSet{
@@ -41,6 +42,8 @@ class AddProjectFifthStepTableViewController: UITableViewController {
         tableView.contentInset = UIEdgeInsets(top: -16, left: 0, bottom: 0, right: 0)
         // button back at secondStep
         navigationItem.backButtonTitle = "Voltar"
+        activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
+        
     }
 
     // MARK: - Table view data source
@@ -94,8 +97,12 @@ class AddProjectFifthStepTableViewController: UITableViewController {
     }
 
     @objc func finishButtonItemTapped() {
+        activityIndicatorManager.startLoading(on: self.navigationItem)
         projectService.saveIfNeeded(createProject) { (projectSaved, error, wasNeeded) in
             if wasNeeded && projectSaved?.id != nil{
+                DispatchQueue.main.async {
+                    self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                }
                 self.presentSuccessAlert(title: "Projeto adicionado!", message: "Agora você pode encontrar pessoas ou projetos semelhantes para colaboração.") { _ in
                     DispatchQueue.main.async {
                         self.dismiss(animated: true, completion: nil)
@@ -113,6 +120,4 @@ extension AddProjectFifthStepTableViewController: PickerViewTableViewCellDelegat
             createProject.status = row.type
         }
     }
-    
-    
 }

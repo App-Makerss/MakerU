@@ -16,7 +16,7 @@ enum ReservationTableViewControllerPickerViews {
 }
 
 class ReservationTableViewController: UITableViewController {
-    
+    let activityIndicatorManager = ActivityIndicatorManager()
     var selectedRoom: Room?
     var selectedEquipment: Equipment?
     var user: User?
@@ -115,6 +115,8 @@ class ReservationTableViewController: UITableViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
         tableView.backgroundColor = .systemGray6
+        
+        activityIndicatorManager.rightBarButtons = self.navigationItem.rightBarButtonItems!
     }
     
     override func viewDidLoad() {
@@ -344,11 +346,12 @@ class ReservationTableViewController: UITableViewController {
     
     @objc func okBarItemTapped() {
         if  var project = self.selectedProject,
-            let category = selectedCategory?.id,
             let endDate = datetimeUpdates["time"] {
-            if project.category == ""{
-                project.category = category
+            if project.category == "" && selectedCategory?.id == nil{
+                return
             }
+            project.category = project.category != "" ? project.category : selectedCategory!.id!
+            activityIndicatorManager.startLoading(on: navigationItem)
             let startDate = datetimeUpdates["date&time"] ?? Date()
             reservationService.checkAvailability(reservedItemID, from: startDate, to: endDate) { (isAvailable, error) in
                 if isAvailable == true {
@@ -357,6 +360,9 @@ class ReservationTableViewController: UITableViewController {
                         if let project = project{
                             reservationService.reserve(reservedItemID, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
                                 if reservation != nil {
+                                    DispatchQueue.main.async {
+                                        self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                                    }
                                     self.presentSuccessAlert(title: "Reservado!", message: "Em caso de necessidade, cancele sua reserva acessando o perfil.") { _ in
                                         self.dismiss(animated: true, completion: nil)
                                     }
@@ -367,6 +373,9 @@ class ReservationTableViewController: UITableViewController {
                         }
                     }
                 }else {
+                    DispatchQueue.main.async {
+                        self.activityIndicatorManager.stopLoading(on: self.navigationItem)
+                    }
                     self.presentSuccessAlert(title: "Horário indisponível", message: "Escolha outro dia ou horário para confirmar sua reserva.")
                 }
             }
