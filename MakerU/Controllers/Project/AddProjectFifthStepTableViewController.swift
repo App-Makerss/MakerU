@@ -97,7 +97,9 @@ class AddProjectFifthStepTableViewController: UITableViewController {
     }
 
     @objc func finishButtonItemTapped() {
-        activityIndicatorManager.startLoading(on: self.navigationItem)
+        DispatchQueue.main.async {
+            self.activityIndicatorManager.startLoading(on: self.navigationItem)
+        }
         projectService.saveIfNeeded(createProject) { (projectSaved, error, wasNeeded) in
             if wasNeeded && projectSaved?.id != nil{
                 DispatchQueue.main.async {
