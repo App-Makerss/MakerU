@@ -11,6 +11,7 @@ import Foundation
 struct MatchService {
     
     private let matchDAO = MatchDAO()
+    private let notificationService = GlobalNotificationService()
     
     
     /// Virifies if a given match is a mutual match or if its a new interest of match and saves it
@@ -21,10 +22,11 @@ struct MatchService {
         matchDAO.search(for: match) { (matchFound, searchesCount, error) in
             if matchFound != nil {
                 if searchesCount == 2 && !matchFound!.isMutual {
+                    //TODO: send push notification
                     //there is a match!
                     var matchUpdated = matchFound!
                     matchUpdated.isMutual = true
-                    matchDAO.update(entity: matchUpdated)
+                    matchDAO.update(entity: matchUpdated, completion: nil)
                     completion(true)
                     return
                 }

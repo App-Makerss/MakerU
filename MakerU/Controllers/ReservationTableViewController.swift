@@ -37,8 +37,6 @@ class ReservationTableViewController: UITableViewController {
             }
         }
     }
-    var categories: [Category] = []
-    
     var selectedProject: Project? {
         didSet {
             if selectedProject?.id == nil && !categories.isEmpty {
@@ -133,12 +131,6 @@ class ReservationTableViewController: UITableViewController {
             }
         }
         
-        CategoryDAO().listAll { (categories, error) in
-            print(error?.localizedDescription)
-            if let categories = categories {
-                self.categories = categories
-            }
-        }
     }
     
     var projectSectionRowCount: Int {
@@ -255,7 +247,7 @@ class ReservationTableViewController: UITableViewController {
                             GenericRow<Category>(type: $0, showText: $0.name)
                         })
                         let cell = PickerViewTableViewCell<Category>(withItems:items)
-                        cell.selectedItem = items.first
+                        cell.selectedItem = items.first(where:{ selectedCategory?.id == $0.type.id}) ?? items.first
                         cell.pickerDelegate = self
                         resultCell = cell
                     default:
@@ -349,7 +341,7 @@ class ReservationTableViewController: UITableViewController {
             let endDate = datetimeUpdates["time"] {
             if project.category == "" && selectedCategory?.id == nil{
                 return
-            }
+            let itemTitle: String = selectedRoom != nil ? selectedRoom!.title : selectedEquipment!.title
             project.category = project.category != "" ? project.category : selectedCategory!.id!
             activityIndicatorManager.startLoading(on: navigationItem)
             let startDate = datetimeUpdates["date&time"] ?? Date()
@@ -358,7 +350,7 @@ class ReservationTableViewController: UITableViewController {
                     self.projectService.saveIfNeeded(project)
                     { [self] project, error, _  in
                         if let project = project{
-                            reservationService.reserve(reservedItemID, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
+                            reservationService.reserve(reservedItemID, itemTitle: itemTitle, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
                                 if reservation != nil {
                                     DispatchQueue.main.async {
                                         self.activityIndicatorManager.stopLoading(on: self.navigationItem)

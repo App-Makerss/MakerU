@@ -17,6 +17,11 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollecitonView()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bell.fill"), primaryAction: UIAction(handler: {_ in
+            let vc = NotificationsTableViewController(style: .insetGrouped)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }))
+        navigationController?.navigationBar.tintColor = .systemPurple
     }
 
     //MARK: Setups
