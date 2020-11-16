@@ -88,7 +88,7 @@ extension Date {
         let formatter = DateFormatter()
         
         formatter.dateStyle = .long
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
         formatter.locale = Locale.init(identifier: "pt-BR")
         
         return formatter.string(from: self)

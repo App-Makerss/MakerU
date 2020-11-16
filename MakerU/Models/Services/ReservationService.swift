@@ -20,9 +20,9 @@ struct ReservationService {
                 
                 var message = "Você reservou "
                 if kind == .equipment {
-                    message.append("o equipamento: ")
+                    message.append("o equipamento ")
                 }else {
-                    message.append("a sala: ")
+                    message.append("a sala ")
                 }
                 message.append("\(itemTitle) para uso em \(startDate.asString()).")
                 
