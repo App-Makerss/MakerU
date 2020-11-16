@@ -15,6 +15,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     //MARK: Attributes
     let matchService = MatchService()
     var matchSuggestions: [MatchCard] = []
+    let notificationService = GlobalNotificationService()
     var user: User?
     
     //MARK: Outlets
@@ -294,7 +295,7 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
         
         let card = self.matchSuggestions[currentIndex.row]
         let match = Match(id: nil, part1: loggedUserID, part2: card.id)
-        self.matchService.verifyMatch(match: match) { isMutual in
+        self.matchService.verifyMatch(match: match) { [self] isMutual in
             DispatchQueue.main.async {
                 animator.startAnimation()
                 animator.addCompletion { [self] _ in
@@ -305,6 +306,11 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
                         reloadCard(card)
                     }
                 }
+            }
+            if !isMutual {
+                notificationService.registerSubscription(for: loggedUserID, of: .match, title: "Novo Match", message: "Você tem um novo match")
+            }else {
+                notificationService.firesNotification(for: match.part2, kind: .match, title: "Match", message: "Voce e \(user?.name) deram match, entre em contato por email: \(user?.email)")
             }
         }
     }

@@ -13,7 +13,7 @@
 		3E502F1725598F4200106CB7 /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E502F1625598F4200106CB7 /* KeychainItem.swift */; };
 		3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */; };
 		3E633ACC252F6DB400EAF3B8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E633ACB252F6DB400EAF3B8 /* Match.swift */; };
-		3E773649254B105500D3D290 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773648254B105500D3D290 /* NotificationService.swift */; };
+		3E773649254B105500D3D290 /* GlobalNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E773648254B105500D3D290 /* GlobalNotificationService.swift */; };
 		3EA8FEC925485E970041B9D5 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA8FEC825485E970041B9D5 /* Notification.swift */; };
 		3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */; };
 		3EB64562253894B0008D437D /* UserProfileTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */; };
@@ -28,12 +28,14 @@
 		3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */; };
 		3EB6457625393F04008D437D /* ShowProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */; };
 		3EC3460E254A5754001C4D06 /* NotificationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC3460D254A5754001C4D06 /* NotificationDAO.swift */; };
-		5626667A2541B5470091C10C /* MakerspaceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562666792541B5470091C10C /* MakerspaceTableViewController.swift */; };
 		56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */; };
 		5618B73A25484AB700DF5675 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618B73925484AB600DF5675 /* Room.swift */; };
 		5618B73D25484AE000DF5675 /* RoomDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5618B73C25484AE000DF5675 /* RoomDAO.swift */; };
 		5626667A2541B5470091C10C /* MakerspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562666792541B5470091C10C /* MakerspaceViewController.swift */; };
 		56266680254203B20091C10C /* ImageCoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5626667F254203B20091C10C /* ImageCoverNavigationController.swift */; };
+		56271A6A25619B3500D6B02A /* GlobalNotificationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A6925619B3500D6B02A /* GlobalNotificationDAO.swift */; };
+		56271A6D25619B8300D6B02A /* GlobalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A6C25619B8300D6B02A /* GlobalNotification.swift */; };
+		56271A722561AB2900D6B02A /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A712561AB2900D6B02A /* NotificationsTableViewController.swift */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564954B7253F0C790052125A /* TimePickerTableViewCell.swift */; };
@@ -119,7 +121,7 @@
 		3E502F1625598F4200106CB7 /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCardInfoViewController.swift; sourceTree = "<group>"; };
 		3E633ACB252F6DB400EAF3B8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
-		3E773648254B105500D3D290 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		3E773648254B105500D3D290 /* GlobalNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotificationService.swift; sourceTree = "<group>"; };
 		3EA8FEC825485E970041B9D5 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		3EB6455F253894B0008D437D /* UserProfileTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTagTableViewCell.swift; sourceTree = "<group>"; };
 		3EB64560253894B0008D437D /* UserProfileTagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileTagTableViewCell.xib; sourceTree = "<group>"; };
@@ -134,12 +136,14 @@
 		3EB6457325393F04008D437D /* ShowProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileTableViewCell.swift; sourceTree = "<group>"; };
 		3EB6457425393F04008D437D /* ShowProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowProfileTableViewCell.xib; sourceTree = "<group>"; };
 		3EC3460D254A5754001C4D06 /* NotificationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDAO.swift; sourceTree = "<group>"; };
-		562666792541B5470091C10C /* MakerspaceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerspaceTableViewController.swift; sourceTree = "<group>"; };
 		56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTextTableViewController.swift; sourceTree = "<group>"; };
 		5618B73925484AB600DF5675 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		5618B73C25484AE000DF5675 /* RoomDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomDAO.swift; sourceTree = "<group>"; };
 		562666792541B5470091C10C /* MakerspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerspaceViewController.swift; sourceTree = "<group>"; };
 		5626667F254203B20091C10C /* ImageCoverNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCoverNavigationController.swift; sourceTree = "<group>"; };
+		56271A6925619B3500D6B02A /* GlobalNotificationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotificationDAO.swift; sourceTree = "<group>"; };
+		56271A6C25619B8300D6B02A /* GlobalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotification.swift; sourceTree = "<group>"; };
+		56271A712561AB2900D6B02A /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
 		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -241,6 +245,7 @@
 				566EC890252E738A00346846 /* User.swift */,
 				566620B6252F59A2009821E9 /* UserRole.swift */,
 				3E633ACB252F6DB400EAF3B8 /* Match.swift */,
+				56271A6C25619B8300D6B02A /* GlobalNotification.swift */,
 				566620C6252F8C00009821E9 /* Makerspace.swift */,
 				566620C9252F9054009821E9 /* Coordinate.swift */,
 				566EB3D42535EF6D0092F096 /* Project.swift */,
@@ -314,6 +319,7 @@
 				569714C1254B257500419049 /* OccurrenceDAO.swift */,
 				569714CA254B416400419049 /* MonitorInterestDAO.swift */,
 				56BA673825508A2F006F8BF8 /* ReservationDAO.swift */,
+				56271A6925619B3500D6B02A /* GlobalNotificationDAO.swift */,
 			);
 			path = DAO;
 			sourceTree = "<group>";
@@ -404,7 +410,7 @@
 			children = (
 				56BE769D25389C5100F3E07F /* MatchService.swift */,
 				E22EB021253E87F400EA7FDD /* ProjectService.swift */,
-				3E773648254B105500D3D290 /* NotificationService.swift */,
+				3E773648254B105500D3D290 /* GlobalNotificationService.swift */,
 				569714C4254B277F00419049 /* OccurrenceService.swift */,
 				569714CD254B49BD00419049 /* MonitorInterestService.swift */,
 				56BA673B255096EF006F8BF8 /* ReservationService.swift */,
@@ -471,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				E273CC9A255B617600A61078 /* ProfileViewController.swift */,
+				56271A712561AB2900D6B02A /* NotificationsTableViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -594,6 +601,7 @@
 				5697BFDA255ED49F001441DE /* AddProjectFifthStepTableViewController.swift in Sources */,
 				3EB645712539388F008D437D /* TextViewTableViewCell.swift in Sources */,
 				564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */,
+				56271A722561AB2900D6B02A /* NotificationsTableViewController.swift in Sources */,
 				56C33284252BA7B300FA03AA /* AppDelegate.swift in Sources */,
 				56C33286252BA7B300FA03AA /* SceneDelegate.swift in Sources */,
 				56BA673925508A2F006F8BF8 /* ReservationDAO.swift in Sources */,
@@ -604,7 +612,7 @@
 				569714CB254B416400419049 /* MonitorInterestDAO.swift in Sources */,
 				56BA67362550891A006F8BF8 /* Reservation.swift in Sources */,
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
-				3E773649254B105500D3D290 /* NotificationService.swift in Sources */,
+				3E773649254B105500D3D290 /* GlobalNotificationService.swift in Sources */,
 				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
 				E2EAAC38255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,
@@ -615,6 +623,7 @@
 				569714C8254B412C00419049 /* MonitorInterest.swift in Sources */,
 				56630B39255C86BD00E10026 /* CardLayoutFactory.swift in Sources */,
 				569103DF25478F040094D071 /* GradientView.swift in Sources */,
+				56271A6A25619B3500D6B02A /* GlobalNotificationDAO.swift in Sources */,
 				E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */,
 				569714BF254B252C00419049 /* Occurrence.swift in Sources */,
 				56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */,
@@ -644,6 +653,7 @@
 				3E277C0E255C2E57001FF7B4 /* LoginBioViewController.swift in Sources */,
 				569714C2254B257500419049 /* OccurrenceDAO.swift in Sources */,
 				56A6FC55254E7185006198BF /* FormFieldTableViewCell.swift in Sources */,
+				56271A6D25619B8300D6B02A /* GlobalNotification.swift in Sources */,
 				569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */,
 				56BE769E25389C5100F3E07F /* MatchService.swift in Sources */,
 				56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */,

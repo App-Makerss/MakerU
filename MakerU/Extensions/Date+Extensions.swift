@@ -9,6 +9,37 @@ import Foundation
 
 extension Date {
     
+    func howMuchTimeAsString() -> String {
+        let now = Date()
+        let components = Calendar.current.dateComponents([.minute,.hour,.day,.month], from: self, to: now)
+        var resultString = ""
+        if components.month != 0 {
+            resultString = "Há \(components.month!) mês"
+            if components.month! > 1 {
+                resultString = resultString.replacingOccurrences(of: "ê", with: "e")
+                resultString.append("es")
+            }
+        }else if components.day != 0{
+            resultString = "Há \(components.day!) dia"
+            if components.day! > 1 {
+                resultString.append("s")
+            }
+        }else if components.hour != 0 {
+            resultString = "Há \(components.hour!) hora"
+            if components.hour! > 1 {
+                resultString.append("s")
+            }
+        }else if components.minute != 0 {
+            resultString = "Há \(components.minute!) minuto"
+            if components.minute! > 1 {
+                resultString.append("s")
+            }
+        }else {
+            resultString = "Agora"
+        }
+        return resultString
+    }
+    
     func addDays(days: Int) -> Date {
         var calendar = Calendar.current
         calendar.locale = Locale.init(identifier: "pt-BR")
@@ -54,12 +85,12 @@ extension Date {
         return selfComponents == dateComponents
     }
     
-    func monthAndYearString() -> String{
+    func monthAndYearString(withFormat format: String = "MMMM YYYY") -> String{
         let formatter = DateFormatter()
         
         formatter.timeStyle = .none
         formatter.dateStyle = .short
-        formatter.dateFormat = "MMMM YYYY"
+        formatter.dateFormat = format
         formatter.locale = Locale.init(identifier: "pt-BR")
         
         return formatter.string(from: self).replacingOccurrences(of: " ", with: " de ")

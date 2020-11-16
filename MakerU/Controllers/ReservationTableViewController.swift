@@ -346,6 +346,7 @@ class ReservationTableViewController: UITableViewController {
         if  var project = self.selectedProject,
             let category = selectedCategory?.id,
             let endDate = datetimeUpdates["time"] {
+            var itemTitle: String = selectedRoom != nil ? selectedRoom!.title : selectedEquipment!.title
             if project.category == ""{
                 project.category = category
             }
@@ -355,7 +356,7 @@ class ReservationTableViewController: UITableViewController {
                     self.projectService.saveIfNeeded(project)
                     { [self] project, error, _  in
                         if let project = project{
-                            reservationService.reserve(reservedItemID, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
+                            reservationService.reserve(reservedItemID, itemTitle: itemTitle, ofKind: reservationKind, for: project, from: startDate, to: endDate) { reservation, error in
                                 if reservation != nil {
                                     self.presentSuccessAlert(title: "Reservado!", message: "Em caso de necessidade, cancele sua reserva acessando o perfil.") { _ in
                                         self.dismiss(animated: true, completion: nil)
