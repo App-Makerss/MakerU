@@ -12,9 +12,6 @@ import UIKit
 class LogInViewController: UIViewController{
     
     //MARK: View Code Set up
-    
-    
-    
     private let loginProviderStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -215,17 +212,18 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
             else { return }
 
         DispatchQueue.main.async {
-//            viewController.userIdentifierLabel.text = userIdentifier
-//            if let givenName = fullName?.givenName {
-//                viewController.givenNameLabel.text = givenName
-//            }
-//            if let familyName = fullName?.familyName {
-//                viewController.familyNameLabel.text = familyName
-//            }
-//            if let email = email {
-//                viewController.emailLabel.text = email
-//            }
-//            self.dismiss(animated: true, completion: nil)
+            //Removi o .text de todos os campos
+            viewController.userIdentifierLabel = userIdentifier
+            if let givenName = fullName?.givenName {
+                viewController.givenNameLabel = givenName
+            }
+            if let familyName = fullName?.familyName {
+                viewController.familyNameLabel = familyName
+            }
+            if let email = email {
+                viewController.emailLabel = email
+            }
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
