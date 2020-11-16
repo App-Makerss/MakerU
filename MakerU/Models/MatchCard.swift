@@ -25,6 +25,8 @@ class MatchCard: Codable, Hashable {
     var firstSessionLabel: String
     var secondSessionTitle: String
     var secondSessionLabel: String
+    var user: User?
+    var project: Project?
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -44,6 +46,7 @@ class MatchCard: Codable, Hashable {
         firstSessionLabel = project.description
         secondSessionTitle = "Habilidades Procuradas"
         secondSessionLabel = project.skillsInNeed
+        self.project = project
     }
     
     init(from user: User) {
@@ -57,6 +60,7 @@ class MatchCard: Codable, Hashable {
         firstSessionLabel = user.description
         secondSessionTitle = "Habilidades Pessoais"
         secondSessionLabel = user.skills
+        self.user = user
     }
     
     init() {

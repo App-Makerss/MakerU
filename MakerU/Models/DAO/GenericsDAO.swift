@@ -10,7 +10,7 @@ import CloudKit
 
 protocol GenericsDAO where Self: CloudKitEncodable {
     func delete(id: String)
-    func update(entity: ManagedEntity)
+    func update(entity: ManagedEntity, completion: ((ManagedEntity?,Error?) -> ())?)
     func save(entity: ManagedEntity, completion:  ((ManagedEntity?,Error?) -> ())?)
     func find(byId id: String, completion:  @escaping (ManagedEntity?,Error?) -> ())
     func listAll(by predicate: NSPredicate, sortBy sortDescriptors: [String: Bool], completion: @escaping ([ManagedEntity]?, Error?) -> ())
@@ -44,7 +44,7 @@ extension GenericsDAO {
     
     /// Updates a ManagedEntity(informed by the DAO implementing it) on the cloudKit
     /// - Parameter entity: entity with values to be used to update it on cloudkit
-    func update(entity: ManagedEntity) {
+    func update(entity: ManagedEntity, completion: ((ManagedEntity?,Error?) -> ())?) {
         let recID = CKRecord.ID(recordName: entity.id!)
         //fetches on database using the id
         DatabaseAccess.shared.publicDB.fetch(withRecordID: recID) { (foundRec, err) in
@@ -58,10 +58,12 @@ extension GenericsDAO {
                 //saves the update to cloudkit
                 DatabaseAccess.shared.publicDB.save(updatedRec) { (recSaved, err) in
                     if err != nil {
-                        print(err!.localizedDescription)
-                    }
-                    if recSaved != nil {
-                        print("saved")
+                        completion?(nil, err)
+                    }else if
+                        let record = recSaved,
+                        let entity = decode(fromRecord: record) {
+                        print("updated")
+                        completion?(entity, err)
                     }
                 }
             }
