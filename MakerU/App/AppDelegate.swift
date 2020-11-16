@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UserDefaults.standard.setValue("2A7BB027-588D-4F94-B383-AAFB2A6D2D4D",forKey: "loggedUserId") //Adam
 //        UserDefaults.standard.setValue("276C6229-1F9E-4B91-8A50-D364A7A3C852", forKey: "loggedUserId") // Mary
             UserDefaults.standard.setValue("3AFCA70E-7A52-4B67-B7D7-113B1B8BCF98", forKey: "loggedUserId")
+        UserDefaults.standard.setValue("8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", forKey: "selectedMakerspace")
         return true
     }
 

@@ -208,23 +208,23 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
     
     private func showResultViewController(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
         print("Teria um segue para a proxima view")
-        guard let viewController = self.presentingViewController as? LoginTitleViewController
-            else { return }
+        let viewController = LoginTitleViewController(style: .insetGrouped)
 
-        DispatchQueue.main.async {
-            //Removi o .text de todos os campos
-            viewController.userIdentifierLabel = userIdentifier
-            if let givenName = fullName?.givenName {
-                viewController.givenNameLabel = givenName
-            }
-            if let familyName = fullName?.familyName {
-                viewController.familyNameLabel = familyName
-            }
-            if let email = email {
-                viewController.emailLabel = email
-            }
-            self.dismiss(animated: true, completion: nil)
+        //Removi o .text de todos os campos
+        guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+        let user = User(name: fullName!.givenName!, email: email!, password: "", projects: [], makerspaces: [makerspace])
+        viewController.user = user
+        viewController.userIdentifierLabel = userIdentifier
+        if let givenName = fullName?.givenName {
+            viewController.givenNameLabel = givenName
         }
+        if let familyName = fullName?.familyName {
+            viewController.familyNameLabel = familyName
+        }
+        if let email = email {
+            viewController.emailLabel = email
+        }
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func showPasswordCredentialAlert(username: String, password: String) {

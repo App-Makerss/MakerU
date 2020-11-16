@@ -13,7 +13,7 @@ class LoginTitleViewController: UITableViewController {
     var user: User?
     
     var userIdentifierLabel: String?
-    var givenNameLabel: String?
+    var givenNameLabel: String? 
     var familyNameLabel: String?
     var emailLabel: String?
     var userOcupation: String?
@@ -49,6 +49,9 @@ class LoginTitleViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        2
+    }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         UITableViewHeaderFooterView()
@@ -65,17 +68,13 @@ class LoginTitleViewController: UITableViewController {
         var resultCell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
         switch indexPath.row {
-        case 1:
+        case 0:
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
             cell.textLabel?.text = "Nome"
             cell.detailTextLabel?.text = givenNameLabel
             cell.accessibilityHint = "toque duas vezes para editar"
-            cell.detailTextLabel?.textColor = .systemPurple
-            resultCell = cell
-        case 2:
-            let cell = FormFieldTableViewCell()
-            cell.label.text = "Título"
-            cell.detailTextLabel?.text = userOcupation
+            cell.detailTextLabel?.textColor = .secondaryLabel
+            cell.selectionStyle = .none
             resultCell = cell
         default:
             let cell = FormFieldTableViewCell()
@@ -86,14 +85,7 @@ class LoginTitleViewController: UITableViewController {
         return resultCell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if  indexPath.section == 1 && indexPath.row == 2 {
-            return 0
-        }
         return UITableView.automaticDimension
     }
 
