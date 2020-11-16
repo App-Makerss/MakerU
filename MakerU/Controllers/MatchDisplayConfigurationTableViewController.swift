@@ -322,24 +322,36 @@ class MatchDisplayConfigurationTableViewController: UITableViewController {
     
     @objc func okBarItemTapped() {
         if !stringUpdates.isEmpty || !boolUpdates.isEmpty {
-            
-            if var selectedProject = selectedProject{
-            selectedProject.skillsInNeed = stringUpdates["projectSkills"] ?? selectedProject.skillsInNeed
-            selectedProject.canAppearOnMatch = boolUpdates["projectCanAppearOnMatch"] ?? selectedProject.canAppearOnMatch
-                ProjectDAO().update(entity: selectedProject)
-            }
-            
             if var selectedUser = selectedUser {
                 selectedUser.skills = stringUpdates["userSkills"] ?? selectedUser.skills
                 selectedUser.canAppearOnMatch = boolUpdates["userCanAppearOnMatch"] ?? selectedUser.canAppearOnMatch
-                UserDAO().update(entity: selectedUser)
+                UserDAO().update(entity: selectedUser){ [self]
+                    updatedUser, error in
+                    self.selectedUser = updatedUser
+                    if var selectedProject = selectedProject{
+                        selectedProject.skillsInNeed = stringUpdates["projectSkills"] ?? selectedProject.skillsInNeed
+                        selectedProject.canAppearOnMatch = boolUpdates["projectCanAppearOnMatch"] ?? selectedProject.canAppearOnMatch
+                        ProjectDAO().update(entity: selectedProject) {
+                            updatedProject, error in
+                            self.selectedProject = updatedProject
+                            print(error?.localizedDescription)
+                            DispatchQueue.main.async {
+                                self.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                    }else {
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                }
             }
             
             
-            self.dismiss(animated: true, completion: nil)
-            
         }else {
-            self.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         
     }
