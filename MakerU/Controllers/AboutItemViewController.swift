@@ -18,6 +18,7 @@ class AboutItemViewController: UIViewController {
     var reservationCell: ReservationCalendarTableViewCell!
     
     // MARK: Attributes
+    var loggedUserVerifier:LoggedUserVerifier!
     var selectedRoom: Room? {
         didSet {
             navigationItem.title = selectedRoom?.title
@@ -67,6 +68,7 @@ class AboutItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        loggedUserVerifier = LoggedUserVerifier(verifierVC: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -215,15 +217,19 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 2 && indexPath.row == 0 {
+            if !loggedUserVerifier.verifyLoggedUser() {
+                return
+            }
             let vc = OccurrencesTableViewController(style: .insetGrouped)
             vc.selectedEquipment = self.selectedEquip
             present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
         }
     }
     
-    
     @objc func reservationButtonTap() {
-        //opens reservation flow
+        if !loggedUserVerifier.verifyLoggedUser() {
+            return 
+        }
         print("it will open reservation flow")
         let vc = ReservationTableViewController(style: .insetGrouped)
         vc.selectedEquipment = selectedEquip

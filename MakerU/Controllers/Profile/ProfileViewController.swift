@@ -11,16 +11,32 @@ class ProfileViewController: UIViewController {
 
     // MARK: Outlet
     var collectionView: UICollectionView!
-    var user: User? {
+    var user: User? = nil {
         didSet {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
     }
-
     let horizontalInset: CGFloat = 29
-
+    
+    // MARK: Attributes
+    var loggedUserVerifier: LoggedUserVerifier!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !loggedUserVerifier.verifyLoggedUser() {
+            return
+        }
+        if user == nil {
+            guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+            UserDAO().find(byId: loggedUserID) { (user, error) in
+                if let user = user {
+                    self.user = user
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollecitonView()
@@ -30,12 +46,9 @@ class ProfileViewController: UIViewController {
         }))
         navigationController?.navigationBar.tintColor = .systemPurple
         view.backgroundColor = .systemGroupedBackground
-
-        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
-        UserDAO().find(byId: loggedUserID) { (user, error) in
-            if let user = user {
-                self.user = user
-            }
+        loggedUserVerifier = LoggedUserVerifier(verifierVC: self)
+        if !loggedUserVerifier.verifyLoggedUser() {
+            return
         }
     }
 
@@ -261,6 +274,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         if indexPath.section == 2 && indexPath.row == 0 {
+            if !loggedUserVerifier.verifyLoggedUser() {
+                return
+            }
             let vc = AddProjectFirstStepTableViewController(style: .insetGrouped)
             present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
         }

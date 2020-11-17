@@ -18,6 +18,7 @@ class MakerspaceViewController: UIViewController {
     var collectionView: UICollectionView!
 
     // MARK: Attributes
+    var loggedUserVerifier:LoggedUserVerifier!
     var equipments: [Equipment] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -51,6 +52,7 @@ class MakerspaceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollecitonView()
+        loggedUserVerifier = LoggedUserVerifier(verifierVC: self)
 
         self.view.backgroundColor = .systemBackground
         let makerspaceRef = EquipmentDAO().generateRecordReference(for: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", action: .deleteSelf)
@@ -195,6 +197,9 @@ extension MakerspaceViewController: UICollectionViewDelegate, UICollectionViewDa
             vc.selectedRoom = item
             break
         case 2:
+            if !loggedUserVerifier.verifyLoggedUser(){
+                return
+            }
             if indexPath.row == 0 {
                 let vc = ApplyForMonitoringTableViewController(style: .insetGrouped)
                 present(UINavigationController(rootViewController: vc), animated: true, completion: nil)

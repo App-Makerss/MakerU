@@ -44,6 +44,7 @@ class NotificationsTableViewController: UITableViewController{
                 }
             }
         }
+        navigationItem.title = "Notificações"
         
     }
     
