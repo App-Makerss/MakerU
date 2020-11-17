@@ -104,7 +104,8 @@ class LoginTitleViewController: UITableViewController {
     @objc func nextButtonItemTapped() {
         if self.userOcupation != "" {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
-            let vc = LoginBioViewController()
+            let vc = LoginBioViewController(style: .insetGrouped)
+            vc.user = self.user
             navigationController?.pushViewController(vc, animated: true)
         }
     }

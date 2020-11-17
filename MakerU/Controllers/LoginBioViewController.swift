@@ -10,7 +10,7 @@ import UIKit
 
 class LoginBioViewController: SingleTextTableViewController {
     
-    var createUser: User!
+    var user: User!
 
     override var stringUpdate: String {
         didSet {
@@ -50,13 +50,14 @@ class LoginBioViewController: SingleTextTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        300
+        200
     }
 
 
     override func okBarItemTapped() {
         if stringUpdate != "" {
-            UserDAO().save(entity: createUser) { (savedUser, error) in
+            self.user.description = stringUpdate
+            UserDAO().save(entity: user) { (savedUser, error) in
                 if let savedUser = savedUser {
                     UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
                     
