@@ -5,11 +5,11 @@
 //  Created by Patricia Amado Ferreira de Mello on 11/11/20.
 //
 
-import Foundation
 import UIKit
 import AuthenticationServices
 
 class LoginTitleViewController: UITableViewController {
+    
     var user: User?
     
     var userIdentifierLabel: String?
@@ -18,10 +18,11 @@ class LoginTitleViewController: UITableViewController {
     var emailLabel: String?
     var userOcupation: String?
     
+    
     //MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigations()
+        self.setupNavigations()
         hideKeyboardWhenTappedAround()
 
         tableView.contentInset = UIEdgeInsets(top: -16, left: 0, bottom: 0, right: 0)
@@ -29,20 +30,29 @@ class LoginTitleViewController: UITableViewController {
     }
 
     func setupNavigations() {
-        navigationItem.title = "Cadastre-se"
-        navigationItem.backButtonTitle = "Voltar"
-        navigationItem.backBarButtonItem?.tintColor = UIColor.systemPurple
+        self.navigationItem.title = "Cadastre-se"
+        
+        self.navigationItem.leftBarButtonItems?.removeAll()
+        
+        self.navigationItem.backBarButtonItem?.tintColor = UIColor.systemPurple
+        self.navigationController?.navigationBar.tintColor = .systemPurple
+
+        tableView.contentInset = UIEdgeInsets(top: -16, left: 0, bottom: 0, right: 0)
+
 
         let nextButtonItem = UIBarButtonItem(title: "Próximo", style: .done, target: self, action: #selector(self.nextButtonItemTapped))
         nextButtonItem.tintColor = UIColor.systemPurple
         nextButtonItem.isEnabled = false
 
         self.navigationItem.rightBarButtonItem = nextButtonItem
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.navigationItem.backButtonTitle = "Voltar"
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemGray6
         tableView.backgroundColor = .systemGray6
     }
+    
 
     // MARK: - Table view data source
 
@@ -80,6 +90,7 @@ class LoginTitleViewController: UITableViewController {
             let cell = FormFieldTableViewCell()
             cell.label.text = "Título"
             cell.detailTextLabel?.text = userOcupation
+            cell.value.addTarget(self, action: #selector(self.newTitleValueChanged(sender:)), for: .editingDidEnd)
             resultCell = cell
         }
         return resultCell
@@ -91,9 +102,18 @@ class LoginTitleViewController: UITableViewController {
 
 
     @objc func nextButtonItemTapped() {
-        if userOcupation != "" {
+        if self.userOcupation != "" {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             let vc = LoginBioViewController()
             navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @objc func newTitleValueChanged(sender: UITextField) {
+        self.user?.ocupation = sender.text ?? ""
+        let userOcupationText = sender.text
+        if userOcupationText != "" {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
     
