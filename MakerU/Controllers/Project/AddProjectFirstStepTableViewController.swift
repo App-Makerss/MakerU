@@ -21,6 +21,7 @@ class AddProjectFirstStepTableViewController: UITableViewController, PickerViewT
         didSet {
             if createProject.id == nil && !categories.isEmpty {
                 selectedCategory = categories.first(where: {$0.id == createProject.category}) ?? categories.first
+                createProject.category = selectedCategory?.id ?? ""
             }
             DispatchQueue.main.async { [self] in
                 if createProject.title != "" && createProject.category != "" {
