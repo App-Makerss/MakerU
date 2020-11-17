@@ -48,7 +48,6 @@ class LogInViewController: UIViewController{
     
     let cardSubtitle: UILabel = {
         let subtitle = UILabel()
-//        subtitle.textColor = .black
         subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         subtitle.setDynamicType(font: .systemFont(style: .callout), textStyle: .callout)
         subtitle.heightAnchor.constraint(equalToConstant: 49).isActive = true
@@ -61,7 +60,6 @@ class LogInViewController: UIViewController{
     
     let footnoteText: UILabel = {
         let footnote = UILabel()
-//        footnote.textColor = .black
         footnote.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         footnote.setDynamicType(font: .preferredFont(forTextStyle: .footnote))
         footnote.text = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade."
@@ -97,6 +95,7 @@ class LogInViewController: UIViewController{
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .systemBackground
+        navigationItem.backButtonTitle = "Voltar"
     }
     
     override func viewDidLoad() {
@@ -121,8 +120,9 @@ class LogInViewController: UIViewController{
     
     /// - Tag: add_appleid_button
     func setupProviderLoginView() {
-        let authorizationButton = ASAuthorizationAppleIDButton()
-        authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+        let authorizationButton = SignInWithAppleButton(self, action: #selector(self.handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+        authorizationButton.cornerRadius = 6
+        
         self.loginProviderStackView.addArrangedSubview(authorizationButton)
     }
     
