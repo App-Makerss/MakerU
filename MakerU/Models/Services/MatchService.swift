@@ -69,26 +69,46 @@ struct MatchService {
         
         let dao = ProjectDAO()
         
-        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else {return}
-        let userReference = dao.generateRecordReference(for: loggedUserID)
-        
         let makerspaceReference = dao.generateRecordReference(for: makerspace)
         
-        let predicate = NSPredicate(format: "makerspace == %@ AND canAppearOnMatch == %@ AND owner != %@", makerspaceReference, NSNumber(1), userReference)
+        let predicate = NSPredicate(format: "makerspace == %@ AND canAppearOnMatch == %@", makerspaceReference, NSNumber(1))
+        var finalPredicate: NSPredicate
+        if let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") {
+            let userReference = dao.generateRecordReference(for: loggedUserID)
+            finalPredicate = NSCompoundPredicate(
+                andPredicateWithSubpredicates: [
+                    predicate,
+                    NSPredicate(format: " owner != %@", userReference)
+                ]
+            )
+        }else {
+            finalPredicate = predicate
+        }
         
 //        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
         
-        dao.listAll(by: predicate, completion: completion)
+        dao.listAll(by: finalPredicate, completion: completion)
         
     }
     
     private func listAllMatchElegibleUsers(by makerspace: String, completion: @escaping ([User]?, Error?) -> ()) {
         let dao = UserDAO()
-        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else {return}
-        let userID = dao.generateRecordID(for: loggedUserID)
         let makerspaceReference = dao.generateRecordReference(for: makerspace)
-        let predicate = NSPredicate(format: "makerspaces CONTAINS %@ AND canAppearOnMatch == %@ AND recordID != %@", makerspaceReference, NSNumber(1), userID)
+        let predicate = NSPredicate(format: "makerspaces CONTAINS %@ AND canAppearOnMatch == %@ ", makerspaceReference, NSNumber(1))
+        var finalPredicate: NSPredicate
+        if let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") {
+            let userReference = dao.generateRecordReference(for: loggedUserID)
+            finalPredicate = NSCompoundPredicate(
+                andPredicateWithSubpredicates: [
+                    predicate,
+                    NSPredicate(format: " recordID != %@", userReference)
+                ]
+            )
+        }else {
+            finalPredicate = predicate
+        }
         
-        dao.listAll(by: predicate, completion: completion)
+        
+        dao.listAll(by: finalPredicate, completion: completion)
     }
 }

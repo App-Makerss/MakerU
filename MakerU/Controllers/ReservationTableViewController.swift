@@ -151,7 +151,6 @@ class ReservationTableViewController: UITableViewController {
         if let id = UserDefaults.standard.string(forKey: "loggedUserId"){
         let appUserID = self.user?.id
             if appUserID != id {
-                //TODO: Create the user object
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
                 appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
                     switch credentialState {

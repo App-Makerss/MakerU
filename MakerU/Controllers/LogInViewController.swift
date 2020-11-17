@@ -12,9 +12,6 @@ import UIKit
 class LogInViewController: UIViewController{
     
     //MARK: View Code Set up
-    
-    
-    
     private let loginProviderStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -43,7 +40,6 @@ class LogInViewController: UIViewController{
         title.text = "MakerU"
         title.heightAnchor.constraint(equalToConstant: 41).isActive = true
         title.widthAnchor.constraint(equalToConstant: 112).isActive = true
-        title.textColor = .black
         title.numberOfLines = 0
         title.textAlignment = .center
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -52,7 +48,6 @@ class LogInViewController: UIViewController{
     
     let cardSubtitle: UILabel = {
         let subtitle = UILabel()
-        subtitle.textColor = .black
         subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         subtitle.setDynamicType(font: .systemFont(style: .callout), textStyle: .callout)
         subtitle.heightAnchor.constraint(equalToConstant: 49).isActive = true
@@ -65,7 +60,6 @@ class LogInViewController: UIViewController{
     
     let footnoteText: UILabel = {
         let footnote = UILabel()
-        footnote.textColor = .black
         footnote.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
         footnote.setDynamicType(font: .preferredFont(forTextStyle: .footnote))
         footnote.text = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade."
@@ -100,7 +94,8 @@ class LogInViewController: UIViewController{
         self.navigationItem.leftBarButtonItem = cancelBarItem
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        navigationItem.backButtonTitle = "Voltar"
     }
     
     override func viewDidLoad() {
@@ -113,7 +108,7 @@ class LogInViewController: UIViewController{
         self.view.addSubview(stacks)
         setupContraints(stack: stacks)
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         setupProviderLoginView()
     }
@@ -125,8 +120,9 @@ class LogInViewController: UIViewController{
     
     /// - Tag: add_appleid_button
     func setupProviderLoginView() {
-        let authorizationButton = ASAuthorizationAppleIDButton()
-        authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+        let authorizationButton = SignInWithAppleButton(self, action: #selector(self.handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
+        authorizationButton.cornerRadius = 6
+        
         self.loginProviderStackView.addArrangedSubview(authorizationButton)
     }
     
@@ -212,22 +208,23 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
     
     private func showResultViewController(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
         print("Teria um segue para a proxima view")
-//        guard let viewController = self.presentingViewController as? ResultViewController
-//            else { return }
-//
-//        DispatchQueue.main.async {
-//            viewController.userIdentifierLabel.text = userIdentifier
-//            if let givenName = fullName?.givenName {
-//                viewController.givenNameLabel.text = givenName
-//            }
-//            if let familyName = fullName?.familyName {
-//                viewController.familyNameLabel.text = familyName
-//            }
-//            if let email = email {
-//                viewController.emailLabel.text = email
-//            }
-//            self.dismiss(animated: true, completion: nil)
-//        }
+        let viewController = LoginTitleViewController(style: .insetGrouped)
+
+        //Removi o .text de todos os campos
+        guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+        let user = User(name: fullName!.givenName!, email: email!, password: "", projects: [], makerspaces: [makerspace])
+        viewController.user = user
+        viewController.userIdentifierLabel = userIdentifier
+        if let givenName = fullName?.givenName {
+            viewController.givenNameLabel = givenName
+        }
+        if let familyName = fullName?.familyName {
+            viewController.familyNameLabel = familyName
+        }
+        if let email = email {
+            viewController.emailLabel = email
+        }
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func showPasswordCredentialAlert(username: String, password: String) {

@@ -45,9 +45,9 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: Load data
     fileprivate func loadMatchSuggestions() {
-        CategoryDAO().listAll { (categories, error) in
-            if let categories = categories{
-                self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
+        CategoryDAO().listAll { (cats, error) in
+            if let cats = cats{
+                self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: cats) { (matchCards, error) in
                     if var matchCards = matchCards{
                         if matchCards.isEmpty{
                             matchCards.append(MatchCard())
@@ -124,6 +124,8 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: @ojbc funcs
     @objc func configDisplayButtonTapped() {
+        self.isUserLogged()
+        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
         let displayConfigurationVC = MatchDisplayConfigurationTableViewController(style: .insetGrouped)
         let navigation = UINavigationController(rootViewController: displayConfigurationVC)
         present(navigation, animated: true, completion: nil)
@@ -233,26 +235,20 @@ extension MatchViewController {
     }
     
     func isUserLogged(){
-        if let id = UserDefaults.standard.string(forKey: "loggedUserId"){
-            let appUserID = self.user?.id
-            if appUserID != id {
-                //TODO: Create the user object
-                let appleIDProvider = ASAuthorizationAppleIDProvider()
-                appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
-                    switch credentialState {
-                        case .authorized:
-                            break // The Apple ID credential is valid.
-                        case .revoked, .notFound:
-                            // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-                            DispatchQueue.main.async {
-                                let login = LogInViewController()
-                                let navigation = UINavigationController(rootViewController: login)
-                                self.present(navigation, animated: true, completion: nil)
-                            }
-                        default:
-                            break
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+            switch credentialState {
+                case .authorized:
+                    break // The Apple ID credential is valid.
+                case .revoked, .notFound:
+                    // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                    DispatchQueue.main.async {
+                        let login = LogInViewController()
+                        let navigation = UINavigationController(rootViewController: login)
+                        self.present(navigation, animated: true, completion: nil)
                     }
-                }
+                default:
+                    break
             }
         }
     }
@@ -280,10 +276,9 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         
-        self.isUserLogged()
-        
         guard let currentIndex = collectionView.indexPath(for: cell),
-              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else {self.isUserLogged(); return }
+        
         if matchSuggestions[currentIndex.row].type == .none {
             return
         }
