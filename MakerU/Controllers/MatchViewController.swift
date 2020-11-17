@@ -45,9 +45,9 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: Load data
     fileprivate func loadMatchSuggestions() {
-        CategoryDAO().listAll { (categories, error) in
-            if let categories = categories{
-                self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: categories) { (matchCards, error) in
+        CategoryDAO().listAll { (cats, error) in
+            if let cats = cats{
+                self.matchService.matchSuggestions(by: "8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", categories: cats) { (matchCards, error) in
                     if var matchCards = matchCards{
                         if matchCards.isEmpty{
                             matchCards.append(MatchCard())
@@ -277,8 +277,7 @@ extension MatchViewController: MatchCardCollectionViewCellDelegate {
     func collaborateButtonTapped(_ cell: MatchCardCollectionViewCell) {
         
         guard let currentIndex = collectionView.indexPath(for: cell),
-              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
-        self.isUserLogged()
+              let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else {self.isUserLogged(); return }
         
         if matchSuggestions[currentIndex.row].type == .none {
             return
