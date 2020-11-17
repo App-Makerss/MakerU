@@ -89,8 +89,8 @@ class LoginTitleViewController: UITableViewController {
         default:
             let cell = FormFieldTableViewCell()
             cell.label.text = "Título"
-            cell.detailTextLabel?.text = userOcupation
             cell.value.addTarget(self, action: #selector(self.newTitleValueChanged(sender:)), for: .editingDidEnd)
+            cell.detailTextLabel?.text = userOcupation
             resultCell = cell
         }
         return resultCell
@@ -103,20 +103,20 @@ class LoginTitleViewController: UITableViewController {
 
     @objc func nextButtonItemTapped() {
         if self.userOcupation != "" {
+            self.user?.ocupation = userOcupation!
             self.navigationItem.rightBarButtonItem?.isEnabled = true
             let vc = LoginBioViewController(style: .insetGrouped)
             vc.user = self.user
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
     @objc func newTitleValueChanged(sender: UITextField) {
-        self.user?.ocupation = sender.text ?? ""
-        let userOcupationText = sender.text
-        if userOcupationText != "" {
-            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            self.userOcupation = sender.text ?? ""
+            let userOcupationText = sender.text
+            if userOcupationText != "" {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
         }
-    }
     
 }
 
