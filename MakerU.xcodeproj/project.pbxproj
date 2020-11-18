@@ -357,25 +357,12 @@
 		566EB3CC2535E56B0092F096 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				56C3980A256548CD00D20C71 /* Login */,
+				56C3980E256549BC00D20C71 /* Makerspace */,
+				56C3980C2565497700D20C71 /* Match */,
 				E2B7A93D255AC9B000FA978A /* Profile */,
 				E2B7A938255A36B500FA978A /* Project */,
-				567C514925499BB30003BCCB /* AboutItemViewController.swift */,
-				566EB3CD2535E58B0092F096 /* MatchViewController.swift */,
-				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
-				562666792541B5470091C10C /* MakerspaceViewController.swift */,
-				E2EAAC3A255E1EED00961EF1 /* PickPhotoViewController.swift */,
-				5626667F254203B20091C10C /* ImageCoverNavigationController.swift */,
-				569C44282542FA3F0099A44A /* ScrollableCover.swift */,
-				3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */,
-				E247C090254260B00093833C /* MatchOnboardingViewController.swift */,
-				56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */,
-				569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */,
-				569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */,
-				56E9C838254C9883000441C4 /* ReservationTableViewController.swift */,
-				56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */,
-				3E502F132559711900106CB7 /* LogInViewController.swift */,
-				3E277C0A255C2388001FF7B4 /* LoginTitleViewController.swift */,
-				3E277C0D255C2E57001FF7B4 /* LoginBioViewController.swift */,
+				56C398112565502700D20C71 /* ReusableThings */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -479,6 +466,51 @@
 				56C33291252BA7B500FA03AA /* Info.plist */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		56C3980A256548CD00D20C71 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3E502F132559711900106CB7 /* LogInViewController.swift */,
+				3E277C0A255C2388001FF7B4 /* LoginTitleViewController.swift */,
+				3E277C0D255C2E57001FF7B4 /* LoginBioViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		56C3980C2565497700D20C71 /* Match */ = {
+			isa = PBXGroup;
+			children = (
+				566EB3CD2535E58B0092F096 /* MatchViewController.swift */,
+				566EB3D12535ED160092F096 /* MatchDisplayConfigurationTableViewController.swift */,
+				3E5B0F7F2541B1A800E54FDF /* MatchCardInfoViewController.swift */,
+				E247C090254260B00093833C /* MatchOnboardingViewController.swift */,
+			);
+			path = Match;
+			sourceTree = "<group>";
+		};
+		56C3980E256549BC00D20C71 /* Makerspace */ = {
+			isa = PBXGroup;
+			children = (
+				567C514925499BB30003BCCB /* AboutItemViewController.swift */,
+				562666792541B5470091C10C /* MakerspaceViewController.swift */,
+				569714B5254ADD5B00419049 /* OccurrencesTableViewController.swift */,
+				569714BB254AEDF600419049 /* ApplyForMonitoringTableViewController.swift */,
+				56E9C838254C9883000441C4 /* ReservationTableViewController.swift */,
+			);
+			path = Makerspace;
+			sourceTree = "<group>";
+		};
+		56C398112565502700D20C71 /* ReusableThings */ = {
+			isa = PBXGroup;
+			children = (
+				5626667F254203B20091C10C /* ImageCoverNavigationController.swift */,
+				56A6FC51254E5285006198BF /* PickerViewTableViewController.swift */,
+				E2EAAC3A255E1EED00961EF1 /* PickPhotoViewController.swift */,
+				569C44282542FA3F0099A44A /* ScrollableCover.swift */,
+				56133E37254A23B7009E1CEF /* SingleTextTableViewController.swift */,
+			);
+			path = ReusableThings;
 			sourceTree = "<group>";
 		};
 		E2B7A938255A36B500FA978A /* Project */ = {
@@ -838,6 +870,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MakerU/MakerU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GJUSD98938;
 				INFOPLIST_FILE = MakerU/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -845,6 +878,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = bgpv.academyChallenge.MakerU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -859,6 +893,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MakerU/MakerU.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.1;
 				DEVELOPMENT_TEAM = GJUSD98938;
 				INFOPLIST_FILE = MakerU/App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -866,6 +901,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = bgpv.academyChallenge.MakerU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
