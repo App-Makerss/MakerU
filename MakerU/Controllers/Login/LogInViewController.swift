@@ -16,10 +16,7 @@ class LogInViewController: UIViewController{
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillProportionally
-        
-        stack.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        stack.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        
+
         stack.clipsToBounds = true
         
         return stack
@@ -36,10 +33,8 @@ class LogInViewController: UIViewController{
     
     let viewTitle: UILabel = {
         let title = UILabel()
-        title.setDynamicType(font: .systemFont(style: .largeTitle, weight: .light), textStyle: .largeTitle)
+        title.setDynamicType(textStyle: .largeTitle, weight: .light)
         title.text = "MakerU"
-        title.heightAnchor.constraint(equalToConstant: 41).isActive = true
-        title.widthAnchor.constraint(equalToConstant: 112).isActive = true
         title.numberOfLines = 0
         title.textAlignment = .center
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -48,10 +43,8 @@ class LogInViewController: UIViewController{
     
     let cardSubtitle: UILabel = {
         let subtitle = UILabel()
-        subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        subtitle.setDynamicType(font: .systemFont(style: .callout), textStyle: .callout)
-        subtitle.heightAnchor.constraint(equalToConstant: 49).isActive = true
-        subtitle.widthAnchor.constraint(equalToConstant: 326).isActive = true
+        subtitle.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        subtitle.setDynamicType(textStyle: .callout)
         subtitle.text = "Inicie uma sessão para poder utilizar os serviços de criação de projetos e reservas."
         subtitle.textAlignment = .center
         subtitle.numberOfLines = 0
@@ -60,11 +53,8 @@ class LogInViewController: UIViewController{
     
     let footnoteText: UILabel = {
         let footnote = UILabel()
-        footnote.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        footnote.setDynamicType(font: .preferredFont(forTextStyle: .footnote))
+        footnote.setDynamicType(textStyle: .footnote)
         footnote.text = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade."
-        footnote.heightAnchor.constraint(equalToConstant: 34).isActive = true
-        footnote.widthAnchor.constraint(equalToConstant: 316).isActive = true
         footnote.textAlignment = .center
         footnote.numberOfLines = 0
         return footnote
@@ -80,11 +70,7 @@ class LogInViewController: UIViewController{
         content.spacing = 44
         content.axis = .vertical
         
-        let firstSessionStack = UIStackView(arrangedSubviews: [content, footnoteText])
-        firstSessionStack.axis = .vertical
-        firstSessionStack.spacing = 427
-        
-        return firstSessionStack
+        return content
     }
     
     func setupNavigations() {
@@ -104,8 +90,10 @@ class LogInViewController: UIViewController{
         self.setupNavigations()
         
         let stacks = stackSetUp()
+        footnoteText.translatesAutoresizingMaskIntoConstraints = false
         stacks.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(stacks)
+        self.view.addSubview(footnoteText)
         setupContraints(stack: stacks)
         
         view.backgroundColor = .systemBackground
@@ -122,6 +110,8 @@ class LogInViewController: UIViewController{
     func setupProviderLoginView() {
         let authorizationButton = SignInWithAppleButton(self, action: #selector(self.handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
         authorizationButton.cornerRadius = 6
+        authorizationButton.translatesAutoresizingMaskIntoConstraints = false
+        authorizationButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
         
         self.loginProviderStackView.addArrangedSubview(authorizationButton)
     }
@@ -141,9 +131,13 @@ class LogInViewController: UIViewController{
     }
     
     func setupContraints(stack: UIView) {
-        stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         stack.topAnchor.constraint(equalTo: view.topAnchor, constant: 51).isActive = true
-        stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        
+        footnoteText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        footnoteText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        footnoteText.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
     }
     
     /// - Tag: perform_appleid_request
