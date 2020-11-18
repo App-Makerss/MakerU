@@ -20,7 +20,8 @@ struct ProjectDAO: GenericsDAO {
               let makerspaceRef = record["makerspace"]as? CKRecord.Reference,
               let isForMuralInt = record["isForMural"] as? Int,
               let canAppearOnMatchInt = record["canAppearOnMatch"] as? Int,
-              let statusInt = record["status"] as? Int
+              let statusInt = record["status"] as? Int,
+              let status = ProjectStatus(rawValue: statusInt)
         else {return nil}
         
         let id = record.recordID.recordName
@@ -29,17 +30,14 @@ struct ProjectDAO: GenericsDAO {
         let description = record["description"] as? String ?? ""
         let skillsInNeed = record["skillsInNeed"] as? String ?? ""
         let coverImageAsset = record["coverImage"] as? CKAsset
-        let collaboratorsRef = record["collaborators"] as? [CKRecord.Reference] ?? []
-        let collaborators = collaboratorsRef.map { ref -> String in
-            ref.recordID.recordName
-        }
-        
+
+        let collaborators = record["collaborators"] as? String ?? ""
+       
         let category = categoryRef.recordID.recordName
         let owner = ownerRef.recordID.recordName
         let makerspace = makerspaceRef.recordID.recordName
         let isForMural = isForMuralInt == 1
         let canAppearOnMatch = canAppearOnMatchInt == 1
-        let status = statusInt == 1 
         let coverImageData = coverImageAsset?.image?.jpegData(compressionQuality: 1)
        
         
@@ -51,13 +49,11 @@ struct ProjectDAO: GenericsDAO {
         newDict.removeValue(forKey: "makerspace")
         newDict.removeValue(forKey: "owner")
         newDict.removeValue(forKey: "category")
-        newDict.removeValue(forKey: "collaborators")
         
         return newDict
     }
     
     func treatSpecialValues(forRecord rec: CKRecord, entity: Project) {
-        rec["collaborators"] = generateRecordReference(for: entity.collaborators)
         rec["makerspace"] = generateRecordReference(for: entity.makerspace, action: .deleteSelf)
         rec["owner"] = generateRecordReference(for: entity.owner)
         rec["category"] = generateRecordReference(for: entity.category)

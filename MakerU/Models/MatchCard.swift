@@ -7,35 +7,46 @@
 
 import UIKit
 
-enum MatchCardType {
-    case project
-    case user
+enum MatchCardType: Int16, Codable {
+    case project = 3
+    case user = 4
+    case none = 1000
 }
-struct MatchCard {
+class MatchCard: Codable, Hashable {
     var id: String
     var type: MatchCardType
     
+    var face: CardFace = .front
+    
     var title: String
     var subtitle: String
-    var image: UIImage?
+    var image: Data
     var firstSessionTitle: String
     var firstSessionLabel: String
     var secondSessionTitle: String
     var secondSessionLabel: String
+    var user: User?
+    var project: Project?
     
-    
-    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    static func == (lhs: MatchCard, rhs: MatchCard) -> Bool {
+        return
+            lhs.id == rhs.id && lhs.face == rhs.face
+    }
     init(from project: Project, with category: Category) {
         id = project.id!
         type = .project
         
         title = project.title
         subtitle = category.name
-        image = UIImage(data: category.icon)
+        image = category.icon
         firstSessionTitle = "Descrição"
         firstSessionLabel = project.description
         secondSessionTitle = "Habilidades Procuradas"
         secondSessionLabel = project.skillsInNeed
+        self.project = project
     }
     
     init(from user: User) {
@@ -44,11 +55,24 @@ struct MatchCard {
         
         title = user.name
         subtitle = user.ocupation
-        image = UIImage(data: user.profileImage ?? Data()) ?? UIImage(systemName: "person.fill")
+        image = user.profileImage ?? Data()
         firstSessionTitle = "Bio"
         firstSessionLabel = user.description
         secondSessionTitle = "Habilidades Pessoais"
         secondSessionLabel = user.skills
+        self.user = user
     }
     
+    init() {
+        id = ""
+        type = .none
+        face = .nothingFeedback
+        title = ""
+        subtitle = ""
+        image = Data()
+        firstSessionTitle = ""
+        firstSessionLabel = ""
+        secondSessionTitle = ""
+        secondSessionLabel = ""
+    }
 }
