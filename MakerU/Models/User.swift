@@ -19,8 +19,11 @@ struct User: IdentifiableEntity, Codable {
     var description: String = ""
     var whatsapp: String = ""
     var skills: String = ""
-    var projects: [String]
+    var projects: [String] = []
     var makerspaces: [String]
     var canAppearOnMatch: Bool = false
     var profileImage: Data? = nil
+    var signinAppleIdentifier: String? = nil
+    var signinAppleToken: Data? = nil
+    var signinAppleAuthorizationCode: Data? = nil
 }

@@ -35,6 +35,10 @@ struct UserDAO: GenericsDAO {
         let projects = record["projects"] as? [CKRecord.Reference] ?? []
         let canAppearOnMatch = canAppearOnMatchInt == 1
         let makerspaces = record["makerspaces"] as? [CKRecord.Reference] ?? []
+        let signinAppleIdentifier = record["signinAppleIdentifier"] as? String
+        let signinAppleToken = record["signinAppleToken"] as? Data
+        let signinAppleAuthorizationCode = record["signinAppleAuthorizationCode"] as? Data
+        
         let id = record.recordID.recordName
         let profileImageData = profileImageAsset?.image?.jpegData(compressionQuality: 1)
         
@@ -44,7 +48,7 @@ struct UserDAO: GenericsDAO {
         let projectsStrings = projects.map { ref -> String in
             ref.recordID.recordName
         }
-        return User(id: id, name: name, email: email, role: userRole, password: password, ocupation: ocupation, description: description, whatsapp: whatsapp, skills: skills, projects: projectsStrings, makerspaces: makerspacesStrings, canAppearOnMatch: canAppearOnMatch,profileImage: profileImageData)
+        return User(id: id, name: name, email: email, role: userRole, password: password, ocupation: ocupation, description: description, whatsapp: whatsapp, skills: skills, projects: projectsStrings, makerspaces: makerspacesStrings, canAppearOnMatch: canAppearOnMatch,profileImage: profileImageData, signinAppleIdentifier: signinAppleIdentifier, signinAppleToken: signinAppleToken, signinAppleAuthorizationCode: signinAppleAuthorizationCode)
     }
     
     /// Remove variables of references (CKReference) from the dictionary because it needs a special treat
@@ -55,6 +59,8 @@ struct UserDAO: GenericsDAO {
         //References needs a special treat
         newDict.removeValue(forKey: "projects")
         newDict.removeValue(forKey: "makerspaces")
+        newDict.removeValue(forKey: "signinAppleToken")
+        newDict.removeValue(forKey: "signinAppleAuthorizationCode")
         return newDict
     }
     
@@ -67,6 +73,13 @@ struct UserDAO: GenericsDAO {
         
         rec["projects"] = generateRecordReference(for: entity.projects)
         rec["makerspaces"] = generateRecordReference(for: entity.makerspaces)
+        if let signinAppleAuthorizationCode = entity.signinAppleAuthorizationCode as NSData? {
+            rec["signinAppleAuthorizationCode"] = signinAppleAuthorizationCode
+        }
+        if let signinAppleToken = entity.signinAppleToken as NSData? {
+            rec["signinAppleToken"] = signinAppleToken
+        }
+        
         
         if let data = entity.profileImage, let image = CKAsset(data: data, compression: 1) {
             rec["profileImage"] = image

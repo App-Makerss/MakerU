@@ -16,7 +16,7 @@ class LogInViewController: UIViewController{
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillProportionally
-
+        
         stack.clipsToBounds = true
         
         return stack
@@ -100,7 +100,7 @@ class LogInViewController: UIViewController{
         
         setupProviderLoginView()
     }
-        
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         performExistingAccountSetupFlows()
@@ -160,35 +160,67 @@ class LogInViewController: UIViewController{
 }
 
 extension LogInViewController: ASAuthorizationControllerDelegate {
+
+    private func signInRegisteringNew(credential: ASAuthorizationAppleIDCredential) {
+        let userIdentifier = credential.user
+        let fullName = credential.fullName
+        let email = credential.email
+        
+        self.saveUserInKeychain(userIdentifier)
+        
+        guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+        
+        let user = User(
+            name: "\(fullName?.givenName ?? "") \(fullName?.familyName ?? "")",
+            email: email!,
+            password: "",
+            makerspaces: [makerspace],
+            signinAppleIdentifier: userIdentifier,
+            signinAppleToken: credential.identityToken,
+            signinAppleAuthorizationCode: credential.authorizationCode
+        )
+        
+        self.showResultViewController(user: user)
+    }
+    private func signInWithExistingAccount(credential: ASAuthorizationAppleIDCredential) {
+        //search a user based on:
+        let predicate = NSPredicate(
+            format: "signinAppleIdentifier == %@",
+            credential.user)
+        UserDAO().listAll(by: predicate) { (users, error) in
+            print(error?.localizedDescription)
+            if let user = users?.first {
+                UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        
+    }
+    
     /// - Tag: did_complete_authorization
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            
-            // Create an account in your system.
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            
-            // For the purpose of this demo app, store the `userIdentifier` in the keychain.
-            self.saveUserInKeychain(userIdentifier)
-            
-            // For the purpose of this demo app, show the Apple ID credential information in the `ResultViewController`.
-            self.showResultViewController(userIdentifier: userIdentifier, fullName: fullName, email: email)
-        
-        case let passwordCredential as ASPasswordCredential:
-        
-            // Sign in using an existing iCloud Keychain credential.
-            let username = passwordCredential.user
-            let password = passwordCredential.password
-            
-            // For the purpose of this demo app, show the password credential as an alert.
-            DispatchQueue.main.async {
-                self.showPasswordCredentialAlert(username: username, password: password)
-            }
-            
-        default:
-            break
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                if let _ = appleIDCredential.email, let _ = appleIDCredential.fullName {
+                    signInRegisteringNew(credential: appleIDCredential)
+                }
+                else {
+                    signInWithExistingAccount(credential: appleIDCredential)
+                }
+            case let passwordCredential as ASPasswordCredential:
+                
+                // Sign in using an existing iCloud Keychain credential.
+                let username = passwordCredential.user
+                let password = passwordCredential.password
+                
+                // For the purpose of this demo app, show the password credential as an alert.
+                DispatchQueue.main.async {
+                    self.showPasswordCredentialAlert(username: username, password: password)
+                }
+            default:
+                break
         }
     }
     
@@ -200,24 +232,11 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
         }
     }
     
-    private func showResultViewController(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
+    private func showResultViewController(user: User) {
         print("Teria um segue para a proxima view")
         let viewController = LoginTitleViewController(style: .insetGrouped)
-
-        //Removi o .text de todos os campos
-        guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
-        let user = User(name: fullName!.givenName!, email: email!, password: "", projects: [], makerspaces: [makerspace])
+        
         viewController.user = user
-        viewController.userIdentifierLabel = userIdentifier
-        if let givenName = fullName?.givenName {
-            viewController.givenNameLabel = givenName
-        }
-        if let familyName = fullName?.familyName {
-            viewController.familyNameLabel = familyName
-        }
-        if let email = email {
-            viewController.emailLabel = email
-        }
         navigationController?.pushViewController(viewController, animated: true)
     }
     
