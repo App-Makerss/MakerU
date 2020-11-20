@@ -58,7 +58,31 @@ struct MatchService {
                             }
                             return nil
                         }))
-                        completion(list.shuffled(),nil)
+                        guard let loggedUserId = UserDefaults.standard.string(forKey: "loggedUserId") else {completion(list.shuffled(),nil);return}
+                        
+                        
+                        let loggedUserRef = matchDAO.generateRecordReference(for: loggedUserId)
+                        let listOfIds = list.compactMap { element -> String? in
+                            element.type == .project ? element.project?.owner : element.id
+                        }
+                        // this predicate does not work on the liked part, only works for who liked
+                        let predicate = NSPredicate(
+                            format: "part1 == %@ && part2 IN %@ ",
+                            loggedUserRef, matchDAO.generateRecordReference(for: listOfIds))
+                        matchDAO.listAll(by: predicate) { (matchs, error) in
+                            if let matchs = matchs, matchs.count>0 {
+                                for i in 0..<list.count{
+                                    let id = list[i].type == .project ? list[i].project!.owner : list[i].id
+                                    let match = matchs.first(where:{$0.part2 == id})
+                                    if match?.isMutual == true {
+                                        list[i].face = .back
+                                    }else {
+                                        list[i].face = .likeFeedback(list[i].type)
+                                    }
+                                }
+                            }
+                            completion(list.shuffled(),nil)
+                        }
                     }
                 }
             }
@@ -85,7 +109,7 @@ struct MatchService {
             finalPredicate = predicate
         }
         
-//        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
+        //        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
         
         dao.listAll(by: finalPredicate, completion: completion)
         
