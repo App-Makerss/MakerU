@@ -182,6 +182,7 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
         
         self.showResultViewController(user: user)
     }
+    
     private func signInWithExistingAccount(credential: ASAuthorizationAppleIDCredential) {
         //search a user based on:
         let predicate = NSPredicate(
@@ -190,9 +191,16 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
         UserDAO().listAll(by: predicate) { (users, error) in
             print(error?.localizedDescription)
             if let user = users?.first {
-                UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
+                if user.ocupation == "" {
+                    DispatchQueue.main.async {
+                        self.showResultViewController(user: user)
+                    }
+                    
+                }else {
+                    UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -203,8 +211,29 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                if let _ = appleIDCredential.email, let _ = appleIDCredential.fullName {
-                    signInRegisteringNew(credential: appleIDCredential)
+                if let email = appleIDCredential.email, let fullName = appleIDCredential.fullName {
+                    
+                    self.saveUserInKeychain(appleIDCredential.user)
+                    
+                    guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+                    
+                    let user = User(
+                        name: "\(fullName.givenName ?? "") \(fullName.familyName ?? "")",
+                        email: email,
+                        password: "",
+                        makerspaces: [makerspace],
+                        signinAppleIdentifier: appleIDCredential.user,
+                        signinAppleToken: appleIDCredential.identityToken,
+                        signinAppleAuthorizationCode: appleIDCredential.authorizationCode
+                    )
+                    UserDAO().save(entity: user) { userSaved, error in
+                        if userSaved != nil {
+                            DispatchQueue.main.async {
+                                self.showResultViewController(user: userSaved!)
+                            }
+                        }
+                    }
+//                    signInRegisteringNew(credential: appleIDCredential)
                 }
                 else {
                     signInWithExistingAccount(credential: appleIDCredential)

@@ -58,14 +58,25 @@ class LoginBioViewController: SingleTextTableViewController {
     override func okBarItemTapped() {
         if stringUpdate != "" {
             self.user.description = stringUpdate
-            UserDAO().save(entity: user) { (savedUser, error) in
-                if let savedUser = savedUser {
-                    UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
-                    
-                }else {
-                    print(error?.localizedDescription)
+            if self.user.id != nil {
+                UserDAO().update(entity: user) { (updatedUser, error) in
+                    if let updatedUser = updatedUser {
+                        UserDefaults.standard.setValue(updatedUser.id!, forKey: "loggedUserId")
+                        
+                    }else {
+                        print(error?.localizedDescription)
+                    }
+                }
+            }else {
+                UserDAO().save(entity: user) { (savedUser, error) in
+                    if let savedUser = savedUser {
+                        UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
+                    }else {
+                        print(error?.localizedDescription)
+                    }
                 }
             }
+            
             //TODO: fazer um dissmiss
             dismiss(animated: true, completion: nil)
             
