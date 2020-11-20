@@ -100,7 +100,10 @@ class LogInViewController: UIViewController{
         
         setupProviderLoginView()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigations()
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         performExistingAccountSetupFlows()
