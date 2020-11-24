@@ -205,6 +205,17 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
+            }else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Algo deu errado", message: "Remova a credencial do Apple ID em 'Senha e Segurança' nos ajustes do iPhone e volte para se recadastrar.", preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.view.tintColor = .systemPurple
+                    alert.addAction(okAction)
+                    
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
         
