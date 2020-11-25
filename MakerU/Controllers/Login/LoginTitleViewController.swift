@@ -11,10 +11,6 @@ class LoginTitleViewController: UITableViewController {
     
     var user: User?
     
-    var userIdentifierLabel: String?
-    var givenNameLabel: String? 
-    var familyNameLabel: String?
-    var emailLabel: String?
     var userOcupation: String?
     
     
@@ -80,7 +76,7 @@ class LoginTitleViewController: UITableViewController {
         case 0:
             let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell11")
             cell.textLabel?.text = "Nome"
-            cell.detailTextLabel?.text = givenNameLabel
+            cell.detailTextLabel?.text = user?.name
             cell.accessibilityHint = "toque duas vezes para editar"
             cell.detailTextLabel?.textColor = .secondaryLabel
             cell.selectionStyle = .none

@@ -17,9 +17,6 @@ class LogInViewController: UIViewController{
         stack.axis = .vertical
         stack.distribution = .fillProportionally
         
-        stack.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        stack.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        
         stack.clipsToBounds = true
         
         return stack
@@ -36,10 +33,8 @@ class LogInViewController: UIViewController{
     
     let viewTitle: UILabel = {
         let title = UILabel()
-        title.setDynamicType(font: .systemFont(style: .largeTitle, weight: .light), textStyle: .largeTitle)
+        title.setDynamicType(textStyle: .largeTitle, weight: .light)
         title.text = "MakerU"
-        title.heightAnchor.constraint(equalToConstant: 41).isActive = true
-        title.widthAnchor.constraint(equalToConstant: 112).isActive = true
         title.numberOfLines = 0
         title.textAlignment = .center
         title.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .vertical)
@@ -48,10 +43,8 @@ class LogInViewController: UIViewController{
     
     let cardSubtitle: UILabel = {
         let subtitle = UILabel()
-        subtitle.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        subtitle.setDynamicType(font: .systemFont(style: .callout), textStyle: .callout)
-        subtitle.heightAnchor.constraint(equalToConstant: 49).isActive = true
-        subtitle.widthAnchor.constraint(equalToConstant: 326).isActive = true
+        subtitle.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+        subtitle.setDynamicType(textStyle: .callout)
         subtitle.text = "Inicie uma sessão para poder utilizar os serviços de criação de projetos e reservas."
         subtitle.textAlignment = .center
         subtitle.numberOfLines = 0
@@ -60,11 +53,8 @@ class LogInViewController: UIViewController{
     
     let footnoteText: UILabel = {
         let footnote = UILabel()
-        footnote.setContentCompressionResistancePriority(.init(1000), for: .horizontal)
-        footnote.setDynamicType(font: .preferredFont(forTextStyle: .footnote))
+        footnote.setDynamicType(textStyle: .footnote)
         footnote.text = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade."
-        footnote.heightAnchor.constraint(equalToConstant: 34).isActive = true
-        footnote.widthAnchor.constraint(equalToConstant: 316).isActive = true
         footnote.textAlignment = .center
         footnote.numberOfLines = 0
         return footnote
@@ -80,11 +70,7 @@ class LogInViewController: UIViewController{
         content.spacing = 44
         content.axis = .vertical
         
-        let firstSessionStack = UIStackView(arrangedSubviews: [content, footnoteText])
-        firstSessionStack.axis = .vertical
-        firstSessionStack.spacing = 427
-        
-        return firstSessionStack
+        return content
     }
     
     func setupNavigations() {
@@ -104,15 +90,20 @@ class LogInViewController: UIViewController{
         self.setupNavigations()
         
         let stacks = stackSetUp()
+        footnoteText.translatesAutoresizingMaskIntoConstraints = false
         stacks.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(stacks)
+        self.view.addSubview(footnoteText)
         setupContraints(stack: stacks)
         
         view.backgroundColor = .systemBackground
         
         setupProviderLoginView()
     }
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigations()
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         performExistingAccountSetupFlows()
@@ -122,6 +113,8 @@ class LogInViewController: UIViewController{
     func setupProviderLoginView() {
         let authorizationButton = SignInWithAppleButton(self, action: #selector(self.handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
         authorizationButton.cornerRadius = 6
+        authorizationButton.translatesAutoresizingMaskIntoConstraints = false
+        authorizationButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
         
         self.loginProviderStackView.addArrangedSubview(authorizationButton)
     }
@@ -141,9 +134,13 @@ class LogInViewController: UIViewController{
     }
     
     func setupContraints(stack: UIView) {
-        stack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         stack.topAnchor.constraint(equalTo: view.topAnchor, constant: 51).isActive = true
-        stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+        
+        footnoteText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        footnoteText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        footnoteText.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
     }
     
     /// - Tag: perform_appleid_request
@@ -166,35 +163,107 @@ class LogInViewController: UIViewController{
 }
 
 extension LogInViewController: ASAuthorizationControllerDelegate {
+
+    private func signInRegisteringNew(credential: ASAuthorizationAppleIDCredential) {
+        let userIdentifier = credential.user
+        let fullName = credential.fullName
+        let email = credential.email
+        
+        self.saveUserInKeychain(userIdentifier)
+        
+        guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+        
+        let user = User(
+            name: "\(fullName?.givenName ?? "") \(fullName?.familyName ?? "")",
+            email: email!,
+            password: "",
+            makerspaces: [makerspace],
+            signinAppleIdentifier: userIdentifier,
+            signinAppleToken: credential.identityToken,
+            signinAppleAuthorizationCode: credential.authorizationCode
+        )
+        
+        self.showResultViewController(user: user)
+    }
+    
+    private func signInWithExistingAccount(credential: ASAuthorizationAppleIDCredential) {
+        //search a user based on:
+        let predicate = NSPredicate(
+            format: "signinAppleIdentifier == %@",
+            credential.user)
+        UserDAO().listAll(by: predicate) { (users, error) in
+            print(error?.localizedDescription)
+            if let user = users?.first {
+                if user.ocupation == "" {
+                    DispatchQueue.main.async {
+                        self.showResultViewController(user: user)
+                    }
+                    
+                }else {
+                    UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Algo deu errado", message: "Remova a credencial do Apple ID em 'Senha e Segurança' nos ajustes do iPhone e volte para se recadastrar.", preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.view.tintColor = .systemPurple
+                    alert.addAction(okAction)
+                    
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+        
+    }
+    
     /// - Tag: did_complete_authorization
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            
-            // Create an account in your system.
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            
-            // For the purpose of this demo app, store the `userIdentifier` in the keychain.
-            self.saveUserInKeychain(userIdentifier)
-            
-            // For the purpose of this demo app, show the Apple ID credential information in the `ResultViewController`.
-            self.showResultViewController(userIdentifier: userIdentifier, fullName: fullName, email: email)
-        
-        case let passwordCredential as ASPasswordCredential:
-        
-            // Sign in using an existing iCloud Keychain credential.
-            let username = passwordCredential.user
-            let password = passwordCredential.password
-            
-            // For the purpose of this demo app, show the password credential as an alert.
-            DispatchQueue.main.async {
-                self.showPasswordCredentialAlert(username: username, password: password)
-            }
-            
-        default:
-            break
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                if let email = appleIDCredential.email, let fullName = appleIDCredential.fullName {
+                    
+                    self.saveUserInKeychain(appleIDCredential.user)
+                    
+                    guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+                    
+                    let user = User(
+                        name: "\(fullName.givenName ?? "") \(fullName.familyName ?? "")",
+                        email: email,
+                        password: "",
+                        makerspaces: [makerspace],
+                        signinAppleIdentifier: appleIDCredential.user,
+                        signinAppleToken: appleIDCredential.identityToken,
+                        signinAppleAuthorizationCode: appleIDCredential.authorizationCode
+                    )
+                    UserDAO().save(entity: user) { userSaved, error in
+                        if userSaved != nil {
+                            DispatchQueue.main.async {
+                                self.showResultViewController(user: userSaved!)
+                            }
+                        }
+                    }
+//                    signInRegisteringNew(credential: appleIDCredential)
+                }
+                else {
+                    signInWithExistingAccount(credential: appleIDCredential)
+                }
+            case let passwordCredential as ASPasswordCredential:
+                
+                // Sign in using an existing iCloud Keychain credential.
+                let username = passwordCredential.user
+                let password = passwordCredential.password
+                
+                // For the purpose of this demo app, show the password credential as an alert.
+                DispatchQueue.main.async {
+                    self.showPasswordCredentialAlert(username: username, password: password)
+                }
+            default:
+                break
         }
     }
     
@@ -206,24 +275,11 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
         }
     }
     
-    private func showResultViewController(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
+    private func showResultViewController(user: User) {
         print("Teria um segue para a proxima view")
         let viewController = LoginTitleViewController(style: .insetGrouped)
-
-        //Removi o .text de todos os campos
-        guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
-        let user = User(name: fullName!.givenName!, email: email!, password: "", projects: [], makerspaces: [makerspace])
+        
         viewController.user = user
-        viewController.userIdentifierLabel = userIdentifier
-        if let givenName = fullName?.givenName {
-            viewController.givenNameLabel = givenName
-        }
-        if let familyName = fullName?.familyName {
-            viewController.familyNameLabel = familyName
-        }
-        if let email = email {
-            viewController.emailLabel = email
-        }
         navigationController?.pushViewController(viewController, animated: true)
     }
     

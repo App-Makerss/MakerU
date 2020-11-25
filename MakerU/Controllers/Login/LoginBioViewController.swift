@@ -24,6 +24,7 @@ class LoginBioViewController: SingleTextTableViewController {
 
     override func setupNavigations() {
         super.setupNavigations()
+        placeholderValue = "Ex: Sou apaixonado por fotografia e trabalho com projetos de cenografia."
         navigationItem.title = "Cadastre-se"
         navigationItem.rightBarButtonItem?.title = "Concluir"
         navigationItem.rightBarButtonItem?.isEnabled = false
@@ -46,7 +47,7 @@ class LoginBioViewController: SingleTextTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        "Confirme seu nome e adicione um título para que outros usuários conheçam sua ocupação."
+        "Adicione uma descrição pessoal para que outros usuários possam te conhecer melhor."
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -57,14 +58,25 @@ class LoginBioViewController: SingleTextTableViewController {
     override func okBarItemTapped() {
         if stringUpdate != "" {
             self.user.description = stringUpdate
-            UserDAO().save(entity: user) { (savedUser, error) in
-                if let savedUser = savedUser {
-                    UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
-                    
-                }else {
-                    print(error?.localizedDescription)
+            if self.user.id != nil {
+                UserDAO().update(entity: user) { (updatedUser, error) in
+                    if let updatedUser = updatedUser {
+                        UserDefaults.standard.setValue(updatedUser.id!, forKey: "loggedUserId")
+                        
+                    }else {
+                        print(error?.localizedDescription)
+                    }
+                }
+            }else {
+                UserDAO().save(entity: user) { (savedUser, error) in
+                    if let savedUser = savedUser {
+                        UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
+                    }else {
+                        print(error?.localizedDescription)
+                    }
                 }
             }
+            
             //TODO: fazer um dissmiss
             dismiss(animated: true, completion: nil)
             
