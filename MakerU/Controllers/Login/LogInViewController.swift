@@ -100,7 +100,10 @@ class LogInViewController: UIViewController{
         
         setupProviderLoginView()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigations()
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         performExistingAccountSetupFlows()
@@ -182,6 +185,7 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
         
         self.showResultViewController(user: user)
     }
+    
     private func signInWithExistingAccount(credential: ASAuthorizationAppleIDCredential) {
         //search a user based on:
         let predicate = NSPredicate(
@@ -190,9 +194,27 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
         UserDAO().listAll(by: predicate) { (users, error) in
             print(error?.localizedDescription)
             if let user = users?.first {
-                UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
+                if user.ocupation == "" {
+                    DispatchQueue.main.async {
+                        self.showResultViewController(user: user)
+                    }
+                    
+                }else {
+                    UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }else {
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Algo deu errado", message: "Remova a credencial do Apple ID em 'Senha e Segurança' nos ajustes do iPhone e volte para se recadastrar.", preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.view.tintColor = .systemPurple
+                    alert.addAction(okAction)
+                    
+                    
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -203,8 +225,29 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                if let _ = appleIDCredential.email, let _ = appleIDCredential.fullName {
-                    signInRegisteringNew(credential: appleIDCredential)
+                if let email = appleIDCredential.email, let fullName = appleIDCredential.fullName {
+                    
+                    self.saveUserInKeychain(appleIDCredential.user)
+                    
+                    guard let makerspace = UserDefaults.standard.value(forKey: "selectedMakerspace") as? String else {return}
+                    
+                    let user = User(
+                        name: "\(fullName.givenName ?? "") \(fullName.familyName ?? "")",
+                        email: email,
+                        password: "",
+                        makerspaces: [makerspace],
+                        signinAppleIdentifier: appleIDCredential.user,
+                        signinAppleToken: appleIDCredential.identityToken,
+                        signinAppleAuthorizationCode: appleIDCredential.authorizationCode
+                    )
+                    UserDAO().save(entity: user) { userSaved, error in
+                        if userSaved != nil {
+                            DispatchQueue.main.async {
+                                self.showResultViewController(user: userSaved!)
+                            }
+                        }
+                    }
+//                    signInRegisteringNew(credential: appleIDCredential)
                 }
                 else {
                     signInWithExistingAccount(credential: appleIDCredential)
