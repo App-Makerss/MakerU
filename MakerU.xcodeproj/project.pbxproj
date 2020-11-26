@@ -106,6 +106,8 @@
 		56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */; };
 		56E9C835254C590F000441C4 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */; };
 		56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C838254C9883000441C4 /* ReservationTableViewController.swift */; };
+		56EB65E8256FE3F100959137 /* ReservationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */; };
+		56EB65EB256FF60600959137 /* UIContentSizeCategory+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB65EA256FF60600959137 /* UIContentSizeCategory+Extensions.swift */; };
 		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E247C090254260B00093833C /* MatchOnboardingViewController.swift */; };
 		E273CC9B255B617600A61078 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273CC9A255B617600A61078 /* ProfileViewController.swift */; };
@@ -221,6 +223,8 @@
 		56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
 		56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		56E9C838254C9883000441C4 /* ReservationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTableViewController.swift; sourceTree = "<group>"; };
+		56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCollectionViewCell.swift; sourceTree = "<group>"; };
+		56EB65EA256FF60600959137 /* UIContentSizeCategory+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+Extensions.swift"; sourceTree = "<group>"; };
 		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E247C090254260B00093833C /* MatchOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchOnboardingViewController.swift; sourceTree = "<group>"; };
 		E273CC9A255B617600A61078 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -380,6 +384,7 @@
 				56D872212555934D00BCB1D1 /* Date+Extensions.swift */,
 				56CCCE652559C9DE0005C2DC /* UIStackView+Extensions.swift */,
 				E2EAAC31255E01B900961EF1 /* UITextView+Extensions.swift */,
+				56EB65EA256FF60600959137 /* UIContentSizeCategory+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -551,6 +556,7 @@
 				56630B3B255C986800E10026 /* MatchCard */,
 				569103CF254763900094D071 /* EquipmentCollectionViewCell.swift */,
 				569103DB254782410094D071 /* RoomCollectionViewCell.swift */,
+				56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -640,6 +646,7 @@
 				569103D8254780F10094D071 /* TitleSupplementaryView.swift in Sources */,
 				566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */,
 				566EC897252E99AC00346846 /* IdentifiableEntity.swift in Sources */,
+				56EB65EB256FF60600959137 /* UIContentSizeCategory+Extensions.swift in Sources */,
 				3EB64565253922D6008D437D /* UserProjectTagTableViewCell.swift in Sources */,
 				3EC3460E254A5754001C4D06 /* NotificationDAO.swift in Sources */,
 				56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */,
@@ -698,6 +705,7 @@
 				3EB6457525393F04008D437D /* ShowProfileTableViewCell.swift in Sources */,
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				56BCD8AA255C345E0056DD49 /* CardFaceEnum.swift in Sources */,
+				56EB65E8256FE3F100959137 /* ReservationCollectionViewCell.swift in Sources */,
 				E2EAAC35255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
 				56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */,
