@@ -62,6 +62,7 @@ class LoginBioViewController: SingleTextTableViewController {
                 UserDAO().update(entity: user) { (updatedUser, error) in
                     if let updatedUser = updatedUser {
                         UserDefaults.standard.setValue(updatedUser.id!, forKey: "loggedUserId")
+                        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
                         
                     }else {
                         print(error?.localizedDescription)
@@ -71,17 +72,14 @@ class LoginBioViewController: SingleTextTableViewController {
                 UserDAO().save(entity: user) { (savedUser, error) in
                     if let savedUser = savedUser {
                         UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
+                        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
                     }else {
                         print(error?.localizedDescription)
                     }
                 }
             }
             
-            //TODO: fazer um dissmiss
-            dismiss(animated: true, completion: nil)
-            
-//            let vc = AddProjectThirdStepTableViewController(style: .insetGrouped)
-//            navigationController?.pushViewController(vc, animated: true)
+            dismiss(animated: true)
         }
     }
 }

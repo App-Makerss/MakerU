@@ -55,21 +55,29 @@ class ProfileViewController: UIViewController {
     var loggedUserVerifier: LoggedUserVerifier!
     var reservationService = ReservationService()
     
+    @objc func loadUser() {
+        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+        UserDAO().find(byId: loggedUserID) { (user, error) in
+            if let user = user {
+                self.user = user
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !loggedUserVerifier.verifyLoggedUser() {
             return
         }
         if user == nil {
-            guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
-            UserDAO().find(byId: loggedUserID) { (user, error) in
-                if let user = user {
-                    self.user = user
-                }
-            }
+            loadUser()
         }else {
             loadReservations()
         }
+        
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "registrationDidFinish"), object: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +88,7 @@ class ProfileViewController: UIViewController {
         }))
         navigationController?.navigationBar.tintColor = .systemPurple
         view.backgroundColor = .systemGroupedBackground
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loadUser), name: NSNotification.Name(rawValue: "registrationDidFinish"), object: nil)
         loggedUserVerifier = LoggedUserVerifier(verifierVC: self)
         if !loggedUserVerifier.verifyLoggedUser() {
             return

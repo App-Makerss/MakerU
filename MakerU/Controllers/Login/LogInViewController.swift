@@ -179,6 +179,7 @@ class LogInViewController: UIViewController{
     
     @objc func cancelBarItemTapped() {
         //Todo: passar as informaçoes pra volta
+        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
         self.dismiss(animated: true, completion: nil)
     }
     @objc func privacyPoliceTap() {
@@ -230,6 +231,7 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                 }else {
                     UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
                     DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
