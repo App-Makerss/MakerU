@@ -155,7 +155,7 @@ class ReservationTableViewController: UITableViewController {
         section == 1 ? dateSelectorsRowCount : projectSectionRowCount
     }
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        section == 0 ? "Associe uma atividade a sua reserva" : ""
+        section == 0 ? "Associe uma atividade à sua reserva." : ""
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
