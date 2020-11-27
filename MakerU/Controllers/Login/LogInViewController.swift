@@ -70,6 +70,12 @@ class LogInViewController: UIViewController{
         control.isUserInteractionEnabled = true
         control.addSubview(footnote)
         footnote.setupConstraints(to: control)
+        footnote.isAccessibilityElement = false
+        
+        
+        control.isAccessibilityElement = true
+        control.accessibilityLabel = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade"
+        control.accessibilityTraits = [.link]
         return control
     }()
     
