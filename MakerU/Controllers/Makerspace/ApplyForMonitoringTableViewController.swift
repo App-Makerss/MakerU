@@ -12,10 +12,17 @@ class ApplyForMonitoringTableViewController: SingleTextTableViewController {
     let activityIndicatorManager = ActivityIndicatorManager()
     let monitorInterestService = MonitorInterestService()
     
+    override var stringUpdate: String {
+        didSet {
+            navigationItem.rightBarButtonItem?.isEnabled = stringUpdate != ""
+        }
+    }
+    
     override func setupNavigations() {
         super.setupNavigations()
         navigationItem.title = "Monitoria"
         navigationItem.rightBarButtonItem?.title = "Aplicar"
+        navigationItem.rightBarButtonItem?.isEnabled = false
         activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
     }
     

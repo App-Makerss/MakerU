@@ -84,6 +84,19 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     }
     
     //MARK: Setups
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        navigationItem.title = "Encontrar pessoas"
+        let item = UITabBarItem()
+        item.title = "Match"
+        item.image = UIImage(systemName: "square.fill.on.square.fill")
+        self.tabBarItem = item
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setupCollecitonView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,11 +110,7 @@ class MatchViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func setupNavigations() {
-        navigationItem.title = "Encontrar pessoas"
-        let item = UITabBarItem()
-        item.title = "Match"
-        item.image = UIImage(systemName: "square.fill.on.square.fill")
-        self.tabBarItem = item
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundColor = .clear

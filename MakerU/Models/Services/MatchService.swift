@@ -58,9 +58,55 @@ struct MatchService {
                             }
                             return nil
                         }))
-                        completion(list.shuffled(),nil)
+                        verifyLikedAndMatchSuggestions(suggestions: list, completion: completion)
                     }
                 }
+            }
+        }
+    }
+    
+    private func verifyLikedAndMatchSuggestions(suggestions: [MatchCard], completion: @escaping ([MatchCard]?, Error?) -> ()) {
+        guard let loggedUserId = UserDefaults.standard.string(forKey: "loggedUserId") else {completion(suggestions.shuffled(),nil);return}
+        
+        
+        let loggedUserRef = matchDAO.generateRecordReference(for: loggedUserId)
+        let listOfIdsRef = matchDAO.generateRecordReference(for: suggestions.compactMap({ element -> String? in
+            element.type == .project ? element.project?.owner : element.id
+        }))
+        
+        // verifying the part who liked
+        let predicatePart1 = NSPredicate(
+            format: "part1 == %@ && part2 IN %@ ",
+            loggedUserRef, listOfIdsRef)
+        matchDAO.listAll(by: predicatePart1) { (matchs, error) in
+            if let matchs = matchs, matchs.count>0 {
+                for i in 0..<suggestions.count{
+                    let id = suggestions[i].type == .project ? suggestions[i].project!.owner : suggestions[i].id
+                    if let match = matchs.first(where:{$0.part2 == id}){
+                        if match.isMutual == true {
+                            suggestions[i].face = .back
+                        }else {
+                            suggestions[i].face = .likeFeedback(suggestions[i].type)
+                        }
+                    }
+                }
+            }
+            // verifying the liked part
+            let predicatePart2 = NSPredicate(
+                format: "part2 == %@ && part1 IN %@ ",
+                loggedUserRef, listOfIdsRef)
+            matchDAO.listAll(by: predicatePart2) { (matchs, error) in
+                if let matchs = matchs, matchs.count>0 {
+                    for i in 0..<suggestions.count{
+                        let id = suggestions[i].type == .project ? suggestions[i].project!.owner : suggestions[i].id
+                        if let match = matchs.first(where:{$0.part1 == id}){
+                            if match.isMutual == true {
+                                suggestions[i].face = .back
+                            }
+                        }
+                    }
+                }
+                completion(suggestions.shuffled(),nil)
             }
         }
     }
@@ -85,7 +131,7 @@ struct MatchService {
             finalPredicate = predicate
         }
         
-//        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
+        //        let predicate2 = NSPredicate(format: "NOT (collaborators CONTAINS %@)", userReference)
         
         dao.listAll(by: finalPredicate, completion: completion)
         
