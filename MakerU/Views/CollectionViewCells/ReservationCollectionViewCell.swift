@@ -41,7 +41,7 @@ class ReservationCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(containerView)
         containerView.setupConstraints(to: contentView)
         
-        containerView.backgroundColor = .systemBackground
+        containerView.backgroundColor = .secondarySystemGroupedBackground
         self.backgroundColor = .clear
         
     }
