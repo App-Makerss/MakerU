@@ -11,13 +11,35 @@ class ProfileViewController: UIViewController {
 
     // MARK: Outlet
     var collectionView: UICollectionView!
+    fileprivate func loadReservations() {
+        self.reservationService.loadUserReservations(of: self.user!) { (reservs, projs, error) in
+            if let projs = projs {
+                self.projects = projs
+            }
+            if let reservs = reservs {
+                self.reservations = reservs
+            }
+        }
+    }
+    
     var user: User? = nil {
         didSet {
+            DispatchQueue.main.async {
+                if self.user != nil {
+                    self.loadReservations()
+                }
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    var reservations: [Reservation] = []{
+        didSet{
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
     }
+    var projects: [Project] = []
     let horizontalInset: CGFloat = 16
     var reservationCardHeight: CGFloat {
         if traitCollection.preferredContentSizeCategory <= .large {
@@ -31,6 +53,7 @@ class ProfileViewController: UIViewController {
     }
     // MARK: Attributes
     var loggedUserVerifier: LoggedUserVerifier!
+    var reservationService = ReservationService()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,6 +67,8 @@ class ProfileViewController: UIViewController {
                     self.user = user
                 }
             }
+        }else {
+            loadReservations()
         }
     }
     override func viewDidLoad() {
@@ -233,7 +258,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        section == 3 ? 5 : 1
+        section == 3 ? reservations.count : 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -271,8 +296,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 break
                 
             case 3:
-                let reservationCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReservationCollectionViewCell.reuseIdentifier, for: indexPath)
-                
+                let reservationCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReservationCollectionViewCell.reuseIdentifier, for: indexPath) as! ReservationCollectionViewCell
+                let reservation = reservations[indexPath.row]
+                let project = projects.first(where: { $0.id == reservation.project})
+                reservationCell.item.configView(title: project?.title, subtitle: "\(reservation.startDate.timeAsString()) - \(reservation.endDate.timeAsString())")
+                reservationCell.day.text = "\(reservation.startDate.getDay())"
+                reservationCell.weekdayLabel.text = reservation.startDate.getWeekday().uppercased()
                 cell = reservationCell
                 break
                 

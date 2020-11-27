@@ -15,14 +15,12 @@ class ReservationCollectionViewCell: UICollectionViewCell {
     let weekdayLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = .systemRed
-        lbl.text = "QUINTA-FEIRA"
         lbl.setDynamicType(textStyle: .caption2, weight: .semibold)
         return lbl
     }()
     
     let day: UILabel = {
         let lbl = UILabel()
-        lbl.text = "8"
         lbl.setDynamicType(textStyle: .title1)
         return lbl
     }()
@@ -30,7 +28,6 @@ class ReservationCollectionViewCell: UICollectionViewCell {
     
     
     func commonInit() {
-        item.configView(title: "Aplicativo para espaço maker", subtitle: "17:00 - 18:00")
         let contentStack = UIStackView(axis: .vertical, arrangedSubviews: [weekdayLabel, day, item])
         contentStack.alignment = .leading
         contentStack.distribution = .fillProportionally
