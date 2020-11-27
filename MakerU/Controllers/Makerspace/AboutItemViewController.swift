@@ -117,12 +117,12 @@ class AboutItemViewController: UIViewController {
 extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        selectedEquip != nil ? 3 : 2
+        selectedEquip != nil ? 4 : 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-            case 2:
+            case 2,3:
                 return 1
             case 1:
                 return 2
@@ -143,8 +143,10 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
 
         switch section {
-            case 2:
+            case 3:
                 label.text = "Ocorrências"
+            case 2:
+                label.text = "Informações adicionais"
             case 1:
                 label.text = "Reservas"
             default:
@@ -165,11 +167,17 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         let row = indexPath.row
         var cell = UITableViewCell(style: .value1, reuseIdentifier: "")
         switch indexPath.section{
-            case 2:
+            case 3:
                 cell.accessoryType = .disclosureIndicator
                 cell.textLabel?.text = "Reportar"
                 cell.textLabel?.setDynamicType(font: .systemFont(style: .body))
                 cell.textLabel?.textColor = .systemPurple
+                break
+            case 2:
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.text = "Manual"
+                cell.textLabel?.setDynamicType(font: .systemFont(style: .body))
+                cell.textLabel?.textColor = .label
                 break
             case 1:
                 if row == 1{
@@ -216,13 +224,17 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 2 && indexPath.row == 0 {
+        if indexPath.section == 3 && indexPath.row == 0 {
             if !loggedUserVerifier.verifyLoggedUser() {
                 return
             }
             let vc = OccurrencesTableViewController(style: .insetGrouped)
             vc.selectedEquipment = self.selectedEquip
             present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+        }else if indexPath.section == 2 {
+            guard let url = URL(string: selectedEquip!.guideLink)
+            else { return /*could show an alert for equips with no guideLiks */ }
+            UIApplication.shared.open(url)
         }
     }
     
