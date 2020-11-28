@@ -47,7 +47,7 @@ class OnboardingPage1ViewController: UIViewController {
                               imageName: "magnifyingglass.circle")
         let block2 = genBlock(title: "Conheça pessoas",
                               description: "Adicione um projeto e procure interessados em colaboração.",
-                              imageName: "person.2.square.stack.fill")
+                              imageName: "person.2.square.stack")
         
         let blockStack = UIStackView(axis: .vertical, arrangedSubviews: [block1, block2])
         blockStack.spacing = 24

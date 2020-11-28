@@ -38,15 +38,17 @@ class OnboardingPage3ViewController: UIViewController {
         titleLabel.text = "Encontre pessoas"
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         
         let subtitleLabel = UILabel()
         subtitleLabel.setDynamicType(textStyle: .body)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
         subtitleLabel.text = "Explore projetos desenvolvidos no seu espaço e demonstre interesse em colaborar."
+        subtitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         
         
-        let stackContent = UIStackView(axis: .vertical, arrangedSubviews: [imageView, titleLabel, subtitleLabel])
+        let stackContent = UIStackView(axis: .vertical, arrangedSubviews: [imageView, titleLabel, subtitleLabel,UIView()])
         stackContent.alignment = .center
         stackContent.spacing = 12
         stackContent.setCustomSpacing(24, after: imageView)
@@ -71,7 +73,7 @@ class OnboardingPage3ViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.heightAnchor.constraint(equalTo: stackContent.heightAnchor, multiplier: UIDevice().hasNotch ? 0.75 : 0.7).isActive = true
         
-        stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: UIDevice().hasNotch ? -70 : -50).isActive = true
+        stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: UIDevice().hasNotch ? -40 : -20).isActive = true
     }
     
     //MARK: objc funcs
