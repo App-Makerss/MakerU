@@ -69,6 +69,11 @@ class MakerspaceViewController: UIViewController {
                 self.rooms = rooms.shuffled()
             }
         }
+        if !UserDefaults.standard.bool(forKey: "onboardingAlreadySeen"){
+            let navigation = OnboardingNavigationController(rootViewController: OnboardingPage1ViewController())
+            self.present(navigation, animated: true)
+        }
+        
     }
 
     //MARK: Setups

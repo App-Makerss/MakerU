@@ -51,6 +51,9 @@
 		566620BA252F7D9D009821E9 /* GenericsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620B9252F7D9D009821E9 /* GenericsDAO.swift */; };
 		566620C7252F8C00009821E9 /* Makerspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C6252F8C00009821E9 /* Makerspace.swift */; };
 		566620CA252F9054009821E9 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566620C9252F9054009821E9 /* Coordinate.swift */; };
+		566C8F7F2571E83B0023F634 /* OnboardingPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566C8F7E2571E83B0023F634 /* OnboardingPage2ViewController.swift */; };
+		566C8F832571ECBE0023F634 /* OnboardingPage3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566C8F822571ECBE0023F634 /* OnboardingPage3ViewController.swift */; };
+		566C8F882571EF2B0023F634 /* OnboardingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566C8F872571EF2B0023F634 /* OnboardingNavigationController.swift */; };
 		566D50F52539E721002B0CE1 /* MatchDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D50F42539E721002B0CE1 /* MatchDAO.swift */; };
 		566D51032539F262002B0CE1 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D51022539F262002B0CE1 /* UIFont+Extensions.swift */; };
 		566D5106253A2B18002B0CE1 /* MatchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566D5105253A2B18002B0CE1 /* MatchCard.swift */; };
@@ -104,6 +107,7 @@
 		56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */; };
 		56DE940B254E29630054CF6E /* GenericRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940A254E29630054CF6E /* GenericRow.swift */; };
 		56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */; };
+		56E579A42571DCCC0006A236 /* OnboardingPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E579A32571DCCC0006A236 /* OnboardingPage1ViewController.swift */; };
 		56E9C835254C590F000441C4 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */; };
 		56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C838254C9883000441C4 /* ReservationTableViewController.swift */; };
 		56EB65E8256FE3F100959137 /* ReservationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */; };
@@ -166,6 +170,9 @@
 		566620B9252F7D9D009821E9 /* GenericsDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericsDAO.swift; sourceTree = "<group>"; };
 		566620C6252F8C00009821E9 /* Makerspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Makerspace.swift; sourceTree = "<group>"; };
 		566620C9252F9054009821E9 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		566C8F7E2571E83B0023F634 /* OnboardingPage2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPage2ViewController.swift; sourceTree = "<group>"; };
+		566C8F822571ECBE0023F634 /* OnboardingPage3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPage3ViewController.swift; sourceTree = "<group>"; };
+		566C8F872571EF2B0023F634 /* OnboardingNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationController.swift; sourceTree = "<group>"; };
 		566D50F42539E721002B0CE1 /* MatchDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchDAO.swift; sourceTree = "<group>"; };
 		566D51022539F262002B0CE1 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		566D5105253A2B18002B0CE1 /* MatchCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCard.swift; sourceTree = "<group>"; };
@@ -221,6 +228,7 @@
 		56DCCE50255190ED005D11D3 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		56DE940A254E29630054CF6E /* GenericRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRow.swift; sourceTree = "<group>"; };
 		56DE940D254E29C90054CF6E /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
+		56E579A32571DCCC0006A236 /* OnboardingPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage1ViewController.swift; sourceTree = "<group>"; };
 		56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		56E9C838254C9883000441C4 /* ReservationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTableViewController.swift; sourceTree = "<group>"; };
 		56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -358,6 +366,17 @@
 			path = MatchCard;
 			sourceTree = "<group>";
 		};
+		566C8F852571EE160023F634 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				56E579A32571DCCC0006A236 /* OnboardingPage1ViewController.swift */,
+				566C8F7E2571E83B0023F634 /* OnboardingPage2ViewController.swift */,
+				566C8F822571ECBE0023F634 /* OnboardingPage3ViewController.swift */,
+				566C8F872571EF2B0023F634 /* OnboardingNavigationController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		566EB3CC2535E56B0092F096 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +386,7 @@
 				E2B7A93D255AC9B000FA978A /* Profile */,
 				E2B7A938255A36B500FA978A /* Project */,
 				56C398112565502700D20C71 /* ReusableThings */,
+				566C8F852571EE160023F634 /* Onboarding */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -674,6 +694,7 @@
 				566620C7252F8C00009821E9 /* Makerspace.swift in Sources */,
 				3E773649254B105500D3D290 /* GlobalNotificationService.swift in Sources */,
 				3E5B0F802541B1A800E54FDF /* MatchCardInfoViewController.swift in Sources */,
+				56E579A42571DCCC0006A236 /* OnboardingPage1ViewController.swift in Sources */,
 				E2EAAC38255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift in Sources */,
 				56271A792562C4C400D6B02A /* NotificationTableViewCell.swift in Sources */,
 				566D510C253A3164002B0CE1 /* CategoryDAO.swift in Sources */,
@@ -706,6 +727,7 @@
 				3EB6456D25392A79008D437D /* ProjectDescriptionTableViewCell.swift in Sources */,
 				56BCD8AA255C345E0056DD49 /* CardFaceEnum.swift in Sources */,
 				56EB65E8256FE3F100959137 /* ReservationCollectionViewCell.swift in Sources */,
+				566C8F882571EF2B0023F634 /* OnboardingNavigationController.swift in Sources */,
 				E2EAAC35255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift in Sources */,
 				E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */,
 				56133E38254A23B7009E1CEF /* SingleTextTableViewController.swift in Sources */,
@@ -713,8 +735,10 @@
 				569C44292542FA400099A44A /* ScrollableCover.swift in Sources */,
 				566EC891252E738A00346846 /* User.swift in Sources */,
 				569714CE254B49BD00419049 /* MonitorInterestService.swift in Sources */,
+				566C8F7F2571E83B0023F634 /* OnboardingPage2ViewController.swift in Sources */,
 				3E277C0E255C2E57001FF7B4 /* LoginBioViewController.swift in Sources */,
 				569714C2254B257500419049 /* OccurrenceDAO.swift in Sources */,
+				566C8F832571ECBE0023F634 /* OnboardingPage3ViewController.swift in Sources */,
 				56A6FC55254E7185006198BF /* FormFieldTableViewCell.swift in Sources */,
 				56271A6D25619B8300D6B02A /* GlobalNotification.swift in Sources */,
 				569714BC254AEDF600419049 /* ApplyForMonitoringTableViewController.swift in Sources */,
