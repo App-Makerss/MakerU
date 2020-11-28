@@ -67,14 +67,13 @@ class OnboardingPage2ViewController: UIViewController {
         
         stackContent.setupConstraintsOnlyTo(to: view, leadingConstant: 16, topConstant: -5, trailingConstant: -16, topSafeArea: true)
         
-        continueButton.setupConstraintsOnlyTo(to: view, leadingConstant: 16, trailingConstant: -16, bottomConstant: -44, bottomSafeArea: true)
+        continueButton.setupConstraintsOnlyTo(to: view, leadingConstant: 16, trailingConstant: -16, bottomConstant: UIDevice().hasNotch ? -44 : -24, bottomSafeArea: true)
         continueButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalTo: stackContent.heightAnchor, multiplier: 0.75).isActive = true
+        imageView.heightAnchor.constraint(equalTo: stackContent.heightAnchor, multiplier: UIDevice().hasNotch ? 0.75 : 0.7).isActive = true
         
-        stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: -70).isActive = true
-        
-        
+        stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: UIDevice().hasNotch ? -70 : -50).isActive = true
         
     }
     

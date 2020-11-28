@@ -369,10 +369,10 @@
 		566C8F852571EE160023F634 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				566C8F872571EF2B0023F634 /* OnboardingNavigationController.swift */,
 				56E579A32571DCCC0006A236 /* OnboardingPage1ViewController.swift */,
 				566C8F7E2571E83B0023F634 /* OnboardingPage2ViewController.swift */,
 				566C8F822571ECBE0023F634 /* OnboardingPage3ViewController.swift */,
-				566C8F872571EF2B0023F634 /* OnboardingNavigationController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";

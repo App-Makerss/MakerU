@@ -75,7 +75,7 @@ class OnboardingPage1ViewController: UIViewController {
         
         stackContent.setupConstraintsOnlyTo(to: view, leadingConstant: 16, topConstant: 22, trailingConstant: -16, topSafeArea: true)
         
-        continueButton.setupConstraintsOnlyTo(to: view, leadingConstant: 16, trailingConstant: -16, bottomConstant: -44, bottomSafeArea: true)
+        continueButton.setupConstraintsOnlyTo(to: view, leadingConstant: 16, trailingConstant: -16, bottomConstant: UIDevice().hasNotch ? -44 : -24, bottomSafeArea: true)
         continueButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
         
         stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: -10).isActive = true

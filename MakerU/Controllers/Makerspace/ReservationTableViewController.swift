@@ -330,6 +330,7 @@ class ReservationTableViewController: UITableViewController {
                                         self.activityIndicatorManager.stopLoading(on: self.navigationItem)
                                     }
                                     self.presentSuccessAlert(title: "Reservado!", message: "Em caso de necessidade, cancele sua reserva acessando o perfil.") { _ in
+                                        NotificationCenter.default.post(name: NSNotification.Name("reservationDidFinish"), object: nil)
                                         self.dismiss(animated: true, completion: nil)
                                     }
                                 }else {

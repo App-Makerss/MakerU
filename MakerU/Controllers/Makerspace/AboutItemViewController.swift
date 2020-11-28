@@ -101,6 +101,11 @@ class AboutItemViewController: UIViewController {
     
     fileprivate func initItems() {
         setupNavigationBarColor()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadReservations), name: NSNotification.Name(rawValue: "reservationDidFinish"), object: nil)
+        
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "reservationDidFinish"), object: nil)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -248,6 +253,10 @@ extension AboutItemViewController: UITableViewDelegate, UITableViewDataSource {
         vc.selectedRoom = selectedRoom
         vc.selectedDate = selectedDate
         present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
+    }
+    
+    @objc func reloadReservations() {
+        loadReservations()
     }
 }
 
