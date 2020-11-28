@@ -228,10 +228,7 @@ class ProfileViewController: UIViewController {
 
     let profileImageView: UIImageView = {
         let img = UIImageView()
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.image = UIImage(named: "profilePlaceholder")
-        img.heightAnchor.constraint(equalToConstant: 75).isActive = true
-        img.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        img.sizeConstraints(equalSidesConstant: 75)
         img.tintColor = .purple
         img.layer.cornerRadius = 36
         img.clipsToBounds = true
@@ -329,6 +326,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 listCell.addSubview(downStack)
                 downStack.setupConstraints(to: listCell)
                 
+                profileImageView.image = user?.profileImage != nil ? UIImage(data: user!.profileImage!) : UIImage(named: "profilePlaceholder")
                 profileName.text = user?.name
                 profileSubtitle.text = user?.ocupation
                 

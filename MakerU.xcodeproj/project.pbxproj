@@ -39,6 +39,7 @@
 		56271A792562C4C400D6B02A /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A782562C4C400D6B02A /* NotificationTableViewCell.swift */; };
 		56271A8425630AC500D6B02A /* ActivityIndicatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A8325630AC500D6B02A /* ActivityIndicatorManager.swift */; };
 		56271A9325633E4200D6B02A /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56271A9225633E4200D6B02A /* SignInWithAppleButton.swift */; };
+		563787242572CA8900C2D753 /* LoginImageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563787232572CA8900C2D753 /* LoginImageTableViewController.swift */; };
 		56389D782534DB43004B358D /* CKAsset+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56389D772534DB43004B358D /* CKAsset+UIImage.swift */; };
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564954B7253F0C790052125A /* TimePickerTableViewCell.swift */; };
@@ -157,6 +158,7 @@
 		56271A782562C4C400D6B02A /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		56271A8325630AC500D6B02A /* ActivityIndicatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorManager.swift; sourceTree = "<group>"; };
 		56271A9225633E4200D6B02A /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleButton.swift; sourceTree = "<group>"; };
+		563787232572CA8900C2D753 /* LoginImageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginImageTableViewController.swift; sourceTree = "<group>"; };
 		56389D772534DB43004B358D /* CKAsset+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKAsset+UIImage.swift"; sourceTree = "<group>"; };
 		5648EFFB252CBA6E00E326CD /* MakerU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MakerU.entitlements; sourceTree = "<group>"; };
 		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -496,6 +498,7 @@
 		56C3980A256548CD00D20C71 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				563787232572CA8900C2D753 /* LoginImageTableViewController.swift */,
 				3E502F132559711900106CB7 /* LogInViewController.swift */,
 				3E277C0A255C2388001FF7B4 /* LoginTitleViewController.swift */,
 				3E277C0D255C2E57001FF7B4 /* LoginBioViewController.swift */,
@@ -704,6 +707,7 @@
 				3EB64561253894B0008D437D /* UserProfileTagTableViewCell.swift in Sources */,
 				569714C8254B412C00419049 /* MonitorInterest.swift in Sources */,
 				56630B39255C86BD00E10026 /* CardLayoutFactory.swift in Sources */,
+				563787242572CA8900C2D753 /* LoginImageTableViewController.swift in Sources */,
 				569103DF25478F040094D071 /* GradientView.swift in Sources */,
 				56271A6A25619B3500D6B02A /* GlobalNotificationDAO.swift in Sources */,
 				E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */,

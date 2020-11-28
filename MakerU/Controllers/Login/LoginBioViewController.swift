@@ -58,28 +58,9 @@ class LoginBioViewController: SingleTextTableViewController {
     override func okBarItemTapped() {
         if stringUpdate != "" {
             self.user.description = stringUpdate
-            if self.user.id != nil {
-                UserDAO().update(entity: user) { (updatedUser, error) in
-                    if let updatedUser = updatedUser {
-                        UserDefaults.standard.setValue(updatedUser.id!, forKey: "loggedUserId")
-                        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
-                        
-                    }else {
-                        print(error?.localizedDescription)
-                    }
-                }
-            }else {
-                UserDAO().save(entity: user) { (savedUser, error) in
-                    if let savedUser = savedUser {
-                        UserDefaults.standard.setValue(savedUser.id!, forKey: "loggedUserId")
-                        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
-                    }else {
-                        print(error?.localizedDescription)
-                    }
-                }
-            }
-            
-            dismiss(animated: true)
+            let nextVC = LoginImageTableViewController(style: .insetGrouped)
+            nextVC.user = self.user
+            navigationController?.pushViewController(nextVC, animated: true)
         }
     }
 }
