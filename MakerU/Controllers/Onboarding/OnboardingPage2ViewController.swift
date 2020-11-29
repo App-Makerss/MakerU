@@ -8,7 +8,8 @@
 import UIKit
 
 class OnboardingPage2ViewController: UIViewController {
-
+    var imageViewHeightConstraint: NSLayoutConstraint?
+    let imageView = UIImageView(image: UIImage(named: "onboardingImage1"))
     
     //MARK: life cycles
     override func viewDidLoad() {
@@ -31,9 +32,7 @@ class OnboardingPage2ViewController: UIViewController {
     
     func setupLayout() {
         
-        let imageView = UIImageView(image: UIImage(named: "onboardingImage1"))
         imageView.contentMode = .scaleAspectFit
-        
         
         let titleLabel = UILabel()
         titleLabel.setDynamicType(textStyle: .title1, weight: .bold)
@@ -72,10 +71,31 @@ class OnboardingPage2ViewController: UIViewController {
         continueButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.heightAnchor.constraint(equalTo: stackContent.heightAnchor, multiplier: UIDevice().hasNotch ? 0.75 : 0.7).isActive = true
+        imageViewHeightConstraint = imageView.heightAnchor.constraint(equalTo: stackContent.heightAnchor, multiplier: UIDevice().hasNotch ? 0.75 : 0.7)
+        imageViewHeightConstraint?.isActive = true
         
-        stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: UIDevice().hasNotch ? -40 : -20).isActive = true
+        stackContent.bottomAnchor.constraint(lessThanOrEqualTo: continueButton.topAnchor, constant: -10).isActive = true
         
+    }
+    
+    private func manageImageViewHeight() {
+        if imageView.superview != nil {
+            if let imageViewHeightConstraint = imageViewHeightConstraint{
+                var multiplier:CGFloat = 0
+                multiplier   = traitCollection.preferredContentSizeCategory > .large ? -0.05 : 0
+                multiplier += UIDevice().hasNotch ? 0.75 : 0.7
+                let newC = imageViewHeightConstraint.constraintWithMultiplier(multiplier)
+                imageView.superview?.removeConstraint(imageViewHeightConstraint)
+                imageView.superview?.addConstraint(newC)
+                self.imageViewHeightConstraint = newC
+                imageView.superview?.setNeedsLayout()
+            }
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        manageImageViewHeight()
     }
     
     //MARK: objc funcs

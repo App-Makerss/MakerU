@@ -44,6 +44,7 @@
 		5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5648EFFD252CBA7600E326CD /* CloudKit.framework */; };
 		564954B8253F0C790052125A /* TimePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564954B7253F0C790052125A /* TimePickerTableViewCell.swift */; };
 		564954C2253F56510052125A /* Futura_Bold_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 564954C1253F561A0052125A /* Futura_Bold_font.ttf */; };
+		564D494B257313680084DE0C /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564D494A257313680084DE0C /* NSLayoutConstraint+Extensions.swift */; };
 		5653345E256424E30084647F /* LoggedUserVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5653345D256424E30084647F /* LoggedUserVerifier.swift */; };
 		56548DA5252E0985003AC229 /* DatabaseAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA4252E0985003AC229 /* DatabaseAccess.swift */; };
 		56548DA8252E0BDC003AC229 /* CloudKitEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56548DA7252E0BDC003AC229 /* CloudKitEncodable.swift */; };
@@ -164,6 +165,7 @@
 		5648EFFD252CBA7600E326CD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		564954B7253F0C790052125A /* TimePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerTableViewCell.swift; sourceTree = "<group>"; };
 		564954C1253F561A0052125A /* Futura_Bold_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Futura_Bold_font.ttf; sourceTree = "<group>"; };
+		564D494A257313680084DE0C /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		5653345D256424E30084647F /* LoggedUserVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedUserVerifier.swift; sourceTree = "<group>"; };
 		56548DA4252E0985003AC229 /* DatabaseAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAccess.swift; sourceTree = "<group>"; };
 		56548DA7252E0BDC003AC229 /* CloudKitEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitEncodable.swift; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 		566EC89E252E9A2D00346846 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				564D494A257313680084DE0C /* NSLayoutConstraint+Extensions.swift */,
 				56E9C834254C590F000441C4 /* UIDevice+Extensions.swift */,
 				569103BC25472FB90094D071 /* UILabel+Extensions.swift */,
 				566EC8A1252EA22B00346846 /* Encodable+Extensions.swift */,
@@ -713,6 +716,7 @@
 				E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */,
 				569714BF254B252C00419049 /* Occurrence.swift in Sources */,
 				56DE940E254E29C90054CF6E /* PickerViewTableViewCell.swift in Sources */,
+				564D494B257313680084DE0C /* NSLayoutConstraint+Extensions.swift in Sources */,
 				56DCCE51255190ED005D11D3 /* UITextField+Extensions.swift in Sources */,
 				3E502F142559711900106CB7 /* LogInViewController.swift in Sources */,
 				3E502F1725598F4200106CB7 /* KeychainItem.swift in Sources */,
