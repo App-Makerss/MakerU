@@ -93,4 +93,28 @@ struct ReservationService {
             }
         }
     }
+    
+    func loadUserReservations(of user: User, completion: @escaping ([Reservation]?,[Project]?, Error?) -> ()) {
+        let startOfToday = Calendar.current.startOfDay(for: Date())
+        let userRef = dao.generateRecordReference(for: user.id!)
+        let fromTodayOfUser = NSPredicate(format: "startDate >= %@ && byUser == %@", startOfToday as NSDate, userRef)
+        
+        dao.listAll(by: fromTodayOfUser, sortBy: ["startDate":true]) { (reservations, error) in
+            print(error?.localizedDescription)
+            if let reservations = reservations {
+                let projectIDS = dao.generateRecordReference(for:reservations.compactMap {$0.project})
+                let predicate: NSPredicate = NSPredicate(format: "recordID IN %@", projectIDS)
+                projectDAO.listAll(by: predicate) { (projects, err) in
+                    print(err?.localizedDescription)
+                    if let projects = projects {
+                        completion(reservations, projects, nil)
+                    }else {
+                        completion(reservations, nil, err)
+                    }
+                }
+            }else {
+                completion(nil, nil, error)
+            }
+        }
+    }
 }

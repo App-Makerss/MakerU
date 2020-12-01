@@ -66,7 +66,7 @@ class LoginTitleViewController: UITableViewController {
         section == 0 ? "INFORMAÇÕES PESSOAIS" : ""
     }
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        section == 0 ? "Confirme seu nome e adicione um título para que outros usuários conheçam sua ocupação." : ""
+        section == 0 ? "Confirme seu nome e adicione uma ocupação para que outros usuários te conheçam." : ""
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,7 +83,8 @@ class LoginTitleViewController: UITableViewController {
             resultCell = cell
         default:
             let cell = FormFieldTableViewCell()
-            cell.label.text = "Título"
+            cell.label.text = "Ocupação"
+            cell.value.placeholder = "ex: estudante de engenharia"
             cell.value.addTarget(self, action: #selector(self.newTitleValueChanged(sender:)), for: .editingDidEnd)
             cell.detailTextLabel?.text = userOcupation
             resultCell = cell

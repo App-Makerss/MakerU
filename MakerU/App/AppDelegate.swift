@@ -27,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         UserDefaults.standard.setValue("8A0C55B3-0DB5-7C76-FFC7-236570DF3F77", forKey: "selectedMakerspace")
+        
+        #if targetEnvironment(simulator)
+        print("setting loggedUser for simulator")
+        UserDefaults.standard.setValue("2C85C085-EA48-4ECC-97B9-AEF0CEF64441", forKey: "loggedUserId")
+        #endif
         return true
     }
 

@@ -51,13 +51,32 @@ class LogInViewController: UIViewController{
         return subtitle
     }()
     
-    let footnoteText: UILabel = {
+    let footnoteText: UIControl = {
         let footnote = UILabel()
-        footnote.setDynamicType(textStyle: .footnote)
-        footnote.text = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade."
+        let attrString = NSMutableAttributedString(string: "Ao iniciar sessão você aceita nossos", attributes: [NSAttributedString.Key.font: UIFont.systemFont(style: .footnote)])
+        let appendString = NSAttributedString(string: " Termos de Uso e Política de Privacidade", attributes: [
+            NSAttributedString.Key.foregroundColor:UIColor.systemPurple,
+            NSAttributedString.Key.font:UIFont.systemFont(style: .footnote)
+        ])
+        attrString.append(appendString)
+        
+        footnote.attributedText = attrString
+        footnote.adjustsFontForContentSizeCategory = true
         footnote.textAlignment = .center
         footnote.numberOfLines = 0
-        return footnote
+        footnote.isUserInteractionEnabled = false
+        
+        let control = UIControl()
+        control.isUserInteractionEnabled = true
+        control.addSubview(footnote)
+        footnote.setupConstraints(to: control)
+        footnote.isAccessibilityElement = false
+        
+        
+        control.isAccessibilityElement = true
+        control.accessibilityLabel = "Ao iniciar sessão você aceita nossos Termos de Uso e Política de Privacidade"
+        control.accessibilityTraits = [.link]
+        return control
     }()
     
     private func stackSetUp() -> UIStackView {
@@ -95,6 +114,8 @@ class LogInViewController: UIViewController{
         self.view.addSubview(stacks)
         self.view.addSubview(footnoteText)
         setupContraints(stack: stacks)
+        
+        footnoteText.addTarget(self, action: #selector(self.privacyPoliceTap), for: .touchUpInside)
         
         view.backgroundColor = .systemBackground
         
@@ -158,7 +179,15 @@ class LogInViewController: UIViewController{
     
     @objc func cancelBarItemTapped() {
         //Todo: passar as informaçoes pra volta
+        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
         self.dismiss(animated: true, completion: nil)
+    }
+    @objc func privacyPoliceTap() {
+        print("oie")
+        guard let url = URL(string: "https://raw.githubusercontent.com/App-Makerss/MakerU/main/readme.md")
+        else { return }
+        UIApplication.shared.open(url)
+        
     }
 }
 
@@ -202,6 +231,7 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                 }else {
                     UserDefaults.standard.setValue(user.id, forKey: "loggedUserId")
                     DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: NSNotification.Name("registrationDidFinish"), object: nil)
                         self.dismiss(animated: true, completion: nil)
                     }
                 }

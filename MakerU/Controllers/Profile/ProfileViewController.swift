@@ -11,17 +11,58 @@ class ProfileViewController: UIViewController {
 
     // MARK: Outlet
     var collectionView: UICollectionView!
+    fileprivate func loadReservations() {
+        self.reservationService.loadUserReservations(of: self.user!) { (reservs, projs, error) in
+            if let projs = projs {
+                self.projects = projs
+            }
+            if let reservs = reservs {
+                self.reservations = reservs
+            }
+        }
+    }
+    
     var user: User? = nil {
         didSet {
+            DispatchQueue.main.async {
+                if self.user != nil {
+                    self.loadReservations()
+                }
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    var reservations: [Reservation] = []{
+        didSet{
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
     }
-    let horizontalInset: CGFloat = 29
-    
+    var projects: [Project] = []
+    let horizontalInset: CGFloat = 16
+    var reservationCardHeight: CGFloat {
+        if traitCollection.preferredContentSizeCategory <= .large {
+            return 120
+        }else {
+            let multplier:CGFloat = 0.05
+            let coefficient = CGFloat(traitCollection.preferredContentSizeCategory.howMuchMoreThanLargeCategory())
+            return 120 + (120 * (multplier*coefficient))
+        }
+        
+    }
     // MARK: Attributes
     var loggedUserVerifier: LoggedUserVerifier!
+    var reservationService = ReservationService()
+    
+    @objc func loadUser() {
+        guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
+        UserDAO().find(byId: loggedUserID) { (user, error) in
+            if let user = user {
+                self.user = user
+            }
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -29,13 +70,14 @@ class ProfileViewController: UIViewController {
             return
         }
         if user == nil {
-            guard let loggedUserID = UserDefaults.standard.string(forKey: "loggedUserId") else { return }
-            UserDAO().find(byId: loggedUserID) { (user, error) in
-                if let user = user {
-                    self.user = user
-                }
-            }
+            loadUser()
+        }else {
+            loadReservations()
         }
+        
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "registrationDidFinish"), object: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +88,7 @@ class ProfileViewController: UIViewController {
         }))
         navigationController?.navigationBar.tintColor = .systemPurple
         view.backgroundColor = .systemGroupedBackground
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loadUser), name: NSNotification.Name(rawValue: "registrationDidFinish"), object: nil)
         loggedUserVerifier = LoggedUserVerifier(verifierVC: self)
         if !loggedUserVerifier.verifyLoggedUser() {
             return
@@ -58,6 +101,8 @@ class ProfileViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
         collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: "listCell")
+        collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: "addProjCell")
+        collectionView.register(ReservationCollectionViewCell.self, forCellWithReuseIdentifier: ReservationCollectionViewCell.reuseIdentifier)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "celular")
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
         view.addSubview(collectionView)
@@ -90,15 +135,18 @@ class ProfileViewController: UIViewController {
 
             var section: NSCollectionLayoutSection!
             switch sectionIndex {
-            case 1:
-                section = self.makeBioSection(layoutEnvironment)
-                break
-            case 2:
-                section = self.makeAddProjectSection(layoutEnvironment)
-                break
-            default:
-                section = self.makeHeaderProfile(layoutEnvironment)
-                break
+                case 1:
+                    section = self.makeBioSection(layoutEnvironment)
+                    break
+                case 2:
+                    section = self.makeAddProjectSection(layoutEnvironment)
+                    break
+                case 3:
+                    section = self.makeReservationsSection()
+                    break
+                default:
+                    section = self.makeHeaderProfile(layoutEnvironment)
+                    break
             }
 
             if sectionIndex > 0 {
@@ -122,7 +170,7 @@ class ProfileViewController: UIViewController {
         let section = NSCollectionLayoutSection.list(using: configuration,
                                                      layoutEnvironment: layoutEnvironment)
 
-        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: horizontalInset, bottom: 0, trailing: horizontalInset)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: horizontalInset, bottom: 8, trailing: horizontalInset)
         return section
     }
 
@@ -133,7 +181,7 @@ class ProfileViewController: UIViewController {
         let section = NSCollectionLayoutSection.list(using: configuration,
                                                      layoutEnvironment: layoutEnvironment)
 
-        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: horizontalInset, bottom: 0, trailing: horizontalInset)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: horizontalInset, bottom: 8, trailing: horizontalInset)
         return section
     }
 
@@ -154,15 +202,33 @@ class ProfileViewController: UIViewController {
 
         return section
     }
+    
+    func makeReservationsSection() -> NSCollectionLayoutSection? {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize: NSCollectionLayoutSize
+        
+        groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.65), heightDimension: .absolute(reservationCardHeight))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 16
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: horizontalInset, bottom: 0, trailing: horizontalInset)
+        
+        return section
+    }
 
     //MARK: View Code Setup
 
     let profileImageView: UIImageView = {
         let img = UIImageView()
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.image = UIImage(named: "profilePlaceholder")
-        img.heightAnchor.constraint(equalToConstant: 75).isActive = true
-        img.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        img.sizeConstraints(equalSidesConstant: 75)
         img.tintColor = .purple
         img.layer.cornerRadius = 36
         img.clipsToBounds = true
@@ -194,66 +260,78 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        4
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        section == 3 ? reservations.count : 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell: UICollectionViewCell!
         switch indexPath.section {
-        case 1:
-            let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! UICollectionViewListCell
-            var content = UIListContentConfiguration.valueCell()
-            content.text = user?.description
-            listCell.contentConfiguration = content
-            listCell.selectedBackgroundView = nil
-
-            cell = listCell
-            break
-
-        case 2:
-            let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! UICollectionViewListCell
-            let btn = UIButton()
-            btn.setTitle("Adicionar Projeto", for: .normal)
-            btn.setTitleColor( .systemPurple, for: .normal)
-            btn.titleLabel?.setDynamicType(font: .systemFont(style: .callout, weight: .medium), textStyle: .callout)
-            btn.tintColor = .systemPurple
-            btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-            btn.backgroundColor = UIColor.systemPurple.withAlphaComponent(0.15)
-            btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
-            btn.isUserInteractionEnabled = false
-
-            listCell.accessibilityTraits = [.button]
-            listCell.addSubview(btn)
-            btn.setupConstraints(to: listCell)
-            btn.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
-
-            cell = listCell
-            break
-
-        default:
-            let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "celular", for: indexPath)
-            let upStack = UIStackView(arrangedSubviews: [profileImageView, profileName])
-            upStack.axis = .vertical
-            upStack.spacing = 16
-            upStack.alignment = .center
-
-            let downStack = UIStackView(arrangedSubviews: [upStack, profileSubtitle, UIView()])
-            downStack.axis = .vertical
-            downStack.spacing = 8
-            downStack.alignment = .center
-
-            listCell.addSubview(downStack)
-            downStack.setupConstraints(to: listCell)
-
-            profileName.text = user?.name
-            profileSubtitle.text = user?.ocupation
-
-            cell = listCell
-            break
+            case 1:
+                let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! UICollectionViewListCell
+                var content = UIListContentConfiguration.valueCell()
+                content.text = user?.description
+                listCell.contentConfiguration = content
+                listCell.selectedBackgroundView = nil
+                
+                cell = listCell
+                break
+                
+            case 2:
+                let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "addProjCell", for: indexPath) as! UICollectionViewListCell
+                listCell.subviews.forEach({$0.removeFromSuperview()})
+                let btn = UIButton()
+                btn.setTitle("Adicionar Projeto", for: .normal)
+                btn.setTitleColor( .systemPurple, for: .normal)
+                btn.titleLabel?.setDynamicType(font: .systemFont(style: .callout, weight: .medium), textStyle: .callout)
+                btn.tintColor = .systemPurple
+                btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+                btn.backgroundColor = UIColor.systemPurple.withAlphaComponent(0.15)
+                btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+                btn.isUserInteractionEnabled = false
+                
+                listCell.accessibilityTraits = [.button]
+                listCell.addSubview(btn)
+                btn.setupConstraints(to: listCell)
+                btn.heightAnchor.constraint(greaterThanOrEqualToConstant: 44).isActive = true
+                
+                cell = listCell
+                break
+                
+            case 3:
+                let reservationCell = collectionView.dequeueReusableCell(withReuseIdentifier: ReservationCollectionViewCell.reuseIdentifier, for: indexPath) as! ReservationCollectionViewCell
+                let reservation = reservations[indexPath.row]
+                let project = projects.first(where: { $0.id == reservation.project})
+                reservationCell.item.configView(title: project?.title, subtitle: "\(reservation.startDate.timeAsString()) - \(reservation.endDate.timeAsString())")
+                reservationCell.day.text = "\(reservation.startDate.getDay())"
+                reservationCell.weekdayLabel.text = reservation.startDate.getWeekday().uppercased()
+                cell = reservationCell
+                break
+                
+            default:
+                let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: "celular", for: indexPath)
+                let upStack = UIStackView(arrangedSubviews: [profileImageView, profileName])
+                upStack.axis = .vertical
+                upStack.spacing = 16
+                upStack.alignment = .center
+                
+                let downStack = UIStackView(arrangedSubviews: [upStack, profileSubtitle, UIView()])
+                downStack.axis = .vertical
+                downStack.spacing = 8
+                downStack.alignment = .center
+                
+                listCell.addSubview(downStack)
+                downStack.setupConstraints(to: listCell)
+                
+                profileImageView.image = user?.profileImage != nil ? UIImage(data: user!.profileImage!) : UIImage(named: "profilePlaceholder")
+                profileName.text = user?.name
+                profileSubtitle.text = user?.ocupation
+                
+                cell = listCell
+                break
         }
         return cell
     }
@@ -267,6 +345,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         if indexPath.section == 1 {
             header.textLabel.text = "Bio"
+        }
+        if indexPath.section == 3 {
+            header.textLabel.text = "Reservas"
         }
         return header
     }

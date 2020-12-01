@@ -13,7 +13,7 @@ class FormFieldTableViewCell: UITableViewCell {
     let label: UILabel!
     let value: UITextField!
 
-    let padding: CGFloat = 16
+    let padding: CGFloat = 20
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

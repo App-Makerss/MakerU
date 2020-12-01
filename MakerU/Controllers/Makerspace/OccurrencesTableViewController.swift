@@ -9,16 +9,21 @@ import Foundation
 import UIKit
 
 class OccurrencesTableViewController: SingleTextTableViewController {
-    
     let activityIndicatorManager = ActivityIndicatorManager()
     var selectedEquipment: Equipment?
-    
     let occurrenceService = OccurrenceService()
+    
+    override var stringUpdate: String {
+        didSet {
+            navigationItem.rightBarButtonItem?.isEnabled = stringUpdate != ""
+        }
+    }
     
     override func setupNavigations() {
         super.setupNavigations()
         navigationItem.title = "Ocorrência"
         navigationItem.rightBarButtonItem?.title = "Reportar"
+        navigationItem.rightBarButtonItem?.isEnabled = false
         destructiveTitle = "Descartar Ocorrência"
         activityIndicatorManager.rightBarButtons = navigationItem.rightBarButtonItems!
     }

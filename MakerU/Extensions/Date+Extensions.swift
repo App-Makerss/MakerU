@@ -77,6 +77,15 @@ extension Date {
         Calendar.current.component(.day, from: self)
     }
     
+    
+    func getWeekday() -> String {
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: "pt-BR")
+        let symbols = calendar.weekdaySymbols
+        let weekdayIndex = calendar.component(.weekday, from: self)
+        return symbols[weekdayIndex-1]
+    }
+    
     func isSameDay(as date: Date) -> Bool {
         let selfComponents = Calendar.current.dateComponents([.year,.month,.day], from: self)
         

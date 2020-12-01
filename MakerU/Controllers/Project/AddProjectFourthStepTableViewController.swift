@@ -9,11 +9,6 @@ import UIKit
 
 class AddProjectFourthStepTableViewController: SingleTextTableViewController {
 
-    override var stringUpdate: String {
-        didSet {
-            navigationItem.rightBarButtonItem?.isEnabled = stringUpdate != ""
-        }
-    }
     var createProject: Project!
 
     override func viewDidLoad() {
@@ -25,7 +20,6 @@ class AddProjectFourthStepTableViewController: SingleTextTableViewController {
         super.setupNavigations()
         navigationItem.title = "Novo Projeto"
         navigationItem.rightBarButtonItem?.title = "Próximo"
-        navigationItem.rightBarButtonItem?.isEnabled = false
         
         navigationItem.leftBarButtonItems?.removeAll()
         navigationController?.navigationBar.tintColor = .systemPurple
@@ -57,11 +51,9 @@ class AddProjectFourthStepTableViewController: SingleTextTableViewController {
     
     
     override func okBarItemTapped() {
-        if stringUpdate != "" {
-            createProject.collaborators = stringUpdate
-            let vc = AddProjectFifthStepTableViewController(style: .insetGrouped)
-            vc.createProject = createProject
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        createProject.collaborators = stringUpdate
+        let vc = AddProjectFifthStepTableViewController(style: .insetGrouped)
+        vc.createProject = createProject
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

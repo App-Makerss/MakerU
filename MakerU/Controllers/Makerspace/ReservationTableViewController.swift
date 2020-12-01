@@ -155,7 +155,7 @@ class ReservationTableViewController: UITableViewController {
         section == 1 ? dateSelectorsRowCount : projectSectionRowCount
     }
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        section == 0 ? "Associe uma atividade a sua reserva" : ""
+        section == 0 ? "Associe uma atividade à sua reserva." : ""
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -330,6 +330,7 @@ class ReservationTableViewController: UITableViewController {
                                         self.activityIndicatorManager.stopLoading(on: self.navigationItem)
                                     }
                                     self.presentSuccessAlert(title: "Reservado!", message: "Em caso de necessidade, cancele sua reserva acessando o perfil.") { _ in
+                                        NotificationCenter.default.post(name: NSNotification.Name("reservationDidFinish"), object: nil)
                                         self.dismiss(animated: true, completion: nil)
                                     }
                                 }else {
