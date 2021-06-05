@@ -114,6 +114,7 @@
 		56E9C839254C9883000441C4 /* ReservationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E9C838254C9883000441C4 /* ReservationTableViewController.swift */; };
 		56EB65E8256FE3F100959137 /* ReservationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */; };
 		56EB65EB256FF60600959137 /* UIContentSizeCategory+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB65EA256FF60600959137 /* UIContentSizeCategory+Extensions.swift */; };
+		A9FA23DBD8FB7901EC2C8DC6 /* Pods_MakerU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 774E6CA9C1E435907CA06A14 /* Pods_MakerU.framework */; };
 		E22EB022253E87F400EA7FDD /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EB021253E87F400EA7FDD /* ProjectService.swift */; };
 		E247C091254260B00093833C /* MatchOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E247C090254260B00093833C /* MatchOnboardingViewController.swift */; };
 		E273CC9B255B617600A61078 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273CC9A255B617600A61078 /* ProfileViewController.swift */; };
@@ -237,6 +238,8 @@
 		56E9C838254C9883000441C4 /* ReservationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTableViewController.swift; sourceTree = "<group>"; };
 		56EB65E7256FE3F100959137 /* ReservationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCollectionViewCell.swift; sourceTree = "<group>"; };
 		56EB65EA256FF60600959137 /* UIContentSizeCategory+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIContentSizeCategory+Extensions.swift"; sourceTree = "<group>"; };
+		774E6CA9C1E435907CA06A14 /* Pods_MakerU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakerU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F2BED4F32D4A6FF3B0CEE33 /* Pods-MakerU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerU.debug.xcconfig"; path = "Target Support Files/Pods-MakerU/Pods-MakerU.debug.xcconfig"; sourceTree = "<group>"; };
 		E22EB021253E87F400EA7FDD /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		E247C090254260B00093833C /* MatchOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchOnboardingViewController.swift; sourceTree = "<group>"; };
 		E273CC9A255B617600A61078 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 		E2EAAC34255E0AE700961EF1 /* AddProjectThirdStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectThirdStepTableViewController.swift; sourceTree = "<group>"; };
 		E2EAAC37255E1E7500961EF1 /* AddProjectFourthStepTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectFourthStepTableViewController.swift; sourceTree = "<group>"; };
 		E2EAAC3A255E1EED00961EF1 /* PickPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickPhotoViewController.swift; sourceTree = "<group>"; };
+		F111F6E184B5C1DA336EE869 /* Pods-MakerU.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerU.release.xcconfig"; path = "Target Support Files/Pods-MakerU/Pods-MakerU.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5648EFFE252CBA7600E326CD /* CloudKit.framework in Frameworks */,
+				A9FA23DBD8FB7901EC2C8DC6 /* Pods_MakerU.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +315,16 @@
 			path = CustomTableViewCells;
 			sourceTree = "<group>";
 		};
+		5051FA8FC698A1CA6D1D5E1F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9F2BED4F32D4A6FF3B0CEE33 /* Pods-MakerU.debug.xcconfig */,
+				F111F6E184B5C1DA336EE869 /* Pods-MakerU.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		56271A8225630AB000D6B02A /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				5648EFFD252CBA7600E326CD /* CloudKit.framework */,
+				774E6CA9C1E435907CA06A14 /* Pods_MakerU.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -459,6 +475,7 @@
 				56C33282252BA7B300FA03AA /* MakerU */,
 				56C33281252BA7B300FA03AA /* Products */,
 				5648EFFC252CBA7600E326CD /* Frameworks */,
+				5051FA8FC698A1CA6D1D5E1F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -594,9 +611,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 56C33294252BA7B500FA03AA /* Build configuration list for PBXNativeTarget "MakerU" */;
 			buildPhases = (
+				CA1470CA559964AD9F98EBA6 /* [CP] Check Pods Manifest.lock */,
 				56C3327C252BA7B300FA03AA /* Sources */,
 				56C3327D252BA7B300FA03AA /* Frameworks */,
 				56C3327E252BA7B300FA03AA /* Resources */,
+				54B7125881036AAA68CBCEA5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -657,6 +676,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		54B7125881036AAA68CBCEA5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakerU/Pods-MakerU-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakerU/Pods-MakerU-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerU/Pods-MakerU-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA1470CA559964AD9F98EBA6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MakerU-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		56C3327C252BA7B300FA03AA /* Sources */ = {
@@ -905,6 +966,7 @@
 		};
 		56C33295252BA7B500FA03AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F2BED4F32D4A6FF3B0CEE33 /* Pods-MakerU.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -928,6 +990,7 @@
 		};
 		56C33296252BA7B500FA03AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F111F6E184B5C1DA336EE869 /* Pods-MakerU.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
